@@ -1,0 +1,63 @@
+export default [
+  // 3.1 Routing table
+  { id: 'd3-f001', topic: '3.1', front: 'Default AD of a connected route and of a static route?', back: 'Connected **0**, static **1** (a static route with only an exit interface is still AD 1).' },
+  { id: 'd3-f002', topic: '3.1', front: 'Default AD of OSPF?', back: '**110**' },
+  { id: 'd3-f003', topic: '3.1', front: 'Default AD of internal EIGRP vs external EIGRP?', back: 'Internal **90**, external (`D EX`) **170**.' },
+  { id: 'd3-f004', topic: '3.1', front: 'Default AD of eBGP, IS-IS, RIP and iBGP?', back: 'eBGP **20**, IS-IS **115**, RIP **120**, iBGP **200**.' },
+  { id: 'd3-f005', topic: '3.1', front: 'In `O 10.2.0.0/16 [110/3] via 10.0.12.2`, what are 110 and 3?', back: '`[AD/metric]`: administrative distance 110, OSPF cost 3.' },
+  { id: 'd3-f006', topic: '3.1', front: 'First rule the router applies to pick a route for a packet?', back: '**Longest prefix match**: the most specific matching route wins, regardless of protocol or AD.' },
+  { id: 'd3-f007', topic: '3.1', front: 'When are AD and metric actually compared?', back: 'When building the table: AD chooses between sources offering the **same prefix/length**; metric chooses between paths within one protocol.' },
+  { id: 'd3-f008', topic: '3.1', front: 'What is an `L` route in `show ip route`?', back: "A local route: the router's own interface address as a /32 (IPv4) or /128 (IPv6)." },
+  { id: 'd3-f009', topic: '3.1', front: 'Meaning of "Gateway of last resort is not set"?', back: 'No default route is installed; packets matching no specific route are dropped (ICMP unreachable).' },
+  { id: 'd3-f010', topic: '3.1', front: 'What does `O*E2 0.0.0.0/0 [110/1]` usually indicate?', back: 'An OSPF external default route, typically from a neighbor running `default-information originate`.' },
+
+  // 3.2 Static routing
+  { id: 'd3-f011', topic: '3.2', front: 'IPv4 static route syntax?', back: '`ip route <network> <mask> {<next-hop> | <exit-intf> [<next-hop>]} [AD]`' },
+  { id: 'd3-f012', topic: '3.2', front: 'What is a floating static route?', back: 'A static route with AD set **higher** than the primary route (e.g. 130 vs OSPF 110); installed only when the primary disappears.' },
+  { id: 'd3-f013', topic: '3.2', front: 'Mask for an IPv4 host route? Prefix length for an IPv6 host route?', back: '`255.255.255.255` (/32); IPv6 uses `/128`.' },
+  { id: 'd3-f014', topic: '3.2', front: 'Why avoid exit-interface-only static routes on Ethernet?', back: 'The router ARPs for every destination and relies on the neighbor answering with **proxy ARP**; fails if proxy ARP is disabled.' },
+  { id: 'd3-f015', topic: '3.2', front: 'Requirement when an IPv6 static route uses a link-local next hop?', back: 'The exit interface must be specified: `ipv6 route 2001:DB8:20::/48 Gi0/0/1 FE80::2`.' },
+  { id: 'd3-f016', topic: '3.2', front: 'IPv6 default route command (next hop 2001:DB8::1)?', back: '`ipv6 route ::/0 2001:DB8::1`' },
+  { id: 'd3-f017', topic: '3.2', front: 'Static route is in the running-config but not in the routing table. Common causes?', back: 'Next hop unreachable (recursive lookup fails), exit interface down, or a lower-AD route to the same prefix exists (floating).' },
+  { id: 'd3-f018', topic: '3.2', front: 'Global command required before a router forwards IPv6 packets?', back: '`ipv6 unicast-routing`' },
+  { id: 'd3-f019', topic: '3.2', front: 'Ping fails, forward static route looks correct, traceroute stops after the far router. Suspect?', back: 'A **missing return route** on a downstream router back to the source subnet.' },
+
+  // 3.3 OSPF
+  { id: 'd3-f020', topic: '3.3', front: 'OSPF neighbor states in order?', back: 'Down, Init, 2-Way, ExStart, Exchange, Loading, Full (Attempt only on NBMA).' },
+  { id: 'd3-f021', topic: '3.3', front: 'Neighbor stuck in ExStart/Exchange. Most likely cause?', back: '**IP MTU mismatch**. Fix the MTU, or use `ip ospf mtu-ignore` as a workaround.' },
+  { id: 'd3-f022', topic: '3.3', front: 'OSPF router ID selection order?', back: '1. `router-id` command 2. Highest IPv4 on an up loopback 3. Highest IPv4 on any up interface.' },
+  { id: 'd3-f023', topic: '3.3', front: 'DR election rules?', back: 'Highest interface priority (default 1), then highest RID. Priority 0 = never DR/BDR. **Non-preemptive.**' },
+  { id: 'd3-f024', topic: '3.3', front: 'Normal state between two DROTHERs on the same segment?', back: '**2-Way** (2WAY/DROTHER). They go Full only with the DR and BDR.' },
+  { id: 'd3-f025', topic: '3.3', front: 'OSPF multicast addresses (v2 and v3)?', back: 'All OSPF routers: 224.0.0.5 / FF02::5. DR and BDR: 224.0.0.6 / FF02::6.' },
+  { id: 'd3-f026', topic: '3.3', front: 'Default OSPF hello/dead on broadcast and point-to-point networks?', back: 'Hello **10 s**, dead **40 s** (NBMA: 30/120).' },
+  { id: 'd3-f027', topic: '3.3', front: 'OSPF cost formula and default reference bandwidth?', back: 'Cost = reference BW / interface BW, minimum 1. Default reference **100 Mbps** (change with `auto-cost reference-bandwidth`, in Mbps).' },
+  { id: 'd3-f028', topic: '3.3', front: 'Hello parameters that must match to become OSPF neighbors?', back: 'Area ID, subnet/mask (broadcast), hello & dead intervals, authentication, stub flag. Plus unique RIDs and matching MTU for Full.' },
+  { id: 'd3-f029', topic: '3.3', front: 'Must the OSPF process ID match between neighbors?', back: '**No.** It is locally significant and never sent in OSPF packets.' },
+  { id: 'd3-f030', topic: '3.3', front: 'What does an OSPF `network` statement match?', back: 'Interface IP addresses (address + wildcard). Matching interfaces are enabled in the area; their real subnets are advertised.' },
+  { id: 'd3-f031', topic: '3.3', front: 'Effect of `passive-interface` in OSPF?', back: 'Subnet is still advertised, but no hellos are sent or processed, so no neighbor can form on that interface.' },
+  { id: 'd3-f032', topic: '3.3', front: 'How is OSPFv3 enabled on an interface?', back: '`ipv6 ospf <pid> area <area>` in interface mode (after `ipv6 router ospf <pid>`). No network command.' },
+  { id: 'd3-f033', topic: '3.3', front: 'OSPFv3 on an IPv6-only router will not start. Why?', back: 'The RID is still a 32-bit value taken from IPv4 addresses; with none, configure `router-id x.x.x.x` manually.' },
+
+  // 3.4 FHRP
+  { id: 'd3-f034', topic: '3.4', front: 'HSRP default priority and preemption?', back: 'Priority **100**; preemption **disabled** (`standby <grp> preempt` to enable). Tie: highest interface IP wins.' },
+  { id: 'd3-f035', topic: '3.4', front: 'HSRPv1 vs HSRPv2 multicast address and group range?', back: 'v1: 224.0.0.2, groups 0-255. v2: 224.0.0.102, groups 0-4095. Both UDP 1985.' },
+  { id: 'd3-f036', topic: '3.4', front: 'HSRPv1 and HSRPv2 virtual MAC formats?', back: 'v1: `0000.0c07.acXX`. v2: `0000.0c9f.fXXX` (group number in hex).' },
+  { id: 'd3-f037', topic: '3.4', front: 'VRRP multicast address and virtual MAC?', back: '224.0.0.18 (IP protocol 112); MAC `0000.5e00.01XX` (XX = VRID in hex).' },
+  { id: 'd3-f038', topic: '3.4', front: 'VRRP preemption default and address-owner priority?', back: 'Preemption **enabled** by default. The router owning the virtual IP gets priority **255** and is always master when up.' },
+  { id: 'd3-f039', topic: '3.4', front: 'HSRP states in order?', back: 'Initial, Learn, Listen, Speak, Standby, Active.' },
+  { id: 'd3-f040', topic: '3.4', front: 'What does GLBP add over HSRP/VRRP?', back: 'Load balancing in one group: the AVG answers ARP with different virtual MACs, each owned by an AVF. Cisco proprietary.' },
+
+  // Expansion set
+  { id: 'd3-f041', topic: '3.1', front: 'Purpose of a summary static route to Null0, e.g. `S 172.16.0.0/16 is directly connected, Null0`?', back: 'A **discard route**: traffic for unused parts of the block is dropped instead of following the default route. More-specific routes inside the block still win by longest match.' },
+  { id: 'd3-f042', topic: '3.1', front: '`show ip route <address>` prints "% Network not in table", but a default route exists. Is the packet dropped?', back: 'No. `show ip route <address>` ignores the default route; forwarding still uses 0.0.0.0/0. `show ip cef <address>` shows the entry actually used.' },
+  { id: 'd3-f043', topic: '3.1', front: 'What does "10.0.0.0/8 is variably subnetted, 9 subnets, 4 masks" mean?', back: 'A grouping header, not a route: 9 routes inside 10.0.0.0/8 that use 4 different prefix lengths.' },
+  { id: 'd3-f044', topic: '3.2', front: 'What happens to a static route whose exit interface goes down?', back: 'It is removed from the routing table (a floating static route to the same prefix can then be installed).' },
+  { id: 'd3-f045', topic: '3.2', front: 'Two static default routes with the same AD?', back: 'Both are installed and traffic is load-shared (ECMP). Give the backup a higher AD to make it a floating route.' },
+  { id: 'd3-f046', topic: '3.2', front: 'IPv6 floating static default via link-local FE80::99 on Gi0/0/2, AD 200?', back: '`ipv6 route ::/0 GigabitEthernet0/0/2 FE80::99 200`' },
+  { id: 'd3-f047', topic: '3.3', front: 'OSPF neighbor stuck in INIT. Meaning?', back: "We receive its hellos, but our RID is not in them: it is not hearing us. Look for one-way problems such as an inbound ACL that drops OSPF (IP protocol 89)." },
+  { id: 'd3-f048', topic: '3.3', front: 'When does a newly configured OSPF `router-id` take effect?', back: 'After `clear ip ospf process` or a reload. Clearing the process resets every adjacency on the router.' },
+  { id: 'd3-f049', topic: '3.3', front: 'Why do OSPF neighbors learn a loopback as a /32?', back: 'The LOOPBACK network type advertises a host route. `ip ospf network point-to-point` on the loopback advertises its configured mask.' },
+  { id: 'd3-f050', topic: '3.3', front: 'In `show ip ospf database`, how do you count routers and find a segment\'s DR?', back: 'One Router LSA (type 1) per router in the area. Net Link States (type 2): Link ID = DR interface IP, ADV Router = DR RID.' },
+  { id: 'd3-f051', topic: '3.4', front: 'Meaning of `Priority 80 (configured 110)` and `Track object 1 state Down decrement 30` in `show standby`?', back: 'A tracked object failed and lowered the priority by 30. The peer takes over only if it has a higher priority **and** preempt.' },
+  { id: 'd3-f052', topic: '3.4', front: 'VRRP router has the higher priority but stays Backup, and its `Pre` column is blank. Why?', back: 'Preemption was disabled (`no vrrp <grp> preempt`), so it will not take the master role back from a working master.' },
+];
