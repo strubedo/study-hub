@@ -2,7 +2,8 @@
   "name": "study-hub",
   "version": "1.0.0",
   "private": true,
-  "description": "Local multi-course study hub: one shared engine (curriculum, question bank, exam simulator, flashcards) and one site per course, starting with CCNA 200-301 v2.0.",
+  "description": "Offline study hub: fifteen certification and skills courses (CCNA, Azure, Windows Server, Fortinet, Palo Alto, LPI DevOps, TCP/IP, AI prompting) on one shared engine with lessons, question banks, exam simulators and flashcards.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "start": "./serve.sh",

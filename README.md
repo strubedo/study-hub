@@ -23,12 +23,32 @@ settings) plus any course-only plugins (CCNA: IOS CLI labs and a subnetting trai
 | AI Prompt Engineering (ChatGPT, Gemini, Claude) | `courses/ai-prompting/` |
 | AZ-900 Azure Fundamentals (review) | `courses/az-900/` |
 
-## Run it
+## Download and run
 
-```bash
-cd ~/projects/study-hub
-./serve.sh            # → http://127.0.0.1:8231/   (or ./serve.sh 8232)
-```
+Everything runs on your own computer, offline. No account, no install step and
+no dependencies apart from **Python 3**, which macOS and Linux already have
+(Windows: install it from [python.org](https://www.python.org/downloads/) or
+the Microsoft Store).
+
+1. **Download:** the latest zip from
+   [Releases](https://github.com/strubedo/study-hub/releases/latest), or
+   **Code → Download ZIP** on this page, or `git clone https://github.com/strubedo/study-hub.git`.
+2. **Unzip** it anywhere.
+3. **Start it:**
+
+   | System | How |
+   |---|---|
+   | Windows | Double-click `serve.bat` |
+   | macOS | Double-click `serve.command` (first time: right-click → Open, because it isn't signed) |
+   | Linux | Run `./serve.sh` in a terminal |
+   | Any | `python3 scripts/serve.py --open` |
+
+4. The hub opens at <http://127.0.0.1:8231/>. Leave the window open while you
+   study; close it (or press Ctrl+C) to stop. Another port: `./serve.sh 8232`
+   or `python3 scripts/serve.py 8232 --open`.
+
+Opening `index.html` directly from the folder doesn't work: browsers block the
+JavaScript modules on `file://` pages, so the small local server is needed.
 
 `/` is the hub; each course lives at `/courses/<id>/` (CCNA: `/courses/ccna/`).
 No build step and no dependencies: vanilla ES modules served by
@@ -165,11 +185,10 @@ Every course was fact-checked against vendor documentation and RFCs, but
 products change and mistakes slip through. Check anything important against
 the official docs, and open an issue if you find an error.
 
-## App-menu launcher
+## Linux app-menu launcher
 
-The original CCNA site's menu entry (`~/.local/share/applications/ccna-prep.desktop`)
-still runs `~/projects/ccna-prep/scripts/launch.sh`. To launch the hub instead,
-point its `Exec=` at `~/projects/study-hub/scripts/launch.sh`.
+`scripts/launch.sh` starts the server if it isn't running and opens the hub, so
+it works as the `Exec=` line of a `.desktop` file.
 
 ## License
 
