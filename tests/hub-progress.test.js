@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCourse } from '../engine/course.js';
-import { readCourseStore, summarizeProgress } from '../hub/progress.js';
+import { readCourseStore, summarizeProgress, summarizeHub } from '../hub/progress.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ccna = await loadCourse(pathToFileURL(join(root, 'courses/ccna/')));
@@ -46,4 +46,36 @@ test('empty, corrupt or blocked storage reads as a fresh start', () => {
       [0, null, 0, null, null, null, null, null],
     );
   });
+});
+
+test('summarizeProgress: activity in the last 7 days and the next unfinished lesson', () => {
+  const storage = storageWith({
+    'ccna:lessonsDone': JSON.stringify({ a: '2026-10-01' }),
+    'ccna:activity': JSON.stringify({ '2026-10-20': 9, '2026-10-23': 2, '2026-10-29': 3 }),
+  });
+  const p = summarizeProgress({ read: readCourseStore('ccna:', storage), course: ccna, lessonIds: ['a', 'b', 'c'], today: '2026-10-29' });
+  assert.equal(p.weekActivity, 5); // 10-23 and 10-29 are inside the 7-day window; 10-20 is not
+  assert.equal(p.weekDays, 2);
+  assert.equal(p.nextLessonId, 'b');
+});
+
+test('summarizeHub: continue target is the most recently studied course; totals add up', () => {
+  const card = (id, lastStudied, extra = {}) => ({
+    id, progress: { lastStudied, lessonsDone: 1, lessonsTotal: 10, answers: 10, accuracy: 50, weekActivity: 2, weekDays: 1, ...extra },
+  });
+  const h = summarizeHub([card('a', '2026-10-20'), card('b', '2026-10-28', { answers: 30, accuracy: 80 }), card('c', null, { lessonsDone: 0, answers: 0, accuracy: null, weekActivity: 0, weekDays: 0 })]);
+  assert.equal(h.continueId, 'b');
+  assert.deepEqual(h.startedIds, ['b', 'a']);
+  assert.equal(h.lessonsDone, 2);
+  assert.equal(h.answers, 40);
+  assert.equal(h.accuracy, 73); // (5 + 24) / 40
+  assert.equal(h.weekActivity, 4);
+  assert.equal(h.courses, 3);
+});
+
+test('summarizeHub: nothing studied yet means no continue target', () => {
+  const h = summarizeHub([{ id: 'a', progress: { lastStudied: null, lessonsDone: 0, answers: 0, accuracy: null, weekActivity: 0 } }]);
+  assert.equal(h.continueId, null);
+  assert.deepEqual(h.startedIds, []);
+  assert.equal(h.accuracy, null);
 });

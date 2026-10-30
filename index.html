@@ -25,13 +25,19 @@
     <button class="icon-btn" id="theme-btn" aria-label="Toggle theme"></button>
   </header>
   <main class="hub">
-    <section class="hub-hero">
-      <div class="eyebrow">All courses</div>
-      <h1>Pick up where you left off</h1>
-      <p>Each course is its own site with its own progress. Everything stays in this browser. <span id="summary"></span></p>
+    <!-- Welcome page (#/ or no hash): continue where you left off, overall progress. -->
+    <section id="welcome" hidden></section>
+    <!-- Course catalog (#/courses): one card per course. -->
+    <section id="catalog" hidden>
+      <div class="hub-hero">
+        <a class="hub-back small" href="#/">← Home</a>
+        <div class="eyebrow">All courses</div>
+        <h1>Pick a course</h1>
+        <p>Each course is its own site with its own progress. Everything stays in this browser. <span id="summary"></span></p>
+      </div>
+      <div class="hub-grid" id="courses"><div class="empty">Loading courses…</div></div>
+      <p class="hub-foot">Progress is per course and per browser. Back it up from each course's Settings page.</p>
     </section>
-    <div class="hub-grid" id="courses"><div class="empty">Loading courses…</div></div>
-    <p class="hub-foot">Progress is per course and per browser. Back it up from each course's Settings page.</p>
   </main>
   <div class="toasts" id="toasts" aria-live="polite"></div>
   <script type="module" src="hub/hub.js"></script>
