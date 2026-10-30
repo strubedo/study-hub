@@ -6,7 +6,7 @@ export default {
   gaps: {
     title: 'Coverage gaps',
     intro: 'Free videos are thin on some topics, so lean on the lessons and questions here:',
-    note: 'Free videos cover Microsoft Purview, Azure Arc, the Azure Migrate business case (the TCO calculator replacement), Microsoft Defender for Cloud, sovereign regions and the newest Cloud Shell and Advisor features only thinly or with older screens, so rely on the lessons for those.',
+    note: 'Free videos cover Microsoft Purview, Azure Arc, the Azure Migrate business case (the nearest equivalent to the old TCO calculator), Microsoft Defender for Cloud, sovereign regions and the newest Cloud Shell and Advisor features only thinly or with older screens, so rely on the lessons for those.',
   },
   resources: [
     { name: 'AZ-900 study guide', url: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900', note: 'The official skills measured.' },
