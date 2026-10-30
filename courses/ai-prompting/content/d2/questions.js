@@ -255,7 +255,7 @@ Output Rollback: no shutdown on Gi1/0/1-24 and remove spanning-tree bpduguard en
     answer: [1],
     explanation: 'OpenAI\'s guidance for reasoning models says to keep prompts simple and direct and that step-by-step cues may not help or can hinder. Repeating emphasis or piling on examples does not follow that advice.' },
   { topic: '2.4', type: 'single', difficulty: 2, lesson: L7,
-    stem: 'Refer to the exhibit. A standard (non-reasoning) model answered "yes" and was wrong. Which revision is most likely to help?',
+    stem: 'Refer to the exhibit. A standard (non-reasoning) model answered "No" and was wrong. Which revision is most likely to help?',
     exhibit: `Prompt: Are 192.0.2.130/26 and 192.0.2.190/26 hosts in the same subnet? Answer yes or no only.
 Output: No`,
     options: ['Ask it to work out the block size and network address for each host before giving the answer on a final line starting "Answer:"', 'Ask for a one-word answer more firmly', 'Raise the temperature', 'Remove the addresses'],
