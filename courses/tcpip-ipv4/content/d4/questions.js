@@ -309,7 +309,7 @@ Ethernet adapter Ethernet:
 10:41:05.157301 IP 192.0.2.10.50718 > 198.51.100.80.443: Flags [S], seq 3105121870, win 64240, length 0`,
     options: ['The SYN is retransmitted and nothing comes back, so a drop or dead path is likely', 'The server sent RST, so the port is closed', 'A successful three-way handshake', 'The host is sending data segments that the server never acknowledges'],
     answer: [0],
-    explanation: 'Identical SYNs (same sequence number) at growing intervals with no SYN-ACK, RST or ICMP indicate silence from the far end: a firewall drop, routing/return-path fault or a dead host. A closed port would be answered with a reset, and a handshake would show SYN-ACK and ACK.' },
+    explanation: 'Identical SYNs (same sequence number) retransmitted with a backoff and no SYN-ACK, RST or ICMP indicate silence from the far end: a firewall drop, routing/return-path fault or a dead host. A closed port would be answered with a reset, and a handshake would show SYN-ACK and ACK.' },
   { topic: '4.5', type: 'order', difficulty: 2, lesson: L45B,
     stem: 'Put these bottom-up troubleshooting checks in order (first at the top).',
     items: ['Confirm the interface has link and an IP address, mask and gateway', 'Ping the default gateway', 'Ping a remote IP address', 'Resolve a host name with dig or nslookup', 'Test the application port with nc or Test-NetConnection'],

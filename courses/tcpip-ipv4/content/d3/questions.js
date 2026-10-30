@@ -325,19 +325,19 @@ IP 198.51.100.20.8443 > 192.0.2.10.51234: Flags [R.], seq 0, ack 101, win 0, len
     explanation: 'Throughput <= window / RTT = 65,535 x 8 bits / 0.080 s = 6.55 Mbit/s, regardless of link speed. Each other option is off by a factor of ten.' },
   { topic: '3.4', type: 'single', difficulty: 3, lesson: L34C,
     stem: 'Refer to the exhibit. Both SYNs carried a window scale shift of 7. What window, in bytes, does the server advertise in the last packet?',
-    exhibit: `31 192.0.2.10    > 198.51.100.20 TCP [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM WS=128
-32 198.51.100.20 > 192.0.2.10    TCP [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM WS=128
-33 192.0.2.10    > 198.51.100.20 TCP [ACK] Seq=1 Ack=1 Win=64256 Len=0
-40 198.51.100.20 > 192.0.2.10    TCP [ACK] Seq=1 Ack=518 Win=501 Len=0`,
+    exhibit: `IP 192.0.2.10.44312 > 198.51.100.20.443: Flags [S], seq 0, win 64240, options [mss 1460,sackOK,TS val 1 ecr 0,nop,wscale 7], length 0
+IP 198.51.100.20.443 > 192.0.2.10.44312: Flags [S.], seq 0, ack 1, win 65160, options [mss 1460,sackOK,TS val 1 ecr 1,nop,wscale 7], length 0
+IP 192.0.2.10.44312 > 198.51.100.20.443: Flags [.], ack 1, win 502, length 0
+IP 198.51.100.20.443 > 192.0.2.10.44312: Flags [.], ack 518, win 501, length 0`,
     options: ['64,128 bytes', '501 bytes', '501 KiB', '65,535 bytes'],
     answer: [0],
-    explanation: 'After the handshake the raw 16-bit field is multiplied by 2^7 = 128: 501 x 128 = 64,128 bytes. The SYN and SYN-ACK values themselves are never scaled. Wireshark would show the same as "calculated window size".' },
+    explanation: 'After the handshake the raw 16-bit field is multiplied by 2^7 = 128: 501 x 128 = 64,128 bytes. The SYN and SYN-ACK values themselves are never scaled. tcpdump prints the raw field (501); Wireshark would show the scaled value, 64128, as "calculated window size".' },
   { topic: '3.4', type: 'single', difficulty: 2, lesson: L34C,
     stem: 'Refer to the exhibit. Why was packet 105 retransmitted before the retransmission timer fired?',
-    exhibit: `101 198.51.100.20 > 192.0.2.10    [ACK] Seq=1 Ack=2897 Win=501
-102 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#1] Seq=1 Ack=2897 SLE=4345 SRE=5793
-103 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#2] Seq=1 Ack=2897 SLE=4345 SRE=7241
-104 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#3] Seq=1 Ack=2897 SLE=4345 SRE=8689
+    exhibit: `101 198.51.100.20 > 192.0.2.10    [ACK] Seq=1 Ack=2897 Win=64128
+102 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#1] Seq=1 Ack=2897 Win=64128 SLE=4345 SRE=5793
+103 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#2] Seq=1 Ack=2897 Win=64128 SLE=4345 SRE=7241
+104 198.51.100.20 > 192.0.2.10    [TCP Dup ACK 101#3] Seq=1 Ack=2897 Win=64128 SLE=4345 SRE=8689
 105 192.0.2.10    > 198.51.100.20 [TCP Fast Retransmission] Seq=2897 Len=1448`,
     options: ['Three duplicate ACKs triggered fast retransmit of the missing segment', 'The receiver sent a zero window', 'The sender\'s RTO was one second', 'ECN signalled congestion'],
     answer: [0],
