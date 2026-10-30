@@ -161,8 +161,18 @@ exam. Simulated scaled scores are linear estimates; vendors don't publish their
 scoring methods (Cisco doesn't publish the CCNA cut score either: ~825/1000 is
 a community estimate).
 
+Every course was fact-checked against vendor documentation and RFCs, but
+products change and mistakes slip through. Check anything important against
+the official docs, and open an issue if you find an error.
+
 ## App-menu launcher
 
 The original CCNA site's menu entry (`~/.local/share/applications/ccna-prep.desktop`)
 still runs `~/projects/ccna-prep/scripts/launch.sh`. To launch the hub instead,
 point its `Exec=` at `~/projects/study-hub/scripts/launch.sh`.
+
+## License
+
+[MIT](LICENSE). Exam names and product names belong to their owners; this
+project is not affiliated with or endorsed by Cisco, Microsoft, Fortinet,
+Palo Alto Networks, LPI, OpenAI, Google or Anthropic.
