@@ -165,7 +165,7 @@ const d3Tables = [
     rows: [
       ['Repositories', '`helm repo add NAME URL`, `helm repo update`, `helm search repo TERM`, `helm show values CHART`'],
       ['Install', '`helm install REL CHART [-n ns --create-namespace] [-f values.yaml] [--set k=v]`'],
-      ['Upgrade', '`helm upgrade REL CHART -f values.yaml`, `helm upgrade --install REL CHART` (install if absent), `--atomic`, `--reuse-values`'],
+      ['Upgrade', '`helm upgrade REL CHART -f values.yaml`, `helm upgrade --install REL CHART` (install if absent), `--atomic` (Helm 4: `--rollback-on-failure`), `--reuse-values`'],
       ['Inspect', '`helm list [-n ns | -A]`, `helm status REL`, `helm history REL`, `helm get values|manifest REL`'],
       ['Rollback / remove', '`helm rollback REL [REV]` (creates a new revision), `helm uninstall REL [--keep-history]`'],
       ['Without a cluster', '`helm template REL CHART`, `helm lint DIR`, `--dry-run`, `helm create NAME`, `helm package DIR`'],

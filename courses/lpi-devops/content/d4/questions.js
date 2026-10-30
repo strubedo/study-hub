@@ -380,15 +380,16 @@ processors:
 exporters:
   otlp/tempo:
     endpoint: tempo.example.com:4317
+  debug:
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: []`,
-    options: ['The traces pipeline lists no exporter, so nothing is sent to otlp/tempo', 'The batch processor drops all spans', 'Port 4317 is HTTP, not gRPC', 'Receivers cannot be named otlp'],
+      exporters: [debug]`,
+    options: ['The traces pipeline does not reference the otlp/tempo exporter, so nothing is sent to Tempo', 'The batch processor drops all spans', 'Port 4317 is HTTP, not gRPC', 'Receivers cannot be named otlp'],
     answer: [0],
-    explanation: 'Components are only active when a pipeline references them; `exporters: []` means data is discarded, so the pipeline needs `exporters: [otlp/tempo]`. `batch` only groups spans, 4317 is the gRPC port and `otlp` is the standard receiver name.' },
+    explanation: 'Components are only active when a pipeline references them; an exporter that no pipeline lists is never used, and this pipeline only writes to the `debug` exporter, so it needs `exporters: [otlp/tempo]`. `batch` only groups spans, 4317 is the gRPC port and `otlp` is the standard receiver name.' },
 ];
 
 export default bank.map((item, i) => ({ id: `d4-${String(i + 1).padStart(3, '0')}`, ...item }));

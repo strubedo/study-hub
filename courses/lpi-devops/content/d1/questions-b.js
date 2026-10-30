@@ -40,6 +40,9 @@ tmp/`,
     options: ['blob', 'tree', 'commit', 'tag'], answer: [0],
     explanation: 'A blob holds file content; a tree maps names to blobs and subtrees; a commit points to a tree and parents; a tag object annotates a commit.' }),
   q('1.3', GF, 'single', 2, 'Refer to the exhibit. You must urgently switch branches and want to shelve both the modified and the new file. Which command does it?', {
+    exhibit: `$ git status -s
+ M app.py
+?? retry.py`,
     options: ['git stash push -u', 'git stash push', 'git commit --amend', 'git restore .'], answer: [0],
     explanation: '`-u` (--include-untracked) also stashes untracked files.\n\n* Plain `git stash push` leaves untracked files in place.\n* `--amend` rewrites the last commit.\n* `git restore .` discards tracked changes and would lose your work.' }),
   q('1.3', GF, 'match', 2, 'Match each command with its effect.', {
@@ -98,8 +101,8 @@ hint: Updates were rejected because the remote contains work that you do not hav
 5d7e2a1 Fix null pointer in checkout
 8c0b1f3 Add recommendations page
 1a2b3c4 Add health endpoint`,
-    options: ['Copying a single bug fix commit from main onto a release branch', 'Replaying a whole branch on top of another to linearise history', 'Downloading objects from a remote without merging', 'Moving the branch pointer back and discarding commits'], answer: [0],
-    explanation: 'Cherry-pick applies the change of selected commits as new commits on the current branch.\n\n* Replaying a branch is rebase.\n* Downloading without merging is fetch.\n* Moving back and discarding is reset.' }),
+    options: ['git cherry-pick 5d7e2a1', 'git rebase main', 'git fetch origin main', 'git reset --hard 5d7e2a1'], answer: [0],
+    explanation: '`git cherry-pick` applies the change of selected commits as new commits on the current branch.\n\n* `git rebase main` would replay the whole release branch on top of main.\n* `git fetch` downloads without merging.\n* `git reset --hard` moves the branch pointer and discards work.' }),
   q('1.3', GB, 'single', 2, 'Refer to the exhibit. After a plain git clone, libs/shared-ui is an empty directory. Which command populates it with the commit pinned by the parent repository?', {
     exhibit: `$ cat .gitmodules
 [submodule "libs/shared-ui"]
@@ -212,14 +215,14 @@ v1.0.0-rc.1`,
     options: ['An explicit patent licence from contributors, which terminates for those who sue claiming patent infringement by the work', 'A requirement to publish all derivative works under the same licence', 'A requirement to offer source to network users', 'A ban on any commercial use'], answer: [0],
     explanation: 'Apache 2.0 grants patent rights explicitly and ends them for patent litigants.\n\n* Same-licence redistribution is copyleft.\n* Network source offer is AGPL.\n* Commercial use is allowed.' }),
   q('1.5', LC, 'single', 3, 'Refer to the exhibit. A developer wants to ship the project below with the library. What is the result?', {
-    options: ['The licences are not compatible, so the combination cannot be distributed', 'They are compatible because Apache 2.0 is permissive', 'Compatible only if the Apache library is dynamically linked', 'Compatible, but the whole work must then be relicensed as Apache 2.0'], answer: [0],
-    explanation: 'The Apache 2.0 patent and indemnity terms count as further restrictions under GPLv2-only. Apache 2.0 code is compatible with GPLv3 (and with "GPLv2 or later" used under v3).\n\n* Permissive does not automatically mean GPLv2-compatible.\n* Linking style does not change the licence compatibility.' }),
-  q('1.5', LC, 'single', 2, 'Which statement about Apache License 2.0 and GPLv3 is correct?', {
     exhibit: `# project LICENSE header
 SPDX-License-Identifier: GPL-2.0-only
 
 # vendored library libfast/LICENSE
 SPDX-License-Identifier: Apache-2.0`,
+    options: ['The licences are not compatible, so the combination cannot be distributed', 'They are compatible because Apache 2.0 is permissive', 'Compatible only if the Apache library is dynamically linked', 'Compatible, but the whole work must then be relicensed as Apache 2.0'], answer: [0],
+    explanation: 'The Apache 2.0 patent and indemnity terms count as further restrictions under GPLv2-only. Apache 2.0 code is compatible with GPLv3 (and with "GPLv2 or later" used under v3).\n\n* Permissive does not automatically mean GPLv2-compatible.\n* Linking style does not change the licence compatibility.' }),
+  q('1.5', LC, 'single', 2, 'Which statement about Apache License 2.0 and GPLv3 is correct?', {
     options: ['Apache 2.0 code may be included in a GPLv3 work, which is then governed by GPLv3', 'GPLv3 code may be relicensed as Apache 2.0 by anyone who receives it', 'They are incompatible in both directions', 'Apache 2.0 is only compatible with the AGPL'], answer: [0],
     explanation: 'Apache 2.0 was designed to be compatible with GPLv3; the combination is distributed under GPLv3.\n\n* Recipients cannot relicense GPL code.\n* The licences are compatible in the Apache-into-GPLv3 direction.' }),
   q('1.5', LC, 'single', 2, 'How does the BSD 3-clause licence differ from the BSD 2-clause licence?', {
