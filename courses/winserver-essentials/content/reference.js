@@ -245,7 +245,7 @@ const d5Tables = [
       ['Performance tools', '`resmon`, `perfmon`, `logman`, `typeperf`, `Get-Counter`', 'Live drill-down and logged counters', 'Take a baseline when healthy'],
       ['Windows Server Backup', '`Install-WindowsFeature Windows-Server-Backup`; `wbadmin`', '`start backup -allCritical` for bare metal; `start systemstatebackup`', 'No tape; scheduled backups use a dedicated disk'],
       ['Restores', '`wbadmin start recovery`, `start systemstaterecovery`, `start sysrecovery`', 'Files/volumes; system state (DSRM on a DC); bare metal (WinRE only)', '`ntdsutil` for authoritative AD restore'],
-      ['VSS', '`vssadmin list/create/resize/delete`', 'Shadow copies and Previous Versions', '512 per volume, 64 default for shared folders, NTFS, oldest deleted first'],
+      ['VSS', '`vssadmin list/create/resize/delete`', 'Shadow copies and Previous Versions', '512 per volume, 64 default for shared folders, storage area on NTFS, oldest deleted first'],
       ['Azure Backup', 'MARS agent + Recovery Services vault', 'Files, volumes, system state to Azure', 'Passphrase required; not on Server Core'],
       ['Azure Site Recovery', 'Provider + Recovery Services agent on Hyper-V hosts', 'VM replication, failover, failback', 'Replication as often as 30 s; BitLocker must be off'],
     ],

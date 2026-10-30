@@ -264,7 +264,7 @@ Link Order   GPO              Enforced   Link Enabled
         Filtering:  Denied (Security)`,
     options: ['The user lacks the Apply group policy and Read permission through security filtering', 'The GPO is empty', 'A WMI filter returned False', 'The GPO link is disabled'],
     answer: [0],
-    explanation: '"Denied (Security)" means the security filtering and permissions did not allow the object to apply the GPO. An empty GPO shows "Not Applied (Empty)", a WMI result shows "False (WMI)", and a disabled link would not list the GPO.' },
+    explanation: '"Denied (Security)" means the security filtering and permissions did not allow the object to apply the GPO. An empty GPO shows "Not Applied (Empty)", a WMI filter that returns false is reported as a WMI filter denial instead, and a disabled link or disabled GPO gets its own reason rather than a security one.' },
   { topic: '2.3', type: 'fill', difficulty: 1, lesson: L8,
     stem: 'Which gpresult switch writes an HTML report? Enter the switch.',
     answer: ['/h', 'gpresult /h'],

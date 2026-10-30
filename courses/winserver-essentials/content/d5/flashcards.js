@@ -22,6 +22,6 @@ export default [
   c('5.2', 'Core performance counters?', '`% Processor Time`, `Processor Queue Length`, `Available MBytes`, `Pages/sec`, `PhysicalDisk\\Avg. Disk sec/Read`, `Network Interface\\Bytes Total/sec`. Compare to a baseline.'),
   c('5.2', 'Bare-metal backup with wbadmin?', '`wbadmin start backup -backupTarget:E: -allCritical -quiet`. `-allCritical` needs `-backupTarget`. Restore with `wbadmin start sysrecovery` in WinRE.'),
   c('5.2', 'Restore AD on a domain controller?', 'Boot to DSRM, `wbadmin start systemstaterecovery -version:<id>`. Add `ntdsutil` for an authoritative restore.'),
-  c('5.2', 'VSS limits?', '512 shadow copies per volume, 64 by default for Shadow Copies of Shared Folders (`MaxShadowCopies`); NTFS for persistent copies; oldest deleted when storage fills.'),
+  c('5.2', 'VSS limits?', '512 shadow copies per volume, 64 by default for Shadow Copies of Shared Folders (`MaxShadowCopies`); system provider storage area must be on NTFS; oldest deleted when storage fills.'),
   c('5.2', 'MARS agent vs Site Recovery?', 'MARS agent (Recovery Services vault) backs up files, volumes and system state; no Server Core. Site Recovery replicates VMs (Hyper-V as often as 30 s) for failover and failback.'),
 ];

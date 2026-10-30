@@ -256,9 +256,9 @@ Counter                                         Sample 1   Sample 2   Sample 3
     explanation: 'A domain controller\'s Active Directory is restored in Directory Services Restore Mode with a system state recovery (add ntdsutil for an authoritative restore). sysrecovery works only from the recovery environment and is a whole-server recovery, and the other options do not exist or do not restore AD.' },
   { topic: '5.2', type: 'multi', difficulty: 2, lesson: LW,
     stem: 'Which two statements about Volume Shadow Copy Service are correct? (Choose two.)',
-    options: ['Persistent shadow copies can be made only for NTFS volumes', 'When shadow copy storage fills, the oldest shadow copies are deleted first', 'Shadow copies on the same disk protect against failure of that disk', 'A shadow copy removes the need for a separate backup', 'vssadmin list writers creates a new shadow copy'],
+    options: ['The system provider needs its shadow copy storage area on an NTFS volume', 'When shadow copy storage fills, the oldest shadow copies are deleted first', 'Shadow copies on the same disk protect against failure of that disk', 'A shadow copy removes the need for a separate backup', 'vssadmin list writers creates a new shadow copy'],
     answer: [0, 1],
-    explanation: 'VSS persistent copies require NTFS, and a full storage area deletes the oldest copies. Shadow copies on the same disk are lost with it, they are not a replacement for backups, and list writers only reports writer state.' },
+    explanation: 'The default system provider keeps its shadow copy storage area on an NTFS volume (the volume being copied need not be NTFS), and a full storage area deletes the oldest copies. Shadow copies on the same disk are lost with it, they are not a replacement for backups, and list writers only reports writer state.' },
 
   // ---------- 5.2 Azure ----------
   { topic: '5.2', type: 'single', difficulty: 2, lesson: LA,
