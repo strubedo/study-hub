@@ -1,0 +1,21 @@
+// Domain 1 — Software Engineering (LPI 701.1-701.5). Original content for LPI DevOps Tools Engineer 701-200 v2.0.
+export default [
+  { id: '1.1-service-architecture', topic: '1.1', title: 'Service-Based Architecture, Microservices and Immutable Servers', minutes: 12, file: '1.1-service-architecture.md',
+    objectives: ['Contrast monoliths, SOA and microservices and define loose coupling', 'Explain immutable servers and why they remove drift', 'Reason about persistence, transactions, concurrency and scaling in services', 'Describe the risks of migrating monolithic legacy software'] },
+  { id: '1.1-apis-data-cloudnative', topic: '1.1', title: 'REST, JSON, Statelessness, Cloud Native Design and Schema Migrations', minutes: 15, file: '1.1-apis-data-cloudnative.md',
+    objectives: ['Apply REST methods, idempotency and status codes with JSON', 'Decide where data, files and sessions belong in a stateless service', 'List cloud native and container design rules', 'Plan a database migration with the expand/contract pattern'] },
+  { id: '1.1-agile-devops-tdd', topic: '1.1', title: 'Agile, DevOps and Test-Driven Development', minutes: 8, file: '1.1-agile-devops-tdd.md',
+    objectives: ['Distinguish agile practices from DevOps practices', 'State the implications of DevOps for developers and operators', 'Run the red-green-refactor cycle', 'Place unit, integration and acceptance tests in the test pyramid'] },
+  { id: '1.2-platform-components', topic: '1.2', title: 'Cloud Service Models and Standard Platform Components', minutes: 14, file: '1.2-platform-components.md',
+    objectives: ['Tell IaaS, PaaS, SaaS and FaaS apart by who manages what', 'Choose between object storage, relational and NoSQL databases', 'Explain queues, pub/sub, Kafka and MQTT', 'Describe CDNs, big data services and IAM least privilege'] },
+  { id: '1.3-git-fundamentals', topic: '1.3', title: 'Git Concepts, Managing Files, .gitignore and Centralized vs Distributed SCM', minutes: 15, file: '1.3-git-fundamentals.md',
+    objectives: ['Explain the working tree, index and repository and the Git object types', 'Stage, commit, unstage, restore, revert, reset and stash correctly', 'Write .gitignore patterns', 'Contrast CVS/SVN with Git'] },
+  { id: '1.3-git-branches-remotes', topic: '1.3', title: 'Branches, Tags, Merging, Remotes and Submodules', minutes: 18, file: '1.3-git-branches-remotes.md',
+    objectives: ['Create, switch and delete branches and create annotated tags', 'Merge with and without fast-forward and resolve conflicts', 'Choose between rebase, merge and cherry-pick', 'Work with remotes, fetch vs pull, and submodules'] },
+  { id: '1.4-cicd-pipelines', topic: '1.4', title: 'CI/CD Concepts, Pipelines, Artifacts, Caches, Jenkins and GitLab CI', minutes: 14, file: '1.4-cicd-pipelines.md',
+    objectives: ['Distinguish continuous integration, delivery and deployment', 'Order the stages of a pipeline and the test types', 'Separate build artifacts from caches', 'Read a declarative Jenkinsfile and a .gitlab-ci.yml'] },
+  { id: '1.4-deployment-gitops-semver', topic: '1.4', title: 'Deployment Strategies, GitOps and Semantic Versioning', minutes: 12, file: '1.4-deployment-gitops-semver.md',
+    objectives: ['Compare rolling, blue-green, canary and A/B deployments', 'Use feature toggles and preview releases', 'Explain GitOps and the reconciliation loop', 'Apply SemVer 2.0.0 bump and precedence rules'] },
+  { id: '1.5-composition-licensing', topic: '1.5', title: 'Software Composition, Open Source Licences and SBOM', minutes: 15, file: '1.5-composition-licensing.md',
+    objectives: ['Describe dependencies, dependency managers and SBOMs', 'Contrast proprietary, free and open source software', 'State the obligations of MIT, BSD, Apache 2.0, GPL, LGPL and AGPL', 'Judge licence compatibility and multi-licensing'] },
+];

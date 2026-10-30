@@ -1,0 +1,72 @@
+// Domain 4 — Advanced configuration. Lessons in recommended study order.
+export default [
+  {
+    id: '4.1-fmg-ha',
+    topic: '4.1',
+    title: 'FortiManager HA: Synchronization, Manual and VRRP Failover',
+    minutes: 22,
+    file: '4.1-fmg-ha.md',
+    objectives: [
+      'State FortiManager HA limits, prerequisites and the heartbeat port',
+      'List what HA synchronizes and what it does not',
+      'Configure a cluster with config system ha and peers',
+      'Compare manual and VRRP failover and the FortiGate settings each needs',
+      'Explain how FortiManager manages FortiGate HA clusters',
+    ],
+  },
+  {
+    id: '4.2-fortiguard-fds-avips',
+    topic: '4.2',
+    title: 'FortiManager as a Local FortiGuard Server: Terminology, AV/IPS Packages and Push',
+    minutes: 20,
+    file: '4.2-fortiguard-fds-avips.md',
+    objectives: [
+      'Define FDN, FDS, local FDS, override server, push and query services',
+      'Explain local FortiGuard server versus cache behaviour',
+      'List licensing and Service Access prerequisites',
+      'Manage AV/IPS packages with Receive Status, To Be Deployed Version and Service Status',
+      'Configure push updates and unregistered-device handling',
+    ],
+  },
+  {
+    id: '4.2-fortiguard-webfilter-override',
+    topic: '4.2',
+    title: 'Web Filter and Email Filter Queries, Override Servers and Closed Networks',
+    minutes: 18,
+    file: '4.2-fortiguard-webfilter-override.md',
+    objectives: [
+      'Enable web and email filter query services and know their ports',
+      'Use Query Services to manage the query server',
+      'Choose loose or strict server override mode and set override server addresses',
+      'Configure private servers and a cascaded FortiManager FDS',
+      'Operate FortiManager as an FDS in a closed network',
+    ],
+  },
+  {
+    id: '4.2-fortiguard-fortigate-firmware-troubleshooting',
+    topic: '4.2',
+    title: 'FortiGate FDS Settings, Licences, Firmware Cache and FortiGuard Troubleshooting',
+    minutes: 20,
+    file: '4.2-fortiguard-fortigate-firmware-troubleshooting.md',
+    objectives: [
+      'Configure managed and unmanaged FortiGates to use FortiManager as FDS',
+      'Verify FortiGuard licence and contract status from FortiManager and FortiGate',
+      'Use FortiManager firmware images to upgrade FortiGates',
+      'Troubleshoot FortiGuard connectivity with FortiManager and FortiGate commands',
+    ],
+  },
+  {
+    id: '4.3-global-database-fabric-view',
+    topic: '4.3',
+    title: 'Global Database ADOM, Header and Footer Policies, and Fabric View',
+    minutes: 20,
+    file: '4.3-global-database-fabric-view.md',
+    objectives: [
+      'Describe the contents and policy types of the Global Database ADOM',
+      'Assign a global policy package to ADOMs and install it',
+      'Apply version and upgrade rules for global packages',
+      'Navigate FortiManager panes',
+      'Use Fabric View topology and Security Rating',
+    ],
+  },
+];

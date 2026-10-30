@@ -2,8 +2,8 @@
 // help, Tab completion, modes, `do`, pipes, and interface-name handling.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildLab } from '../src/sim/index.js';
-import { normalizeIfName, shortIf } from '../src/sim/ifnames.js';
+import { buildLab } from '../courses/ccna/plugins/sim/index.js';
+import { normalizeIfName, shortIf } from '../courses/ccna/plugins/sim/ifnames.js';
 
 function lab() {
   return buildLab({
@@ -237,7 +237,7 @@ test('an IPv6 static route to a link-local next hop must name the exit interface
 });
 
 test('real-but-unsimulated show commands explain themselves instead of claiming invalid input', async () => {
-  const { buildLab } = await import('../src/sim/index.js');
+  const { buildLab } = await import('../courses/ccna/plugins/sim/index.js');
   const lab = { id: 'stub', topology: { devices: [{ name: 'SW1', type: 'switch' }, { name: 'R1', type: 'router' }], links: [] }, initialConfig: { SW1: 'hostname SW1', R1: 'hostname R1' } };
   const net = buildLab(lab);
   const sw = net.openSession('SW1');

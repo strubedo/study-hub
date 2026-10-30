@@ -1,17 +1,21 @@
 #!/usr/bin/env node
-// Validates every content bank against CONTENT_SPEC.md.
-// Usage: node scripts/validate-content.mjs [domainNumber...]
+// Validates course content banks against CONTENT_SPEC.md, plus each course.js config.
+// Usage: node scripts/validate-content.mjs [course] [domainNumber...]
+//   no args       every ready course in courses/index.js
+//   ccna          one course, by id or by directory (courses/ccna)
+//   ccna 3        one domain of one course
 import { existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { DOMAINS } from '../content/blueprint.js';
+import { loadCourse } from '../engine/course.js';
+import registry from '../courses/index.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TYPES = new Set(['single', 'multi', 'order', 'match', 'fill']);
 const CHOOSE_WORDS = { 2: 'two', 3: 'three', 4: 'four' };
 
-async function loadBank(domain, name) {
-  const path = join(root, 'content', `d${domain}`, `${name}.js`);
+async function loadBank(contentDir, domain, name) {
+  const path = join(contentDir, `d${domain}`, `${name}.js`);
   if (!existsSync(path)) return { missing: true, items: [] };
   const mod = await import(pathToFileURL(path).href);
   return { missing: false, items: mod.default };
@@ -32,7 +36,7 @@ export function validateQuestion(q, domain, topicIds, lessonIds) {
   const where = q?.id ?? '(no id)';
   const err = (m) => errs.push(`${where}: ${m}`);
 
-  if (!/^d\d-\d{3}$/.test(q.id ?? '') || !q.id.startsWith(`d${domain}-`)) err('bad id format');
+  if (!/^d\d+-\d{3}$/.test(q.id ?? '') || !q.id.startsWith(`d${domain}-`)) err('bad id format');
   if (!topicIds.has(q.topic)) err(`topic ${q.topic} not in domain ${domain}`);
   if (!TYPES.has(q.type)) err(`bad type ${q.type}`);
   if (![1, 2, 3].includes(q.difficulty)) err('difficulty must be 1-3');
@@ -80,12 +84,12 @@ export function validateQuestion(q, domain, topicIds, lessonIds) {
   return errs;
 }
 
-async function validateDomain(d) {
+async function validateDomain(contentDir, d) {
   const errs = [];
   const topicIds = new Set(d.topics.map((t) => t.id));
-  const lessons = await loadBank(d.id, 'lessons');
-  const questions = await loadBank(d.id, 'questions');
-  const cards = await loadBank(d.id, 'flashcards');
+  const lessons = await loadBank(contentDir, d.id, 'lessons');
+  const questions = await loadBank(contentDir, d.id, 'questions');
+  const cards = await loadBank(contentDir, d.id, 'flashcards');
 
   if (lessons.missing) errs.push('lessons.js missing');
   if (questions.missing) errs.push('questions.js missing');
@@ -99,7 +103,7 @@ async function validateDomain(d) {
     if (!isNonEmptyString(l.title)) errs.push(`lesson ${l.id}: missing title`);
     if (!Number.isInteger(l.minutes) || l.minutes <= 0) errs.push(`lesson ${l.id}: minutes must be a positive integer`);
     if (!Array.isArray(l.objectives) || l.objectives.length < 2) errs.push(`lesson ${l.id}: needs objectives`);
-    if (!existsSync(join(root, 'content', `d${d.id}`, 'lessons', l.file ?? ''))) errs.push(`lesson ${l.id}: file ${l.file} missing`);
+    if (!existsSync(join(contentDir, `d${d.id}`, 'lessons', l.file ?? ''))) errs.push(`lesson ${l.id}: file ${l.file} missing`);
   }
   if (!lessons.missing) {
     for (const t of d.topics) {
@@ -116,7 +120,7 @@ async function validateDomain(d) {
 
   const cIds = new Set();
   for (const c of cards.items) {
-    if (!/^d\d-f\d{3}$/.test(c.id ?? '') || cIds.has(c.id)) errs.push(`flashcard id bad/duplicate: ${c.id}`);
+    if (!/^d\d+-f\d{3}$/.test(c.id ?? '') || cIds.has(c.id)) errs.push(`flashcard id bad/duplicate: ${c.id}`);
     cIds.add(c.id);
     if (!topicIds.has(c.topic)) errs.push(`flashcard ${c.id}: topic ${c.topic} not in domain`);
     if (!isNonEmptyString(c.front) || !isNonEmptyString(c.back)) errs.push(`flashcard ${c.id}: empty side`);
@@ -126,22 +130,60 @@ async function validateDomain(d) {
   return { errs, stats: { lessons: lessons.items.length, questions: questions.items.length, flashcards: cards.items.length, perTopic } };
 }
 
-async function main() {
-  const wanted = process.argv.slice(2).map(Number);
-  const domains = wanted.length ? DOMAINS.filter((d) => wanted.includes(d.id)) : DOMAINS;
-  let failed = false;
+/** Course directory for an id ("ccna") or a path ("courses/ccna"). */
+function courseDir(arg) {
+  const byId = join(root, 'courses', arg);
+  if (existsSync(join(byId, 'course.js'))) return byId;
+  const byPath = resolve(arg);
+  if (existsSync(join(byPath, 'course.js'))) return byPath;
+  throw new Error(`No course "${arg}": expected courses/${arg}/course.js or a directory containing course.js.`);
+}
+
+async function validateCourse(dir, wantedDomains) {
+  let course;
+  try {
+    course = await loadCourse(pathToFileURL(`${dir}/`));
+  } catch (e) {
+    console.log(`Course ${basename(dir)}: FAIL  config: ${e.message}`);
+    return false;
+  }
+  const contentDir = join(dir, course.contentDir);
+  const domains = wantedDomains.length ? course.domains.filter((d) => wantedDomains.includes(d.id)) : course.domains;
+  console.log(`Course ${course.id} (${course.title}): config OK`);
+  let ok = true;
   for (const d of domains) {
     let result;
     try {
-      result = await validateDomain(d);
+      result = await validateDomain(contentDir, d);
     } catch (e) {
       result = { errs: [`failed to load: ${e.message}`], stats: {} };
     }
     const { errs, stats } = result;
     const status = errs.length ? `FAIL (${errs.length})` : 'OK';
-    console.log(`Domain ${d.id} ${d.short}: ${status}  ${JSON.stringify(stats)}`);
-    errs.slice(0, 50).forEach((e) => console.log(`  - ${e}`));
-    if (errs.length) failed = true;
+    console.log(`  Domain ${d.id} ${d.short}: ${status}  ${JSON.stringify(stats)}`);
+    errs.slice(0, 50).forEach((e) => console.log(`    - ${e}`));
+    if (errs.length) ok = false;
+  }
+  return ok;
+}
+
+async function main() {
+  const [first, ...rest] = process.argv.slice(2);
+  if (first !== undefined && /^\d+$/.test(first)) {
+    console.error('Name the course first, e.g. `node scripts/validate-content.mjs ccna 3`.');
+    process.exit(2);
+  }
+  let dirs;
+  try {
+    dirs = first ? [courseDir(first)] : registry.filter((c) => c.status === 'ready').map((c) => courseDir(c.path.replace(/\/$/, '')));
+  } catch (e) {
+    console.error(e.message);
+    process.exit(2);
+  }
+  const wanted = rest.map(Number);
+  let failed = false;
+  for (const dir of dirs) {
+    if (!(await validateCourse(dir, wanted))) failed = true;
   }
   process.exit(failed ? 1 : 0);
 }

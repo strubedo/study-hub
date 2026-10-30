@@ -1,0 +1,73 @@
+// Domain 1 — Wireless fundamentals and FortiAP management. Lessons in recommended study order.
+export default [
+  {
+    id: '1.1-standards-rf',
+    topic: '1.1',
+    title: '802.11 Standards, RF Bands, Channels and DFS',
+    minutes: 22,
+    file: '1.1-standards-rf.md',
+    objectives: [
+      'Map 802.11a/b/g/n/ac/ax/be to the Wi-Fi Alliance generation names',
+      'Plan channels and channel widths in 2.4, 5 and 6 GHz, including UNII-4',
+      'Explain DFS behaviour and the FortiOS zero-wait-dfs setting',
+      'Set the regulatory domain with the controller country code',
+      'Interpret dBm, EIRP, RSSI, noise floor and SNR',
+    ],
+  },
+  {
+    id: '1.1-wlan-frames-security',
+    topic: '1.1',
+    title: 'SSIDs, the Association Process and Wireless Security Standards',
+    minutes: 20,
+    file: '1.1-wlan-frames-security.md',
+    objectives: [
+      'Distinguish SSID, BSSID, ESS and the FortiOS VAP',
+      'Order the steps a client takes to join a WLAN, including the 4-way handshake',
+      'Compare WEP, WPA, WPA2, WPA3 (SAE, H2E, SAE-PK, 192-bit) and OWE',
+      'Identify the 802.1X roles and common EAP methods',
+      'Explain PMF and the roaming helpers 802.11r/k/v and OKC',
+    ],
+  },
+  {
+    id: '1.2-discovery-capwap',
+    topic: '1.2',
+    title: 'Managed FortiAP: Discovery, Authorization and CAPWAP',
+    minutes: 24,
+    file: '1.2-discovery-capwap.md',
+    objectives: [
+      'Prepare a FortiGate interface to manage FortiAP units',
+      'Choose the right FortiAP discovery method for each topology',
+      'Authorize, deauthorize and pre-authorize FortiAPs, including wildcard serial numbers',
+      'Describe the CAPWAP control and data channels and the join state machine',
+    ],
+  },
+  {
+    id: '1.2-cloud-firmware',
+    topic: '1.2',
+    title: 'FortiEdge Cloud Provisioning and FortiAP Firmware Management',
+    minutes: 20,
+    file: '1.2-cloud-firmware.md',
+    objectives: [
+      'Onboard and deploy a FortiAP with FortiEdge Cloud (now moving to FortiManagement Cloud)',
+      'List the network access a cloud-managed FortiAP needs',
+      'Compare FortiAP firmware upgrade methods on the FortiGate',
+      'Run a rolling (hitless) FortiAP upgrade',
+      'Reach a FortiAP for local management',
+    ],
+  },
+  {
+    id: '1.3-fortiap-profiles',
+    topic: '1.3',
+    title: 'FortiAP Profiles, Radio Settings, DARRP and FortiAP Groups',
+    minutes: 25,
+    file: '1.3-fortiap-profiles.md',
+    objectives: [
+      'Build a FortiAP profile for a specific model',
+      'Configure radio mode, band, channels, width and transmit power',
+      'Assign SSIDs and SSID groups to radios',
+      'Override profile settings for an individual AP',
+      'Tune DARRP with ARRP profiles and schedules',
+      'Use FortiAP groups',
+    ],
+  },
+];

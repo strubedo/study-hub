@@ -1,0 +1,123 @@
+// Domain 3 — Policy and objects. Lessons in recommended study order.
+// Target: FortiManager 7.6 (7.6.1 exam baseline, checked against the 7.6.x Administration Guide
+// and CLI Reference). Original content.
+export default [
+  {
+    id: '3.1-policy-packages-targets',
+    topic: '3.1',
+    title: 'Policy Workflow, Policy Packages and Installation Targets',
+    minutes: 22,
+    file: '3.1-policy-packages-targets.md',
+    objectives: [
+      'Describe the provisioning and day-to-day policy workflow in an ADOM',
+      'Explain how the ADOM database, policy packages and the device database relate during an install',
+      'Set package installation targets and per-policy Install On targets',
+      'Use Feature Visibility to expose hidden policy types and objects',
+      'Run a policy consistency check and interpret its four finding types',
+    ],
+  },
+  {
+    id: '3.1-objects-dynamic-mapping',
+    topic: '3.1',
+    title: 'Objects, Dynamic Mapping and Normalized Interfaces',
+    minutes: 24,
+    file: '3.1-objects-dynamic-mapping.md',
+    objectives: [
+      'Manage ADOM-level objects and find where they are used',
+      'Find unused objects and merge duplicate objects',
+      'Configure per-device and per-platform dynamic mappings and know when the default value applies',
+      'Map device interfaces and zones to normalized interfaces, including default and wildcard mappings',
+      'Predict what happens at install time when a mapping is missing',
+    ],
+  },
+  {
+    id: '3.1-meta-fields-metadata-variables',
+    topic: '3.1',
+    title: 'Meta Fields and ADOM-Level Metadata Variables',
+    minutes: 16,
+    file: '3.1-meta-fields-metadata-variables.md',
+    objectives: [
+      'Distinguish meta fields (extra attributes) from metadata variables (per-device values)',
+      'Create required and optional meta fields and set their values on devices',
+      'Create metadata variables with default, per-device and per-ADOM values',
+      'Reference metadata variables in templates, scripts and objects with the correct syntax',
+    ],
+  },
+  {
+    id: '3.1-locks-workflow-mode',
+    topic: '3.1',
+    title: 'Policy, Device and Per-Policy Locks and Workflow Mode',
+    minutes: 22,
+    file: '3.1-locks-workflow-mode.md',
+    objectives: [
+      'Lock policy packages, devices, individual policies, objects and policy blocks in workspace mode',
+      'Explain how granular locks interact with an ADOM lock',
+      'Configure workflow approval matrices and the permissions they need',
+      'Walk a workflow session through start, save, submit, approve, reject, repair, discard and revert',
+    ],
+  },
+  {
+    id: '3.2-adom-versions-upgrade-move',
+    topic: '3.2',
+    title: 'ADOM Versions, ADOM Upgrade and Moving Devices Between ADOMs',
+    minutes: 20,
+    file: '3.2-adom-versions-upgrade-move.md',
+    objectives: [
+      'Relate FortiManager firmware, ADOM version and FortiOS version',
+      'Organize devices by ADOM and know who may assign them',
+      'Upgrade one or several ADOMs and check upgrade readiness first',
+      'Move an upgraded or registered FortiGate to another ADOM and rebuild its policy package there',
+    ],
+  },
+  {
+    id: '3.2-adom-revisions',
+    topic: '3.2',
+    title: 'ADOM Revisions',
+    minutes: 14,
+    file: '3.2-adom-revisions.md',
+    objectives: [
+      'Create ADOM revisions manually and from the Install Wizard',
+      'Restore, diff, lock and auto-delete ADOM revisions',
+      'Contrast ADOM revisions with device configuration revisions and workflow session revert',
+    ],
+  },
+  {
+    id: '3.3-workspace-mode',
+    topic: '3.3',
+    title: 'Workspace Mode, ADOM Locking and Concurrent Access',
+    minutes: 18,
+    file: '3.3-workspace-mode.md',
+    objectives: [
+      'Explain the default concurrent ADOM access behaviour and why workspace mode exists',
+      'Enable workspace or workflow mode for all ADOMs or per ADOM',
+      'Describe the effects of workspace mode on each FortiManager pane',
+      'Lock, save and unlock an ADOM, override a lock and close a stale admin session',
+    ],
+  },
+  {
+    id: '3.4-package-status-import',
+    topic: '3.4',
+    title: 'Policy Package Status and the Import Configuration Wizard',
+    minutes: 22,
+    file: '3.4-package-status-import.md',
+    objectives: [
+      'Interpret every policy package status and the separate config status',
+      'Walk through the Import Configuration wizard: policy selection, object selection and interface mapping',
+      'Resolve import object conflicts with the FortiGate value or the FortiManager value',
+      'Use the import summary and report, and predict the first install after an import',
+    ],
+  },
+  {
+    id: '3.4-install-wizard-reinstall',
+    topic: '3.4',
+    title: 'Install Wizard, Validation, Preview and Re-install',
+    minutes: 22,
+    file: '3.4-install-wizard-reinstall.md',
+    objectives: [
+      'Choose between Install Policy Package & Device Settings, Install Device Settings (only), Re-install Policy and Quick Install',
+      'Explain install validation, the automatic policy check and the object threshold warning',
+      'Read an install preview, a policy package diff and an install log',
+      'Use ADOM install settings such as auto-push and default device selection',
+    ],
+  },
+];

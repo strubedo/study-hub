@@ -1,0 +1,23 @@
+// Domain 4 — Routing, Services and Troubleshooting. Original content, checked against RFCs 1034, 1035, 1812, 2131, 2132, 2181, 2308, 3022, 3046, 3442, 4787, 5382, 6598, 6888, 7766, 7858 and the IANA DHCP and DNS registries.
+export default [
+  { id: '4.1-gateway-routing-table-lpm', topic: '4.1', title: 'Default Gateway, Routing Tables and Longest Prefix Match', minutes: 8, file: '4.1-gateway-routing-table-lpm.md',
+    objectives: ['Apply the local-versus-remote decision a host makes', 'Read host and router routing tables on Linux, Windows and Cisco IOS', 'Select the winning route by longest prefix match', 'Explain recursive next-hop lookup'] },
+  { id: '4.1-routes-ad-forwarding', topic: '4.1', title: 'Static, Default and Dynamic Routes, AD, Metric and Forwarding', minutes: 8, file: '4.1-routes-ad-forwarding.md',
+    objectives: ['Distinguish administrative distance from metric', 'Recall Cisco default administrative distances', 'Configure a floating static route', 'List what changes per hop when a router forwards a packet'] },
+  { id: '4.2-dhcp-dora-lease-options', topic: '4.2', title: 'DHCP: DORA, Leases, T1/T2 and Options', minutes: 9, file: '4.2-dhcp-dora-lease-options.md',
+    objectives: ['Walk through DORA with ports and addresses', 'Compute T1 and T2 for any lease', 'Recall the common option codes', 'Configure a Cisco pool with a reservation'] },
+  { id: '4.2-dhcp-relay-snooping', topic: '4.2', title: 'DHCP Relay, Option 82, Reservations and Snooping', minutes: 9, file: '4.2-dhcp-relay-snooping.md',
+    objectives: ['Explain giaddr and scope selection through a relay', 'Describe option 82 and its sub-options', 'Configure DHCP snooping trust and rate limits', 'Explain what the binding table feeds'] },
+  { id: '4.3-dns-resolution-records', topic: '4.3', title: 'DNS: Recursive and Iterative Resolution and Record Types', minutes: 9, file: '4.3-dns-resolution-records.md',
+    objectives: ['Contrast recursive and iterative queries', 'Identify roles of root, TLD and authoritative servers', 'Recall the main resource record types and rules', 'Read a dig answer and its flags'] },
+  { id: '4.3-dns-caching-transport-tools', topic: '4.3', title: 'DNS TTLs, Negative Caching, TCP/UDP 53, Reverse Lookups and Tools', minutes: 9, file: '4.3-dns-caching-transport-tools.md',
+    objectives: ['Explain TTL caching and negative caching', 'State when DNS uses TCP', 'Build an in-addr.arpa name', 'Choose between dig and nslookup'] },
+  { id: '4.4-nat-pat-terms', topic: '4.4', title: 'NAT and PAT: Static, Dynamic, Overload and Cisco Terms', minutes: 9, file: '4.4-nat-pat-terms.md',
+    objectives: ['Distinguish static NAT, dynamic NAT and PAT', 'Map inside/outside local/global to a flow', 'Read a translation table', 'Configure NAT on IOS and Linux'] },
+  { id: '4.4-port-forwarding-cgnat-breakage', topic: '4.4', title: 'Port Forwarding, CGNAT and Protocols That Break Through NAT', minutes: 9, file: '4.4-port-forwarding-cgnat-breakage.md',
+    objectives: ['Configure port forwarding and explain hairpinning', 'Describe CGNAT and 100.64.0.0/10', 'List CGNAT side effects', 'Explain why FTP, SIP and IPsec need help through NAT'] },
+  { id: '4.5-interface-route-arp-socket-tools', topic: '4.5', title: 'ip, ipconfig, route, arp, ss and netstat', minutes: 9, file: '4.5-interface-route-arp-socket-tools.md',
+    objectives: ['Map each host question to a Linux, Windows and IOS command', 'Read interface flags, neighbour states and listening sockets', 'Interpret 169.254.x.x and loopback-only binds', 'Tell refused from timed-out'] },
+  { id: '4.5-capture-and-method', topic: '4.5', title: 'tcpdump, Wireshark Filters and a Layered Troubleshooting Method', minutes: 10, file: '4.5-capture-and-method.md',
+    objectives: ['Contrast capture and display filters', 'Write common tcpdump and Wireshark filters', 'Recognise drop, reset and unreachable fingerprints', 'Apply a layer-by-layer method'] },
+];

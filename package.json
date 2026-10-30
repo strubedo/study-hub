@@ -1,8 +1,8 @@
 {
-  "name": "ccna-prep",
+  "name": "study-hub",
   "version": "1.0.0",
   "private": true,
-  "description": "Local CCNA 200-301 v2.0 study site: curriculum, question bank, exam simulator, IOS CLI labs, subnetting trainer, flashcards.",
+  "description": "Local multi-course study hub: one shared engine (curriculum, question bank, exam simulator, flashcards) and one site per course, starting with CCNA 200-301 v2.0.",
   "type": "module",
   "scripts": {
     "start": "./serve.sh",

@@ -3,9 +3,9 @@
 // passes every check, and the solved state survives serialize -> restore.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import labs from '../src/sim/labs/index.js';
-import { buildLab, replaySolution } from '../src/sim/index.js';
-import { topicById } from '../content/blueprint.js';
+import labs from '../courses/ccna/plugins/sim/labs/index.js';
+import { buildLab, replaySolution } from '../courses/ccna/plugins/sim/index.js';
+import { topicById } from '../courses/ccna/content/blueprint.js';
 
 const runChecks = (lab, net) => lab.tasks.map((t) => {
   try { return t.check(net) === true; } catch { return false; }

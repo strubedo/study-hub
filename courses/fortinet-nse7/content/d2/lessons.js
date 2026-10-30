@@ -1,0 +1,70 @@
+// Domain 2 — Central management: lesson index (FortiManager 7.6, FortiOS 7.6). Recommended study order.
+export default [
+  {
+    id: '2.1-ztp-basics',
+    topic: '2.1',
+    title: 'Zero-Touch Provisioning of SD-WAN Branches',
+    minutes: 22,
+    file: '2.1-ztp-basics.md',
+    objectives: [
+      'Describe the auto-link sequence that every ZTP and LTP method ends in',
+      'Choose between FortiCloud/FortiDeploy, DHCP option 240/241, USB boot and LTP for a given branch WAN',
+      'Explain the factory-default and config-touched rules of DHCP-based ZTP',
+      'Link a FortiGate to a model device by serial number or pre-shared key',
+    ],
+  },
+  {
+    id: '2.1-blueprints-csv',
+    topic: '2.1',
+    title: 'Device Blueprints and CSV Import of Model Devices',
+    minutes: 18,
+    file: '2.1-blueprints-csv.md',
+    objectives: [
+      'List what a device blueprint sets on model devices and when blueprint edits take effect',
+      'Build a model device CSV with the required, HA and metadata variable columns',
+      'Use pre-run CLI templates and device groups to chain blueprints into the SD-WAN overlay',
+      'Plan the day-zero to day-one ZTP workflow for a large rollout',
+    ],
+  },
+  {
+    id: '2.2-sdwan-manager-templates',
+    topic: '2.2',
+    title: 'SD-WAN Manager, SD-WAN Templates and Metadata Variables',
+    minutes: 24,
+    file: '2.2-sdwan-manager-templates.md',
+    objectives: [
+      'Map FortiManager features to the parts of an SD-WAN design',
+      'Navigate the FortiManager 7.6 SD-WAN Manager and enable SD-WAN management for devices',
+      'Build SD-WAN templates and predict how metadata variables resolve per device',
+      'Use template groups, install preview and the SD-WAN Monitor',
+      'Plan a new SD-WAN deployment or the conversion of an existing topology',
+    ],
+  },
+  {
+    id: '2.2-ipsec-templates',
+    topic: '2.2',
+    title: 'IPsec Templates and IPsec Members in SD-WAN',
+    minutes: 20,
+    file: '2.2-ipsec-templates.md',
+    objectives: [
+      'Compare VPN Manager communities with IPsec tunnel templates for SD-WAN',
+      'Describe the three recommended IPsec templates and the fields each needs',
+      'Explain IPsec template autorouting (Routing: Automatic) and when to use Manual routing with BGP',
+      'Configure template-built IPsec tunnels as SD-WAN zone members',
+    ],
+  },
+  {
+    id: '2.2-overlay-orchestration',
+    topic: '2.2',
+    title: 'The SD-WAN Overlay Template (Overlay Orchestration)',
+    minutes: 25,
+    file: '2.2-overlay-orchestration.md',
+    objectives: [
+      'Walk through the overlay template wizard and its topology and region options',
+      'List the templates, template groups and objects the wizard creates, and what it does not create',
+      'Size the overlay network and plan branch_id assignment',
+      'Onboard new branches and edit the overlay safely',
+      'Match overlay template options to design requirements',
+    ],
+  },
+];

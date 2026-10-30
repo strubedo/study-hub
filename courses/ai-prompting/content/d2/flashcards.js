@@ -1,0 +1,37 @@
+// Domain 2 — Core Prompting Techniques. Original flashcards.
+let n = 0;
+const c = (topic, front, back) => ({ id: `d2-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('2.1', 'Four building blocks of a clear prompt?', 'Context, task, constraints and output format.'),
+  c('2.1', 'Anthropic\'s quick test for prompt clarity?', 'Show it to a colleague with no background on the task. If they would be confused, the model will be too.'),
+  c('2.1', '"Suggest changes" vs "Change this function"?', '"Suggest" may get suggestions only. A direct verb such as "change" or "rewrite" asks for the action.'),
+  c('2.1', 'Why explain the reason behind an instruction?', 'The model can generalise from the purpose (e.g. text-to-speech cannot pronounce ellipses) instead of only the literal rule.'),
+  c('2.1', 'How do you reduce invented answers when data is missing?', 'Allow "insufficient evidence" or "not stated" and ask which extra output is needed.'),
+  c('2.1', 'Positive instruction vs prohibition?', 'Prefer saying what to do ("flowing prose paragraphs") over what not to do. Keep prohibitions for hard boundaries and pair them with the desired behaviour.'),
+  c('2.1', 'Why name the audience?', 'It sets vocabulary, depth and structure. Without it the model writes for an average reader.'),
+  c('2.1', 'Prompt iteration loop?', 'Run on realistic inputs, name the gap, change one thing, re-run on the same inputs, record the best version.'),
+  c('2.1', 'Why pin model snapshots in production (OpenAI)?', 'Different snapshots in one family can respond differently; pin them and keep evaluations.'),
+  c('2.2', 'Where do standing rules vs changing data go?', 'Rules in the system or developer message; the data to process in the user turn.'),
+  c('2.2', 'OpenAI developer vs user message?', 'Developer messages carry the app\'s rules and are prioritised ahead of user messages.'),
+  c('2.2', 'Scope of OpenAI\'s instructions parameter?', 'Applies only to the current request. With previous_response_id, earlier instructions are not carried over.'),
+  c('2.2', 'API names for standing instructions?', 'OpenAI: developer message / instructions. Anthropic: system parameter. Google: system instruction.'),
+  c('2.2', 'What does role prompting change?', 'Tone, vocabulary and perspective. It does not add facts or guarantee accuracy.'),
+  c('2.2', 'Is a role or system prompt a security boundary?', 'No. Injected or adversarial input can override it, and secrets must not be placed in prompts.'),
+  c('2.2', 'Zero-shot, one-shot, few-shot?', 'No examples, one example, a handful (commonly 3 to 5).'),
+  c('2.2', 'Qualities of good examples?', 'Relevant, diverse, consistently formatted, correct and aligned with the instructions.'),
+  c('2.2', 'Risk of too many or too uniform examples?', 'Overfitting and copying incidental features such as length, wording or a repeated label.'),
+  c('2.2', 'Examples with OpenAI reasoning models?', 'Try zero-shot first; add a few examples only if needed, closely aligned with the instructions.'),
+  c('2.3', 'Why use delimiters?', 'They separate instructions from context, examples and data, reducing misreading. Markdown and XML-style tags are both recommended; pick one style.'),
+  c('2.3', 'Long document prompt order?', 'Documents first, question and instructions last, optionally with "Based on the information above". Anthropic reports up to 30 percent better quality in tests.'),
+  c('2.3', 'Quote-first technique?', 'Ask the model to quote relevant passages, then answer from them. Helps focus and lets you check against the source.'),
+  c('2.3', 'Best prompt-only way to fix an output shape?', 'A template with placeholders, plus "not stated" for missing fields.'),
+  c('2.3', 'OpenAI Structured Outputs vs JSON mode?', 'Both give valid JSON; only Structured Outputs ensures schema adherence.'),
+  c('2.3', 'What does a schema not guarantee?', 'That the values are true. Shape is enforced, facts still need verification.'),
+  c('2.3', 'What is prefill?', 'Writing the start of the assistant reply so the model continues from it, for example "{" to force JSON.'),
+  c('2.3', 'Prefill on Claude?', 'Unsupported from Claude 4.6 models on (400 error on the last assistant turn); earlier models still support it. Use structured outputs or direct instructions.'),
+  c('2.4', 'Chain-of-thought prompting?', 'Ask for intermediate steps before the answer. Mark the final answer ("Answer:" or a tag) so it is extractable.'),
+  c('2.4', 'Does "think step by step" help reasoning models?', 'OpenAI says it may not help and can hinder; give a clear goal and constraints. It is still useful on standard models.'),
+  c('2.4', 'Self-check prompt and its limit?', '"Verify against these criteria before finishing" catches some errors, but the model shares its blind spots; test and read docs.'),
+  c('2.4', 'Prompt chaining?', 'Each step is its own prompt and each output feeds the next, so you can inspect intermediate results.'),
+];

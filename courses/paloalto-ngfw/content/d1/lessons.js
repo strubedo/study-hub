@@ -1,0 +1,23 @@
+// Domain 1 — PAN-OS Networking Configuration. Original content for PAN-OS 11.2 / 12.1.
+export default [
+  { id: '1.1-interfaces', topic: '1.1', title: 'Interfaces: Layer 2, Layer 3, Virtual Wire, Tunnel, AE and Management', minutes: 25, file: '1.1-interfaces.md',
+    objectives: ['Choose the right interface type for a deployment and state what each type can and cannot do', 'Configure Layer 3 interfaces and subinterfaces with management profiles', 'Explain virtual wire, Layer 2 VLAN objects and VLAN interfaces', 'Configure aggregate Ethernet groups with LACP', 'Separate the dedicated management interface from data-plane interfaces and service routes'] },
+  { id: '1.2-zones', topic: '1.2', title: 'Security Zones and Zone Protection', minutes: 20, file: '1.2-zones.md',
+    objectives: ['List zone types and the interface types each accepts', 'Predict intrazone and interzone default behaviour', 'Build a Zone Protection profile and know what each section defends against', 'Explain where zone protection is applied and what it does not cover'] },
+  { id: '1.3-ha-concepts', topic: '1.3', title: 'High Availability: Active/Passive and Active/Active', minutes: 25, file: '1.3-ha-concepts.md',
+    objectives: ['Name the HA links (HA1, HA2, HA3, HA4) and what each carries', 'Compare active/passive and active/active and when each applies', 'Explain election, preemption, passive link state and floating IP', 'Read show high-availability state output'] },
+  { id: '1.3-ha-monitoring', topic: '1.3', title: 'HA Link Monitoring, Path Monitoring and Failover Triggers', minutes: 20, file: '1.3-ha-monitoring.md',
+    objectives: ['Configure link groups and path groups with the right failure conditions', 'List the events that trigger an HA failover', 'Tune HA timers and hold times', 'Troubleshoot split-brain and sync problems'] },
+  { id: '1.4-routing-dynamic', topic: '1.4', title: 'Virtual Routers and Dynamic Routing: OSPF, BGP, RIP, BFD', minutes: 25, file: '1.4-routing-dynamic.md',
+    objectives: ['Predict route selection using administrative distance and metric', 'Configure OSPF and BGP essentials on a virtual router', 'Use redistribution profiles and import/export policy', 'Describe ECMP and BFD'] },
+  { id: '1.4-routing-monitoring-are', topic: '1.4', title: 'Route Monitoring and the Advanced Routing Engine', minutes: 25, file: '1.4-routing-monitoring-are.md',
+    objectives: ['Configure path monitoring for static routes with floating backups', 'Contrast the legacy engine (virtual routers) with the Advanced Routing Engine (logical routers)', 'Enable the Advanced Routing Engine and know what it requires', 'Use the correct CLI for each engine'] },
+  { id: '1.5-globalprotect-portal-gateway', topic: '1.5', title: 'GlobalProtect: Portals, Gateways and Agent Configurations', minutes: 25, file: '1.5-globalprotect-portal-gateway.md',
+    objectives: ['Explain the roles of portal, gateway and app', 'Configure a portal agent configuration with external and internal gateways', 'Describe connect methods and gateway selection', 'Configure the gateway tunnel interface, client IP pool and timeouts'] },
+  { id: '1.5-globalprotect-auth-split', topic: '1.5', title: 'GlobalProtect Authentication and Split Tunneling', minutes: 20, file: '1.5-globalprotect-auth-split.md',
+    objectives: ['Combine certificate profiles, authentication profiles, SAML, MFA and cookies', 'Choose between include and exclude access routes', 'Describe domain, application and video-based split tunneling and their precedence', 'Recognize the security trade-off of split tunneling'] },
+  { id: '1.6-ipsec-tunnels', topic: '1.6', title: 'IPSec Site-to-Site VPN: IKE Gateways, Crypto Profiles and Tunnel Interfaces', minutes: 25, file: '1.6-ipsec-tunnels.md',
+    objectives: ['Build a route-based IPSec VPN end to end', 'Explain IKE gateway, IKE crypto, IPSec crypto and proxy ID', 'Configure tunnel monitoring', 'Troubleshoot IKE phases with the correct commands'] },
+  { id: '1.6-quantum-gre', topic: '1.6', title: 'Quantum-Resistant IKEv2 and GRE Tunnels', minutes: 20, file: '1.6-quantum-gre.md',
+    objectives: ['Explain RFC 8784 PPKs and RFC 9242/9370 hybrid keys and their PAN-OS version requirements', 'Configure PPK negotiation modes and additional key exchange rounds', 'Configure a GRE tunnel with keepalive', 'Distinguish a terminated GRE tunnel from transit GRE inspected by tunnel content inspection'] },
+];

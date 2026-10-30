@@ -1,0 +1,112 @@
+// Domain 2 — SD-WAN traffic control, rules and routing. Original content for FortiOS 7.6.
+// Facts checked 2026-10-29 against the FortiOS 7.6.3 Administration Guide (SD-WAN rules, strategies,
+// implicit rule, policy routes, routing concepts, session table, SD-WAN logs and diagnose commands)
+// and the FortiOS 7.6.4 CLI Reference (config system sdwan, router static, system global/interface/settings).
+export default [
+  {
+    id: '2.1-sdwan-rules-matching',
+    topic: '2.1',
+    title: 'SD-WAN Rules: Purpose, GUI, Matching Criteria and Local-Out Traffic',
+    minutes: 25,
+    file: '2.1-sdwan-rules-matching.md',
+    objectives: [
+      'Explain what an SD-WAN rule does and where it sits among policy routes',
+      'Build an SD-WAN rule in the GUI and map each section to its CLI attribute',
+      'Match traffic by address, user, input device, protocol and port, ISDB, application, route tag and DSCP',
+      'Explain why application-based rules need application control on the firewall policy',
+      'Steer FortiGate local-out traffic with SD-WAN using interface-select-method',
+    ],
+  },
+  {
+    id: '2.1-manual-best-quality',
+    topic: '2.1',
+    title: 'Strategies I: Manual, Best Quality and Quality Metrics',
+    minutes: 25,
+    file: '2.1-manual-best-quality.md',
+    objectives: [
+      'Compare the rule strategies and their CLI mode names',
+      'Predict the preferred member of a Manual rule from interface and zone preference',
+      'Pick the right link-cost-factor for a Best Quality rule',
+      'Calculate the link-cost-threshold advantage given to the first-listed member',
+      'Read rule status in diagnose sys sdwan service4 and in the GUI',
+    ],
+  },
+  {
+    id: '2.1-lowest-cost-sla-maps',
+    topic: '2.1',
+    title: 'Strategies II: Lowest Cost (SLA), SLA Target Maps and minimum-sla-meet-members',
+    minutes: 25,
+    file: '2.1-lowest-cost-sla-maps.md',
+    objectives: [
+      'Elect the preferred member of a Lowest Cost (SLA) rule from SLA state, cost and order',
+      'Decode sla_map and sla() values in health-check and service4 output',
+      'Predict what minimum-sla-meet-members does to a rule that loses SLA members',
+      'Use hold-down-time and tie-break options to control failback',
+    ],
+  },
+  {
+    id: '2.1-load-balancing-implicit',
+    topic: '2.1',
+    title: 'Load Balancing with SD-WAN Rules and the Implicit Rule',
+    minutes: 25,
+    file: '2.1-load-balancing-implicit.md',
+    objectives: [
+      'Configure load balancing inside Manual and Lowest Cost (SLA) rules (the former Maximize Bandwidth)',
+      'Choose a hash-mode and supply the bandwidth values the bandwidth modes need',
+      'Configure the implicit rule and its five load-balance-mode algorithms',
+      'Map common SD-WAN use cases to a strategy',
+    ],
+  },
+  {
+    id: '2.2-route-lookup-policy-routes',
+    topic: '2.2',
+    title: 'Routing Principles, Policy Routes and the Route Lookup Process',
+    minutes: 25,
+    file: '2.2-route-lookup-policy-routes.md',
+    objectives: [
+      'Apply the key routing principles that SD-WAN depends on',
+      'Order policy routes, ISDB routes, SD-WAN rules and the FIB in the lookup',
+      'Explain the two FIB checks an SD-WAN rule needs and how default and gateway change them',
+      'Read diagnose firewall proute list and the routing monitor Policy view',
+    ],
+  },
+  {
+    id: '2.2-member-zone-probe-routes',
+    topic: '2.2',
+    title: 'Member Static Routes, Zone Routes and Probe Routes',
+    minutes: 20,
+    file: '2.2-member-zone-probe-routes.md',
+    objectives: [
+      'Configure static routes to an SD-WAN zone and to individual members',
+      'Use member priority and distance correctly for primary/backup and active/active designs',
+      'Explain the dedicated kernel routes that keep health-check probes on each member',
+      'Troubleshoot rules that are skipped because of missing or inactive routes',
+    ],
+  },
+  {
+    id: '2.3-session-table-states-flags',
+    topic: '2.3',
+    title: 'The Session Table, Protocol States and Session Flags',
+    minutes: 20,
+    file: '2.3-session-table-states-flags.md',
+    objectives: [
+      'Filter and read diagnose sys session list output for SD-WAN traffic',
+      'Identify the egress member, gateway and SNAT address of a session',
+      'Decode TCP and UDP proto_state values',
+      'Interpret the common session state flags',
+    ],
+  },
+  {
+    id: '2.3-session-reevaluation-snat',
+    topic: '2.3',
+    title: 'Session Re-evaluation, Route Changes and SNAT Sessions',
+    minutes: 20,
+    file: '2.3-session-reevaluation-snat.md',
+    objectives: [
+      'List the events that make FortiOS re-evaluate existing sessions',
+      'Predict what happens to non-SNAT and SNAT sessions after a route or SD-WAN member change',
+      'Use preserve-session-route, snat-route-change and firewall-session-dirty appropriately',
+      'Explain the trade-off of moving SNAT sessions to a new member',
+    ],
+  },
+];

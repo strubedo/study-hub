@@ -1,0 +1,38 @@
+// Domain 4 — Routing, Services and Troubleshooting. Original flashcards.
+let n = 0;
+const c = (topic, front, back) => ({ id: `d4-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('4.1', 'How does a host decide local versus remote?', 'It ANDs the destination with its own mask. Same network: ARP for the destination. Different: ARP for the default gateway and keep the destination IP unchanged.'),
+  c('4.1', 'Which route wins when several match a destination?', 'The longest prefix (most specific), always before AD or metric. AD and metric only choose between routes to the same prefix.'),
+  c('4.1', 'Administrative distance versus metric?', 'AD ranks the source of a route (static vs OSPF vs EIGRP...) for the same prefix and is local to the router. Metric ranks paths within one protocol.'),
+  c('4.1', 'Cisco default ADs?', 'Connected 0, static 1, eBGP 20, internal EIGRP 90, OSPF 110, IS-IS 115, RIP 120, external EIGRP 170, internal BGP 200.'),
+  c('4.1', 'What is a floating static route?', 'A static route with an AD higher than the dynamic route it backs up, e.g. `ip route 0.0.0.0 0.0.0.0 198.51.100.1 250`. It is installed only when the better route disappears.'),
+  c('4.1', 'What does a router change in a forwarded packet?', 'TTL (minus 1), IPv4 header checksum, and the whole Ethernet header (new source/destination MAC, FCS). IP addresses and ports stay the same without NAT.'),
+  c('4.1', 'What happens at TTL 1?', 'The router drops the packet and sends ICMP Time Exceeded, type 11 code 0, to the source.'),
+  c('4.2', 'DHCP ports?', 'UDP 67 on the server or relay, UDP 68 on the client. DISCOVER goes 0.0.0.0:68 to 255.255.255.255:67.'),
+  c('4.2', 'DHCP message types (option 53)?', '1 Discover, 2 Offer, 3 Request, 4 Decline, 5 Ack, 6 Nak, 7 Release, 8 Inform.'),
+  c('4.2', 'T1 and T2 defaults?', 'T1 = 0.5 x lease (renewing, unicast to the leasing server). T2 = 0.875 x lease (rebinding, broadcast to any server). A 24 h lease gives 12 h and 21 h.'),
+  c('4.2', 'Why is DHCPREQUEST broadcast after the offer?', 'It names the chosen server in option 54, letting other servers that sent offers withdraw them; the client has no confirmed address yet.'),
+  c('4.2', 'DHCP options 1, 3, 6, 15, 51?', '1 subnet mask, 3 router (default gateway), 6 DNS servers, 15 domain name, 51 lease time.'),
+  c('4.2', 'DHCP options 58, 59, 66, 67, 82, 121?', '58 T1, 59 T2, 66 TFTP server name, 67 boot file name, 82 relay agent information (RFC 3046), 121 classless static routes (overrides option 3).'),
+  c('4.2', 'What does a relay agent do?', 'Forwards client broadcasts as unicast to the server, setting giaddr to the client-side interface address. The server picks the scope from giaddr and replies to giaddr on UDP 67.'),
+  c('4.2', 'Option 82 sub-options?', 'Sub-option 1 Agent Circuit ID (port or VLAN), sub-option 2 Agent Remote ID (relay device). Added by the relay, never seen by the client.'),
+  c('4.2', 'What does DHCP snooping do?', 'Drops OFFER/ACK/NAK from untrusted ports, validates chaddr and rate limits, and builds a MAC/IP/VLAN/port binding table used by DAI and IP Source Guard.'),
+  c('4.3', 'Recursive versus iterative query?', 'Stub to resolver is recursive (give me the final answer). Resolver to root, TLD and authoritative servers is iterative (give me a referral or the answer).'),
+  c('4.3', 'DNS record types and numbers?', 'A 1, NS 2, CNAME 5, SOA 6, PTR 12, MX 15, TXT 16, AAAA 28, SRV 33.'),
+  c('4.3', 'MX and CNAME rules?', 'Lowest MX preference is tried first, and the MX target must not be an alias. A CNAME cannot share a name with other data, so it cannot be at the zone apex.'),
+  c('4.3', 'SRV record fields?', 'Priority, weight, port, target, under `_service._proto.name`, e.g. `_sip._tcp.example.com. SRV 10 60 5060 sip1.example.com.`'),
+  c('4.3', 'How long is a negative answer cached?', 'The smaller of the SOA record\'s TTL and its MINIMUM field (RFC 2308). NXDOMAIN means the name is absent; NODATA means NOERROR with no record of that type.'),
+  c('4.3', 'When does DNS use TCP 53?', 'When a UDP answer is truncated (TC bit), for zone transfers, and by any implementation that chooses it. UDP messages are limited to 512 bytes unless EDNS0 raises the size.'),
+  c('4.3', 'Reverse name for 192.0.2.10?', '`10.2.0.192.in-addr.arpa.` with a PTR record; query with `dig -x 192.0.2.10`.'),
+  c('4.3', 'dig versus nslookup?', 'dig shows flags, sections, TTLs and the answering server, and has +trace. Windows nslookup uses its own resolver and ignores the hosts file and system cache.'),
+  c('4.4', 'Static NAT, dynamic NAT, PAT?', 'Static: fixed one-to-one. Dynamic: one-to-one from a pool on demand. PAT (overload): many hosts to one address using port numbers.'),
+  c('4.4', 'Inside local, inside global, outside local, outside global?', 'Inside local: host\'s real inside address. Inside global: that host as seen outside. Outside local: outside host as seen inside. Outside global: outside host\'s real address.'),
+  c('4.4', 'What is CGNAT and 100.64.0.0/10?', 'ISP-side NAT shared by many customers. 100.64.0.0/10 (RFC 6598) is shared address space for the link between CGN and customer router. Effects: no inbound, port limits, shared IP reputation.'),
+  c('4.4', 'Why does NAT break FTP active mode, SIP and IPsec?', 'FTP PORT and SIP/SDP carry IPs and ports in the payload (need an ALG). ESP has no ports and AH covers the IP header; NAT-T wraps ESP in UDP 4500.'),
+  c('4.5', 'Linux versus Windows versus IOS command equivalents?', 'Interfaces: `ip addr` / `ipconfig` / `show ip interface brief`. Routes: `ip route` / `route print` / `show ip route`. ARP: `ip neigh` / `arp -a` / `show ip arp`. Sockets: `ss` / `netstat -ano`.'),
+  c('4.5', 'tcpdump essentials?', '`-nn` no name resolution, `-i` interface, `-w` write, `-r` read, `-c` count, `-e` show Ethernet header. Filters are BPF: `host 192.0.2.10 and tcp port 443`.'),
+  c('4.5', 'Capture filter versus display filter?', 'Capture filter (BPF) discards frames during capture. Display filter (Wireshark fields, e.g. `ip.addr == 192.0.2.10 && tcp.port == 443`) only hides them afterwards.'),
+  c('4.5', 'Troubleshooting order and fingerprints?', 'Link, address, gateway, remote IP, name, port, application. SYN with no reply: drop. RST: closed port. ICMP type 3: someone refused. 169.254.x.x: DHCP failed.'),
+];

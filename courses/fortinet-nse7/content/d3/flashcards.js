@@ -1,0 +1,18 @@
+// Domain 3 — Security profiles: flashcards (FortiOS 7.6).
+export default [
+  { id: 'd3-f001', topic: '3.1', front: 'Re-sign vs replace (`server-cert-mode`)?', back: '**re-sign** (default): multiple clients to multiple servers, FortiGate CA signs. **replace**: Protecting SSL Server, presents your server\'s own certificate (`server-cert`).' },
+  { id: 'd3-f002', topic: '3.1', front: 'What does certificate inspection see?', back: 'Only the TLS handshake: SNI and server certificate. Host/category decisions and the SNI check work; paths, files and payloads need full inspection.' },
+  { id: 'd3-f003', topic: '3.1', front: '`sni-server-cert-check` values?', back: '**enable** (default): on mismatch use the certificate CN for URL filtering. **strict**: close the connection. **disable**: no check.' },
+  { id: 'd3-f004', topic: '3.1', front: 'Fortinet_CA_SSL vs Fortinet_CA_Untrusted?', back: '`caname` Fortinet_CA_SSL signs re-signed certs for trusted servers: deploy to clients. Fortinet_CA_Untrusted signs certs for untrusted servers: **never** deploy it.' },
+  { id: 'd3-f005', topic: '3.1', front: 'Default `untrusted-server-cert`?', back: '**allow**. With deep inspection the cert is re-signed with Fortinet_CA_Untrusted, so the user still sees a warning. `ignore` re-signs as trusted.' },
+  { id: 'd3-f006', topic: '3.1', front: 'Defaults: expired, revoked, client certificate, minimum TLS?', back: 'Expired **block**, revoked **block**, `client-certificate` **bypass**, `min-allowed-ssl-version` **tls-1.1** (7.6 CLI Reference, `config https`).' },
+  { id: 'd3-f007', topic: '3.1', front: 'Categories exempted by default in a new deep-inspection profile (GUI)?', back: 'Finance and Banking, Health and Wellness, Personal Privacy.' },
+  { id: 'd3-f008', topic: '3.1', front: 'Why do users see a cert warning instead of a block page over HTTPS?', back: 'The block page is FortiGate content signed by its CA. Clients that don\'t trust Fortinet_CA_SSL (or your sub-CA) warn, even with certificate inspection.' },
+  { id: 'd3-f009', topic: '3.1', front: 'Best CA design for deep inspection at scale?', back: 'A subordinate CA from the enterprise PKI on every FortiGate. Each unit\'s own Fortinet_CA_SSL is unique, so it doesn\'t scale.' },
+  { id: 'd3-f010', topic: '3.2', front: 'Select IPS signatures by CVE?', back: '`config entries` → `set cve "cve-2021-44228"`, or a year wildcard `"cve-2017"`. New signatures for those CVEs join automatically.' },
+  { id: 'd3-f011', topic: '3.2', front: 'Server vs client IPS targets?', back: 'Server-side (`location server`): inbound attacks on services, VIP policies. Client-side: attacks on browsers and endpoints, outbound policies. Tight filters = faster, fewer false positives.' },
+  { id: 'd3-f012', topic: '3.2', front: 'Narrowest fix for an IPS false positive?', back: 'A **signature entry** for that one signature (above the filter that includes it) with **Exempt IPs** for the source/destination pair, or with action monitor. Then report it to FortiGuard.' },
+  { id: 'd3-f013', topic: '3.2', front: '`config ips global` key defaults?', back: '`fail-open` disable (block when buffer full), `database` extended, `engine-count` 0 (auto), `np-accel-mode` basic (NTurbo on, where the model supports it).' },
+  { id: 'd3-f014', topic: '3.2', front: 'ISDB vs application control?', back: 'ISDB: IP/protocol/port at policy lookup, first packet. Application control: L7 signatures after a few packets; many need deep inspection.' },
+  { id: 'd3-f015', topic: '3.2', front: 'Which sessions can\'t be NP-offloaded?', back: 'Sessions that need **proxy-based** inspection. Flow-based profile sessions can be offloaded with NTurbo (NP6/NP7 models).' },
+];

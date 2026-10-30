@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   ipToInt, intToIp, prefixToMask, maskToPrefix, wildcardFor, subnetInfo,
   prefixForHosts, eui64, compressIPv6, expandIPv6, generateProblem, checkAnswer, mulberry32,
-} from '../src/lib/subnet.js';
+} from '../courses/ccna/plugins/lib/subnet.js';
 
 test('ipToInt / intToIp round-trip including high octets', () => {
   assert.equal(ipToInt('255.255.255.255'), 0xffffffff);

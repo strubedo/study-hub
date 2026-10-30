@@ -1,0 +1,105 @@
+// Domain 3 — Centralized management, visibility and troubleshooting (35-45%). Lessons in study order.
+// FortiOS 7.6 / FortiManager 7.6. Facts checked against the FortiManager 7.6.5 Administration Guide
+// (SD-WAN Manager chapter, provisioning templates, ADOM-level metadata variables) and the FortiOS 7.6.3
+// Administration Guide (SD-WAN monitoring, SD-WAN related logs, SD-WAN related diagnose commands,
+// routing concepts, debugging the packet flow) plus the FortiOS 7.6.4 Log Message Reference.
+export default [
+  {
+    id: '3.1-fortimanager-sdwan-manager',
+    topic: '3.1',
+    title: 'FortiManager Basics and the SD-WAN Manager',
+    minutes: 25,
+    file: '3.1-fortimanager-sdwan-manager.md',
+    objectives: [
+      'Describe the FortiManager building blocks that SD-WAN management relies on: ADOMs, the device database, FGFM and the Install Wizard',
+      'Read the Device Manager config status of a managed FortiGate and know how to resolve Out of Sync and Conflict',
+      'Navigate the FortiManager 7.6 SD-WAN Manager pane and enable SD-WAN management on devices',
+      'Choose between per-device SD-WAN management and central management with SD-WAN templates',
+      'Use the SD-WAN Monitor map, table, template and history views, and know what SD-WAN monitoring history changes',
+    ],
+  },
+  {
+    id: '3.1-sdwan-templates-groups',
+    topic: '3.1',
+    title: 'SD-WAN Templates, Provisioning Templates and Template Groups',
+    minutes: 25,
+    file: '3.1-sdwan-templates-groups.md',
+    objectives: [
+      'Build an SD-WAN template with zones, members, rules, performance SLAs, neighbors and duplication',
+      'Import an SD-WAN template from a FortiGate and assign templates to devices and device groups',
+      'Explain why a default firewall policy or a local FortiGate change breaks an SD-WAN template install',
+      'Group provisioning templates in a template group and explain the one-template-per-type rule',
+      'Use Preview CLI Configuration, Validate and Install Preview to check a template before installing it',
+    ],
+  },
+  {
+    id: '3.1-overlay-orchestration-metadata',
+    topic: '3.1',
+    title: 'SD-WAN Overlay Orchestration and Metadata Variables',
+    minutes: 30,
+    file: '3.1-overlay-orchestration-metadata.md',
+    objectives: [
+      'Plan and run the SD-WAN overlay template wizard, including its default address space and BGP AS',
+      'List the IPsec, BGP, CLI templates, template groups and metadata variables the wizard generates',
+      'Explain why an overlay template still needs an SD-WAN template and how branch_id is assigned',
+      'Create ADOM-level metadata variables with default, device-group and per-device values and predict which value a device receives',
+      'Onboard a new branch with a device group, metadata values and the Install Wizard',
+    ],
+  },
+  {
+    id: '3.2-sdwan-gui-monitoring',
+    topic: '3.2',
+    title: 'SD-WAN Widgets and GUI Monitoring',
+    minutes: 20,
+    file: '3.2-sdwan-gui-monitoring.md',
+    objectives: [
+      'Read the Bandwidth, Volume and Sessions views on the SD-WAN Zones tab',
+      'Use the SD-WAN Rules tab (selected member checkmark, tooltip, hit count) to confirm steering',
+      'Interpret the Performance SLAs charts and status arrows',
+      'Use the Network dashboard widgets (SD-WAN, Static & Dynamic Routing with the Policy view) and FortiView to trace a session',
+      'Relate FortiGate GUI views to the FortiManager SD-WAN Monitor and the REST API data behind it',
+    ],
+  },
+  {
+    id: '3.2-sdwan-logs',
+    topic: '3.2',
+    title: 'SD-WAN Event Logs and Traffic Logs',
+    minutes: 25,
+    file: '3.2-sdwan-logs.md',
+    objectives: [
+      'Identify the SD-WAN event log IDs 0100022921, 0113022923, 0113022924 and 0113022925 and what triggers each',
+      'Decode the eventtype, msg, member, seq and slamap fields of SD-WAN event logs',
+      'Configure periodic SLA logs with sla-fail-log-period and sla-pass-log-period',
+      'Read the vwlid, vwlname, vwlquality and vwlservice fields in forward traffic logs',
+      'Correlate event logs, traffic logs and security logs into a failover timeline',
+    ],
+  },
+  {
+    id: '3.3-sdwan-diagnose-output',
+    topic: '3.3',
+    title: 'Reading SD-WAN Diagnose Output',
+    minutes: 30,
+    file: '3.3-sdwan-diagnose-output.md',
+    objectives: [
+      'Read diagnose sys sdwan health-check output, including dead members and the sla_map bitmask',
+      'Read diagnose sys sdwan member output for each implicit load-balance mode',
+      'Read diagnose sys sdwan service4 output for manual, priority, sla and load-balance rules',
+      'Use sla-log and intf-sla-log for short SLA and bandwidth history',
+      'Map an SD-WAN rule to its entry in diagnose firewall proute list',
+    ],
+  },
+  {
+    id: '3.3-troubleshooting-workflow',
+    topic: '3.3',
+    title: 'Troubleshooting SD-WAN Connectivity and Policy Behaviour',
+    minutes: 30,
+    file: '3.3-troubleshooting-workflow.md',
+    objectives: [
+      'Follow a layered workflow from member health to rule selection, routing, firewall policy and session',
+      'Explain the two FIB checks that decide whether an SD-WAN rule can be used',
+      'Read a diagnose debug flow trace that shows an SD-WAN policy-route match or a policy deny',
+      'Read the SD-WAN fields of diagnose sys session list and force sessions to re-evaluate safely',
+      'Match common SD-WAN symptoms to their most likely cause and the command that proves it',
+    ],
+  },
+];

@@ -1,0 +1,37 @@
+// Domain 1 — How Large Language Models Work. Original flashcards.
+let n = 0;
+const c = (topic, front, back) => ({ id: `d1-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('1.1', 'What is a token?', 'A sub-word chunk from the tokenizer\'s fixed vocabulary. Not a word or a character; code, IPs and non-English text use more tokens per character.'),
+  c('1.1', 'Do ChatGPT, Gemini and Claude count tokens the same way?', 'No. Each vendor uses its own tokenizer, so the same text can have different token counts.'),
+  c('1.1', 'What does an LLM do at each step?', 'Computes a probability for every possible next token, picks one, appends it and repeats (autoregressive generation).'),
+  c('1.1', 'Pretraining vs post-training?', 'Pretraining: predict the next token over huge text corpora. Post-training: supervised fine-tuning and preference training to follow instructions and behave safely.'),
+  c('1.1', 'Do your chats change the model\'s weights?', 'No. Weights are fixed after training. "Memory" is stored text added back into the prompt.'),
+  c('1.1', 'What counts against the context window?', 'System prompt, conversation history, files, tool results and the model\'s own output (including reasoning tokens).'),
+  c('1.1', 'Why do long chats get slower and costlier?', 'Models are stateless: the app resends the whole conversation (or a processed version) every turn.'),
+  c('1.1', 'What if a chat app quietly trims old turns?', 'Early instructions can be lost. Restate key rules or start a new chat with a short summary.'),
+  c('1.1', 'What does low temperature do?', 'Sharpens the probability distribution: more focused and repeatable output. High temperature gives more varied output.'),
+  c('1.1', 'What is top-p (nucleus) sampling?', 'Sample only from the smallest set of top tokens whose probabilities add up to p. Usually tune temperature or top-p, not both.'),
+  c('1.1', 'Is temperature 0 deterministic?', 'Not guaranteed. Hardware numerics, batching and model updates can change output. It is more repeatable, not perfectly repeatable.'),
+  c('1.1', 'Define hallucination.', 'Fluent, confident output that is false or unsupported by the supplied sources, such as an invented CLI command.'),
+  c('1.1', 'Why do models hallucinate?', 'They predict plausible text rather than look up facts, have knowledge gaps, tend not to admit uncertainty and build on their own early errors.'),
+  c('1.1', 'Name two ways to reduce hallucinations.', 'Ground the answer in text you supply, and use tools (search, retrieval, code execution). Neither removes the need to verify.'),
+  c('1.1', 'What is a knowledge cutoff?', 'The point after which the model\'s training data has little or nothing. Later events and releases are unknown unless provided or searched.'),
+  c('1.1', 'Where should you check a model\'s cutoff or name?', 'The vendor\'s model page, not the model\'s own answer.'),
+  c('1.2', 'The three usual tier bands in a model family?', 'Flagship (most capable, slowest, costliest), balanced (good default), fast/lite (cheap, low latency, high volume).'),
+  c('1.2', 'Vendor and family for ChatGPT, Gemini, Claude?', 'ChatGPT: OpenAI GPT. Gemini: Google Gemini. Claude: Anthropic Claude.'),
+  c('1.2', 'Claude lineup, as of October 2026?', 'Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 (Haiku is the fastest tier). Check the vendor page for changes.'),
+  c('1.2', 'OpenAI API lineup, as of October 2026?', 'GPT-6 Astra (flagship), GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Luna (most efficient). Check the vendor page.'),
+  c('1.2', 'Gemini API lineup, as of October 2026?', 'Gemini 4 Argon (flagship reasoning), Gemini 3.8 Flash, plus Flash-Lite models for the cheapest, fastest band.'),
+  c('1.2', 'What is a reasoning model?', 'One that spends extra hidden tokens planning and checking before the final answer. Better on multi-step problems; slower and costlier.'),
+  c('1.2', 'How are reasoning tokens treated?', 'Billed as output tokens and counted within the context window and output cap. Often hidden or only summarized.'),
+  c('1.2', 'How do current Claude models handle thinking?', 'Adaptive thinking guided by an effort setting. Older fixed budget_tokens extended thinking is legacy and rejected by the newest models.'),
+  c('1.2', 'When skip a reasoning model?', 'Simple lookups, formatting, rewriting and bulk classification, where the extra delay and cost buy little.'),
+  c('1.2', 'Why paste text instead of a screenshot?', 'Vision can misread small text and look-alike characters (0/O, 1/l). Text is exact.'),
+  c('1.2', 'Consumer app vs API?', 'App wraps the model with a system prompt, tools, memory and a UI. API gives exact model ID and settings but you handle state, errors and cost.'),
+  c('1.2', 'What do Claude Projects provide?', 'A workspace with project knowledge and instructions shared by its chats, with per-project memory.'),
+  c('1.2', 'Gemini Gems status, as of October 2026?', 'Saved custom Gemini setups; Google says Gems are being replaced by skills, starting with personal accounts in November 2026.'),
+  c('1.2', 'First step in picking a model?', 'Define the task and the cost of an error, then start at the balanced tier and move up or down based on tests.'),
+  c('1.2', 'Is "which assistant is best" a good question?', 'No. Rankings shift every few months; test candidates on your own cases and record plan, model and date.'),
+];

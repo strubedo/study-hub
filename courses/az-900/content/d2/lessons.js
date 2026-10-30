@@ -1,0 +1,15 @@
+// Domain 2 — Describe Azure architecture and services. Original content, checked against Microsoft Learn (regions, availability zones, management groups, availability sets and scale sets, storage redundancy/access tiers/account types, Entra External ID, Defender for Cloud).
+export default [
+  { id: '2.1-core-architecture', topic: '2.1', title: 'Regions, Availability Zones, Resource Groups, Subscriptions and Management Groups', minutes: 8, file: '2.1-core-architecture.md',
+    objectives: ['Describe regions, geographies, region pairs, nonpaired regions and sovereign regions', 'Explain availability zones and how they differ from datacenters and regions', 'Place resources in resource groups and subscriptions correctly', 'State management group depth and inheritance rules', 'Order the management group, subscription, resource group, resource hierarchy'] },
+  { id: '2.2-compute', topic: '2.2', title: 'Azure Compute: VMs, Scale Sets, Containers, Functions and App Hosting', minutes: 8, file: '2.2-compute.md',
+    objectives: ['Compare virtual machines, containers and Azure Functions', 'List the resources required to deploy a VM', 'Distinguish availability sets, availability zones and Virtual Machine Scale Sets', 'Describe Azure Virtual Desktop', 'Choose among web apps, containers and VMs for application hosting'] },
+  { id: '2.2-networking', topic: '2.2', title: 'Azure Networking: VNets, Peering, DNS, VPN Gateway, ExpressRoute and Endpoints', minutes: 8, file: '2.2-networking.md',
+    objectives: ['Describe virtual networks, subnets and peering', 'Explain what Azure DNS provides', 'Compare VPN Gateway and ExpressRoute', 'Distinguish public and private endpoints and Private Link', 'Match networking requirements to the right service'] },
+  { id: '2.3-storage', topic: '2.3', title: 'Azure Storage: Services, Tiers, Redundancy, Account Types and Data Movement', minutes: 9, file: '2.3-storage.md',
+    objectives: ['Compare Blob, Files, Queue, Table and disk storage', 'State access tiers and their minimum retention periods', 'Compare LRS, ZRS, GRS, GZRS and the read-access variants', 'Choose a storage account type', 'Pick among AzCopy, Storage Explorer, File Sync, Azure Migrate and Data Box'] },
+  { id: '2.4-identity', topic: '2.4', title: 'Identity: Microsoft Entra ID, Domain Services, Authentication, External ID and Conditional Access', minutes: 8, file: '2.4-identity.md',
+    objectives: ['Contrast Microsoft Entra ID with Microsoft Entra Domain Services', 'Describe SSO, MFA and passwordless authentication', 'Describe External ID, B2B collaboration and customer identity', 'Explain Conditional Access signals and decisions'] },
+  { id: '2.4-access-security', topic: '2.4', title: 'Access and Security: RBAC, Zero Trust, Defense in Depth and Defender for Cloud', minutes: 8, file: '2.4-access-security.md',
+    objectives: ['Explain Azure RBAC role assignments, scope and inheritance', 'State the three Zero Trust principles', 'List the defense-in-depth layers', 'Describe Microsoft Defender for Cloud, secure score and Defender plans'] },
+];

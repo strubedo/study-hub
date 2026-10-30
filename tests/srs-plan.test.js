@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { newCardState, review, isDue, GRADES } from '../src/lib/srs.js';
-import { buildPlan, topicMastery, daysBetween } from '../src/lib/plan.js';
+import { newCardState, review, isDue, GRADES } from '../engine/lib/srs.js';
+import { buildPlan, topicMastery, daysBetween } from '../engine/lib/plan.js';
 
 const NOW = Date.parse('2026-10-24T12:00:00Z');
 const DAY = 86_400_000;

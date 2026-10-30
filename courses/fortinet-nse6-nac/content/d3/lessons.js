@@ -1,0 +1,73 @@
+// Domain 3 — Integration. Lessons in recommended study order (FortiNAC-F 7.6).
+export default [
+  {
+    id: '3.1-syslog-trap-input',
+    topic: '3.1',
+    title: 'Third-Party Syslog and SNMP Trap Input',
+    minutes: 22,
+    file: '3.1-syslog-trap-input.md',
+    objectives: [
+      'List what FortiNAC-F needs before it processes pushed syslog or traps: allowaccess, a modeled sender and a parsing definition',
+      'Model a third-party sender as a pingable device and choose Syslog or Security Events as its incoming events',
+      'Build Syslog File definitions in CSV, TAG/VALUE or CEF format and compare them with security event parsers',
+      'Configure MAC notification traps on a Cisco access switch for FortiNAC-F',
+      'Decode custom enterprise traps with Trap MIB Files',
+    ],
+  },
+  {
+    id: '3.1-alarms-notification-syslog-out',
+    topic: '3.1',
+    title: 'Alarms, Admin Group Notification and FortiNAC-F Syslog Output',
+    minutes: 20,
+    file: '3.1-alarms-notification-syslog-out.md',
+    objectives: [
+      'Map events to alarms and choose the right trigger rule',
+      'Notify an administrator group by GUI, email or SMS, including the All Management default group',
+      'Attach automatic actions with secondary tasks to an alarm',
+      'Forward FortiNAC-F events and alarms to syslog, SNMP and FortiAnalyzer receivers',
+      'Read the FortiNAC-F CSV syslog message format',
+    ],
+  },
+  {
+    id: '3.2-fortinac-manager',
+    topic: '3.2',
+    title: 'FortiNAC-F Manager in a Distributed Deployment',
+    minutes: 22,
+    file: '3.2-fortinac-manager.md',
+    objectives: [
+      'Explain the split of duties between FortiNAC-F Manager and managed CAs',
+      'Connect a CA to the Manager with nac-ipc, allowed serial numbers and CA Management',
+      'Identify global objects and how and when they synchronize',
+      'Describe host, user and guest propagation across CAs by build',
+      'Explain pooled licensing, Manager clustering and CA status values',
+    ],
+  },
+  {
+    id: '3.3-fortigate-vpn-integration',
+    topic: '3.3',
+    title: 'Managing FortiGate VPN Sessions with FortiNAC-F',
+    minutes: 25,
+    file: '3.3-fortigate-vpn-integration.md',
+    objectives: [
+      'Trace a FortiNAC-F managed VPN session from tunnel up to FSSO tag',
+      'Configure FortiGate syslog, API access, tunnel DNS and domain, and firewall policies for FortiNAC-F',
+      'Configure the FortiNAC-F VPN scope, FortiGate model, VDOM model configuration and VPN policies',
+      'Deliver tags through connector-based FSSO or the Security Fabric connection',
+      'Troubleshoot VPN sessions from both the FortiGate and FortiNAC-F CLI',
+    ],
+  },
+  {
+    id: '3.4-mdm-oui-profiling',
+    topic: '3.4',
+    title: 'MDM Integration, Vendor OUIs and Device Profiling Rules',
+    minutes: 20,
+    file: '3.4-mdm-oui-profiling.md',
+    objectives: [
+      'Configure an MDM service connector and choose its polling and registration options',
+      'Use MDM attributes and roles in user/host profiles',
+      'Manage the Vendor OUI table and explain how it validates and labels devices',
+      'Combine Vendor OUI methods with device profiling rules for devices without an MDM',
+      'Place the MDM connector correctly in a FortiNAC-F Manager deployment',
+    ],
+  },
+];

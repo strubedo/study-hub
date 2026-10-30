@@ -1,0 +1,23 @@
+// Domain 1 — Concepts and initial configuration flashcards. FortiNAC-F 7.6.
+export default [
+  { id: 'd1-f001', topic: '1.1', front: 'FortiNAC-F port1 vs port2?', back: '**port1**: management, Admin UI, device SNMP/CLI, trap receiver, FortiCloud, HA/Manager. **port2**: DHCP, DNS and captive portal for isolation networks. Never in the same network.' },
+  { id: 'd1-f002', topic: '1.1', front: 'FortiNAC-F appliance roles?', back: '**CA** (Control and Application, e.g. `FNC-CAX-VM`) runs NAC; **Manager** (`FNC-MX-VM`) centrally manages CAs. Separate Control + Application VMs are the legacy CentOS design.' },
+  { id: 'd1-f003', topic: '1.1', front: 'Three things FortiNAC-F does (concept guide)?', back: 'Visibility (who/what/where/when, profiling), control (policy engine + enforcement engine on network devices), automated response to security events. Not inline: network devices enforce.' },
+  { id: 'd1-f004', topic: '1.1', front: 'Perpetual vs subscription endpoint licences?', back: 'Perpetual = endpoint key file installed. Subscription = entitlements pulled from FortiCloud on TCP 443 at startup, cached, re-polled every 12 h. Both together add up.' },
+  { id: 'd1-f005', topic: '1.1', front: 'What do `get system status` and `get hardware status` show?', back: 'System status: version, serial, licence status and expiry, host name, GA/interim, time. Hardware status: model, UUID, MAC, CPU, RAM, disk.' },
+  { id: 'd1-f006', topic: '1.1', front: 'Credentials needed for FortiNAC-F to control a switch?', back: 'Read/write SNMP plus read/write CLI or API (Cisco: level 15). Read-only is enough just to model it. Device must answer ping from port1; port1 must allow `snmp`.' },
+  { id: 'd1-f007', topic: '1.1', front: 'Container rules?', back: 'Created in Network > Inventory; logical folders for devices. Cannot be nested. Deleting a container deletes the devices in it.' },
+  { id: 'd1-f008', topic: '1.1', front: 'Discovery limits?', back: 'SNMP based. Keep all ranges under 65,000 addresses. With Use CDP only a starting IP is needed (depth limited by Maximum Cisco Discovery Depth). Cannot add RADIUS-only devices.' },
+  { id: 'd1-f009', topic: '1.1', front: 'RADIUS-only device (F 7.6.7)?', back: 'Add Device with just the IP address and an optional RADIUS secret, no SNMP or CLI credentials. Must be added individually, not by Discovery.' },
+  { id: 'd1-f010', topic: '1.1', front: 'System Defined Uplink Count?', back: 'Default 20 MACs per port; above it the port becomes a Threshold Uplink and is not enforced. Fortinet suggests 2000 after initial discovery.' },
+  { id: 'd1-f011', topic: '1.1', front: 'Model Configuration VLAN fields?', back: 'Default, Dead End, Registration, Quarantine (remediation), Authentication, Voice. Values are stored in FortiNAC-F, not pushed to the device.' },
+  { id: 'd1-f012', topic: '1.1', front: 'Default L2 polling intervals?', back: 'Wired devices 60 minutes, wireless devices 10 minutes.' },
+  { id: 'd1-f013', topic: '1.1', front: 'L3 (IP-->MAC) group?', back: 'Created empty, never auto-filled. Add routers, L3 switches, controllers. Members get L3 polling at 30 min, priority Low.' },
+  { id: 'd1-f014', topic: '1.1', front: 'MAC notification trap best practice?', back: 'Enable on access and AP ports, not uplinks or aggregates; remove link up/down traps on those ports; send to port1. IP-phone MAC traps ignored by default.' },
+  { id: 'd1-f015', topic: '1.1', front: 'Group member types and nesting?', back: 'Administrator, Hosts, Devices, Ports, Users (System > Groups). A group can contain sub-groups of the same type.' },
+  { id: 'd1-f016', topic: '1.2', front: 'Config Wizard network types?', back: '**None**: no isolation, captive portal disabled. **Layer 3**: port2 on one untagged VLAN, routed isolation subnets, DHCP relays. **Layer 2**: 802.1Q trunk to port2, IP per isolation VLAN.' },
+  { id: 'd1-f017', topic: '1.2', front: 'Reserved Layer 3 scope-label prefixes?', back: '`REG_`, `REM_`, `AUTH_`, `DE_`, `ISOL_`, `VPN_` (Configure scopes page also lists `HUB_`).' },
+  { id: 'd1-f018', topic: '1.2', front: 'When is Layer 3 network type required?', back: 'When HA peers sit on different networks (for example data centre and DR site). It is also the most common type.' },
+  { id: 'd1-f019', topic: '1.2', front: 'New hardware appliance defaults?', back: 'port1 192.168.1.99, only SSH open; CLI `admin` with no password. Then `set allowaccess https-adminui ssh`, GUI `https://192.168.1.99:8443`, `root` / `YAMS`.' },
+  { id: 'd1-f020', topic: '1.2', front: 'Restrict an admin to some hosts and ports?', back: 'Profile with Manage Hosts And Ports = Restrict By Groups, admin group that Manages the host/port groups, and remove the admins from All Management.' },
+];

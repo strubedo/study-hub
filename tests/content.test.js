@@ -4,9 +4,9 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DOMAINS, topicLabel } from '../content/blueprint.js';
-import videos from '../content/videos.js';
-import reference from '../content/reference.js';
+import { DOMAINS, topicLabel } from '../courses/ccna/content/blueprint.js';
+import videos from '../courses/ccna/content/videos.js';
+import reference from '../courses/ccna/content/reference.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -22,22 +22,30 @@ test('topicLabel keeps acronyms and lower-cases ordinary first words', () => {
   assert.equal(topicLabel({ verb: 'Diagnose', title: 'Interface and cable issues' }), 'Diagnose interface and cable issues');
 });
 
+test('engine topicLabel honours a topic keepCase flag for proper nouns', async () => {
+  const { topicLabel: engineLabel } = await import('../engine/content.js');
+  assert.equal(engineLabel({ verb: 'Manage', title: 'Windows Server storage', keepCase: true }), 'Manage Windows Server storage');
+  assert.equal(engineLabel({ verb: 'Manage', title: 'Hyper-V and guest VMs', keepCase: true }), 'Manage Hyper-V and guest VMs');
+  assert.equal(engineLabel({ verb: 'Diagnose', title: 'Interface and cable issues' }), 'Diagnose interface and cable issues');
+  assert.equal(engineLabel({ verb: 'Troubleshoot', title: 'IPv4 address configuration' }), 'Troubleshoot IPv4 address configuration');
+});
+
 test('every content bank passes the spec validator', () => {
   const out = execFileSync(process.execPath, [join(root, 'scripts/validate-content.mjs')], { encoding: 'utf8' });
   assert.doesNotMatch(out, /FAIL/, out);
 });
 
 test('question ids are unique across the whole bank', async () => {
-  const banks = await Promise.all(DOMAINS.map((d) => import(`../content/d${d.id}/questions.js`).then((m) => m.default)));
+  const banks = await Promise.all(DOMAINS.map((d) => import(`../courses/ccna/content/d${d.id}/questions.js`).then((m) => m.default)));
   const ids = banks.flat().map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length);
 });
 
 test('every lesson file ends with a Key takeaways section', async () => {
   for (const d of DOMAINS) {
-    const lessons = (await import(`../content/d${d.id}/lessons.js`)).default;
+    const lessons = (await import(`../courses/ccna/content/d${d.id}/lessons.js`)).default;
     for (const l of lessons) {
-      const text = readFileSync(join(root, 'content', `d${d.id}`, 'lessons', l.file), 'utf8');
+      const text = readFileSync(join(root, 'courses', 'ccna', 'content', `d${d.id}`, 'lessons', l.file), 'utf8');
       assert.match(text, /^## Key takeaways/m, `${l.id} missing Key takeaways`);
       assert.doesNotMatch(text, /^# /m, `${l.id} must not contain an H1`);
     }

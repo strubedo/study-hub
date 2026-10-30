@@ -2,7 +2,7 @@
 // BPDU guard, port security, DTP, EtherChannel, ACL unreachables, NAT, HSRP.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildLab } from '../src/sim/index.js';
+import { buildLab } from '../courses/ccna/plugins/sim/index.js';
 
 function cli(net, dev, lines) {
   const s = net.openSession(dev);

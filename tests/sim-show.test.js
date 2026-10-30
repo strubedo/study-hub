@@ -1,8 +1,8 @@
 // Show-command formatting and running-config rendering / round trip.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildLab } from '../src/sim/index.js';
-import { type7Encrypt, type7Decrypt } from '../src/sim/util.js';
+import { buildLab } from '../courses/ccna/plugins/sim/index.js';
+import { type7Encrypt, type7Decrypt } from '../courses/ccna/plugins/sim/util.js';
 
 const LAB = {
   id: 'show',

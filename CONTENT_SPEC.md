@@ -1,31 +1,40 @@
-# Content Spec — CCNA 200-301 v2.0 Study Site
+# Content Spec — Study Hub courses
 
-All study content targets the **official Cisco 200-301 CCNA v2.0 blueprint** in
-`content/blueprint.js`. Every lesson, question and flashcard is tagged with a
-blueprint topic id (e.g. `"3.3"`).
+The format every course's study content follows. Each course also has its own
+`courses/<id>/CONTENT_SPEC.md` with the subject-specific rules (CCNA: IOS syntax,
+exhibit conventions, question mix). Read both before writing content.
 
-## Ground rules (non-negotiable)
+All content targets the course's official blueprint in
+`courses/<id>/content/blueprint.js`. Every lesson, question and flashcard is
+tagged with a blueprint topic id (e.g. `"3.3"`).
+
+## Ground rules (every course)
 
 1. **Original content only.** Write exam-*style* questions from your own
-   knowledge of networking. Never copy or paraphrase "brain dump" / leaked exam
-   questions (they violate the Cisco certification agreement). Do not copy
-   prose from books, Cisco docs or websites.
-2. **Technically airtight.** The owner is a working network engineer who checks
-   details. IOS syntax must be valid IOS/IOS-XE. Show-command output in exhibits
-   must be self-consistent (interface names, IPs, masks, states, timers all agree
-   with each other and with the question). If a fact has a caveat (platform
-   differences, defaults that changed across IOS versions), say so in the
-   explanation.
+   knowledge. Never copy or paraphrase "brain dump" / leaked exam questions
+   (they violate vendor certification agreements). Do not copy prose from
+   books, vendor docs or websites.
+2. **Technically airtight.** The owner is a working engineer who checks
+   details. Commands, output and exhibits must be valid and self-consistent.
+   If a fact has a caveat (version or platform differences, changed defaults),
+   say so in the explanation.
 3. **Unambiguous answers.** Exactly the stated number of correct options. No
    "all of the above". Distractors must be plausible but clearly wrong to
    someone who knows the material.
 4. **Explanations teach.** Every explanation says why the correct answer is
    right *and* why each distractor is wrong (briefly).
-5. Defaults to remember: IOS-XE on Catalyst 9k / ISR 1k/4k style interface names
-   (`GigabitEthernet0/0/0` on routers, `GigabitEthernet1/0/1` on switches), unless
-   the question needs classic names. Keep naming consistent within one question.
 
-## File layout per domain (`content/dN/`)
+## Blueprint (`content/blueprint.js`)
+
+Exports `DOMAINS`: `[{ id, weight, title, short, topics: [{ id, verb, title, sub? }] }]`.
+
+* Domain `id`s are positive integers; content lives in `content/d<id>/`.
+* `weight` is relative: the exam builder and readiness score normalise it, so
+  midpoints of published ranges (22.5, 12.5, …) are fine. Add
+  `weightRange: '20-25%'` to show the published range in the UI.
+* Multi-exam courses tag each domain with `exam: '<exam id>'` (see README).
+
+## File layout per domain (`courses/<id>/content/dN/`)
 
 ```
 content/dN/lessons.js      // lesson index
@@ -60,11 +69,9 @@ split into 2 lessons. Order the array in recommended study order.
 
 * Start with `## ` level headings (the page supplies the H1 from `title`).
 * 900–2000 words. Dense, exam-focused, practical. Use tables for comparisons.
-* IOS config/show output in fenced blocks with the language `ios`:
-  ```ios
-  R1(config)# router ospf 1
-  R1(config-router)# router-id 1.1.1.1
-  ```
+* Code and output go in fenced blocks with a language: `ios` gets prompt and
+  interface-state highlighting; any other language (`powershell`, `text`, …)
+  renders as plain monospace.
 * Callouts are blockquotes that begin with one of these bold labels:
   `> **Exam tip:** ...`, `> **Watch out:** ...`, `> **Real world:** ...`
 * End every lesson with `## Key takeaways` (5–8 bullets).
@@ -102,11 +109,6 @@ Type rules:
 Options are shuffled by the app, so **never** write "Both A and B" or refer to
 option letters. Explanations should refer to options by their content.
 
-Mix guide per bank: ~60% single, ~15% multi, ~10% order/match, ~10% fill,
-plus at least 25% of all questions with an `exhibit` (show output, config,
-routing tables, syslog lines, JSON, packet captures, etc.).
-v2.0 leans hard into **troubleshoot / diagnose / interpret** — reflect that.
-
 ## flashcards.js
 
 ```js
@@ -120,7 +122,8 @@ Backs are short (≤ 40 words). Markdown allowed (inline `code`).
 ## Validate before you finish
 
 ```
-node scripts/validate-content.mjs 3      # your domain number
+node scripts/validate-content.mjs <course> <domain>    # e.g. ccna 3
 ```
 
-must print `OK` for your domain with zero errors.
+must print `OK` for your domain with zero errors. With only a course id it
+checks every domain of that course; with no arguments, every ready course.

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { shuffle, prepareQuestion, gradeResponse, buildExam, scoreExam, normalizeFill } from '../src/lib/quiz.js';
-import { mulberry32 } from '../src/lib/subnet.js';
+import { shuffle, prepareQuestion, gradeResponse, buildExam, scoreExam, normalizeFill } from '../engine/lib/quiz.js';
+import { mulberry32 } from '../courses/ccna/plugins/lib/subnet.js';
 
 const single = { id: 'd1-001', topic: '1.1', type: 'single', options: ['a', 'b', 'c', 'd'], answer: [2] };
 const multi = { id: 'd1-002', topic: '1.1', type: 'multi', options: ['a', 'b', 'c', 'd', 'e'], answer: [0, 3] };

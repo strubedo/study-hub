@@ -31,6 +31,11 @@
   --d3: #a78bfa;
   --d4: #f2b33d;
   --d5: #f0729a;
+  --d6: #5fc4f0;
+  --d7: #9ccc65;
+  --d8: #f08a5d;
+  --d9: #c48ff0;
+  --d10: #e6c84f;
   color-scheme: dark;
 }
 
@@ -59,6 +64,11 @@
   --d3: #7c5ce6;
   --d4: #c27d07;
   --d5: #d6336c;
+  --d6: #0b7fb3;
+  --d7: #4d8a1a;
+  --d8: #c4521f;
+  --d9: #8a43c9;
+  --d10: #9a7d05;
   color-scheme: light;
 }
 
@@ -95,6 +105,10 @@ kbd {
   background: var(--surface); border-right: 1px solid var(--border);
   display: flex; flex-direction: column; padding: 18px 12px;
 }
+.hub-link {
+  display: inline-flex; align-items: center; gap: 6px; margin: 0 10px 12px; font-size: 0.78rem; font-weight: 600; color: var(--muted);
+}
+.hub-link:hover { color: var(--text); text-decoration: none; }
 .brand { display: flex; align-items: center; gap: 10px; padding: 4px 10px 18px; color: var(--text); }
 .brand:hover { text-decoration: none; }
 .brand-mark {
@@ -279,6 +293,8 @@ a.list-item:hover { text-decoration: none; background: var(--surface-2); }
 
 /* Domain colouring */
 .dom-1 { --dc: var(--d1); } .dom-2 { --dc: var(--d2); } .dom-3 { --dc: var(--d3); } .dom-4 { --dc: var(--d4); } .dom-5 { --dc: var(--d5); }
+/* Domains 6-10: multi-exam courses (e.g. AZ-800 + AZ-801) can have more than five. */
+.dom-6 { --dc: var(--d6); } .dom-7 { --dc: var(--d7); } .dom-8 { --dc: var(--d8); } .dom-9 { --dc: var(--d9); } .dom-10 { --dc: var(--d10); }
 .dom-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; color: var(--dc); }
 .dom-tag::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--dc); }
 .bar.dom > span { background: var(--dc); }

@@ -1,0 +1,135 @@
+// Cheat-sheet tables for the Reference page. Cells are inline markdown.
+// Defaults are for Windows Server 2025 unless a cell says otherwise.
+export default [
+  {
+    id: 'ad-ports', title: 'AD DS and DC ports', topic: '1.1',
+    columns: ['Service', 'Port'],
+    rows: [
+      ['DNS', 'TCP/UDP 53'], ['Kerberos', 'TCP/UDP 88'], ['W32Time (NTP)', 'UDP 123'], ['RPC endpoint mapper', 'TCP 135'],
+      ['LDAP', 'TCP/UDP 389'], ['SMB (SYSVOL, NETLOGON)', 'TCP 445'], ['Kerberos password change', 'TCP/UDP 464'],
+      ['LDAPS', 'TCP 636'], ['Global catalog / GC over SSL', 'TCP 3268 / 3269'], ['AD Web Services (ActiveDirectory PowerShell module)', 'TCP 9389'],
+      ['RPC dynamic range (replication, DFSR, NETLOGON)', 'TCP 49152–65535'],
+    ],
+    note: 'Firewalls between sites or a perimeter network must allow the RPC dynamic range, or the range must be restricted (e.g. a fixed port for AD replication and DFSR). The Active Directory PowerShell module talks to ADWS on 9389, not straight to LDAP.',
+  },
+  {
+    id: 'mgmt-ports', title: 'Remote management ports', topic: '2.1',
+    columns: ['Tool', 'Port'],
+    rows: [
+      ['WinRM / PowerShell remoting (HTTP / HTTPS)', 'TCP 5985 / 5986'], ['OpenSSH server (built in on Windows Server 2025)', 'TCP 22'],
+      ['Remote Desktop', 'TCP 3389 (+ UDP 3389)'], ['Windows Admin Center gateway (2410 and later)', 'HTTPS: TCP 443 on Windows Server, TCP 6600 on Windows client (configurable; legacy local-client installs used 6516)'], ['Windows Admin Center in the Azure portal', 'TCP 6516 by default on the machine; Arc-enabled servers need no inbound port (outbound reverse proxy; port must be in `incomingconnections.ports`)'],
+      ['SMB over QUIC', 'UDP 443'], ['Azure Arc Connected Machine agent', 'Outbound TCP 443 only (no inbound ports)'],
+    ],
+    note: 'WinRM over 5985 is still message-encrypted once Kerberos or NTLM authentication succeeds. Without Kerberos (workgroup, untrusted domain) use HTTPS on 5986 rather than adding hosts to `TrustedHosts`.',
+  },
+  {
+    id: 'fsmo', title: 'FSMO roles', topic: '1.1',
+    columns: ['Role', 'Scope', 'What breaks while it is offline'],
+    rows: [
+      ['Schema master', 'Forest', 'Schema changes (e.g. `adprep /forestprep`, Exchange schema extensions)'],
+      ['Domain naming master', 'Forest', 'Adding or removing domains and application partitions'],
+      ['RID master', 'Domain', 'DCs can\'t get new RID pools; creating security principals fails once a DC\'s pool is used up'],
+      ['PDC emulator', 'Domain', 'Authoritative time (forest-root PDC), urgent password forwarding, account lockout processing, default target for GPO editing'],
+      ['Infrastructure master', 'Domain', 'Cross-domain object reference updates (irrelevant when every DC is a GC or the Recycle Bin is enabled)'],
+    ],
+    note: 'Transfer with `Move-ADDirectoryServerOperationMasterRole -Identity DC2 -OperationMasterRole PDCEmulator`. Add `-Force` to **seize** when the old holder is permanently gone (it still tries a graceful transfer first) — and never bring that DC back online with its old AD database afterwards. Find holders with `netdom query fsmo`.',
+  },
+  {
+    id: 'ad-defaults', title: 'AD DS replication and lifetime defaults', topic: '1.2',
+    columns: ['Setting', 'Default'],
+    rows: [
+      ['Intrasite change notification', '15 s after a change, then 3 s between partners'],
+      ['Intersite replication interval (site link)', '180 minutes (minimum 15)'],
+      ['Default site link (`DEFAULTIPSITELINK`) cost', '100'],
+      ['KCC topology check', 'Every 15 minutes'],
+      ['Tombstone lifetime', '180 days (forests created on Windows Server 2003 SP1 or later)'],
+      ['Deleted object lifetime (Recycle Bin)', 'Equals the tombstone lifetime unless set'],
+      ['AD Recycle Bin', 'Off by default; needs forest functional level 2008 R2+; can\'t be disabled once on'],
+      ['Kerberos max clock skew', '5 minutes'],
+    ],
+    note: 'Urgent replication (no notification delay) covers account lockouts, changes to the account lockout or domain password policy, LSA secret changes and RID master state changes. Password changes are also forwarded to the PDC emulator immediately.',
+  },
+  {
+    id: 'dns', title: 'DNS essentials', topic: '4.1',
+    columns: ['Item', 'Detail'],
+    rows: [
+      ['AD-integrated replication scopes', 'All DNS servers in the forest (`ForestDnsZones`), all DNS servers in the domain (`DomainDnsZones`, default), all DCs in the domain (legacy), custom application partition'],
+      ['Scavenging defaults', 'No-refresh 7 days + refresh 7 days (zone aging); scavenging period 7 days once enabled. Off by default: enable aging on the zone **and** scavenging on at least one server'],
+      ['Stub zone vs conditional forwarder', 'Stub zone copies NS/SOA/glue and stays current automatically; conditional forwarder is a static IP list per namespace'],
+      ['DNSSEC keys / records', 'KSK signs the DNSKEY set, ZSK signs zone data; records DNSKEY, RRSIG, NSEC/NSEC3, DS (in the parent)'],
+      ['Clients validating DNSSEC', 'Windows clients use the Name Resolution Policy Table (NRPT) to require validation'],
+      ['Azure-provided DNS', 'Virtual IP `168.63.129.16`, reachable only from inside Azure; on-premises → Azure private zones needs a DNS Private Resolver inbound endpoint (or a DNS VM in Azure)'],
+      ['DNS policies', 'Policies and client subnets are local to each server (not AD-replicated); dynamic updates and scavenging work only in the default zone scope'],
+    ],
+  },
+  {
+    id: 'dhcp', title: 'DHCP failover', topic: '4.2',
+    columns: ['Setting', 'Value'],
+    rows: [
+      ['Modes', 'Load balance (default 50/50) or hot standby (default 5% reserve on the standby)'],
+      ['Partners per relationship', 'Exactly 2 servers; IPv4 scopes only'],
+      ['Maximum Client Lead Time (MCLT)', '1 hour default'],
+      ['State switchover interval', 'Disabled by default (partner-down must be set manually unless you enable it); the wizard suggests 60 minutes when you tick it'],
+      ['Message authentication', 'Shared secret; checked by default in the console wizard. `Add-DhcpServerv4Failover` enables it only when `-SharedSecret` is given'],
+      ['Partner traffic / time', 'TCP 647 between partners; clocks must be within 1 minute'],
+      ['DHCP in Azure VNets', 'A DHCP server VM cannot lease to Azure VMs (the platform answers their DHCP). Only supported use: target for on-premises relay agents, via a loopback adapter IP that is also a secondary IP configuration on the Azure NIC'],
+    ],
+    note: 'Create with `Add-DhcpServerv4Failover -ComputerName DHCP1 -PartnerServer DHCP2 -Name DHCP1-DHCP2 -ScopeId 10.0.10.0 -LoadBalancePercent 50 -SharedSecret ...`.',
+  },
+  {
+    id: 'hyperv', title: 'Hyper-V quick facts', topic: '3.1',
+    columns: ['Item', 'Detail'],
+    rows: [
+      ['Generation 2 VMs', 'UEFI, Secure Boot, boot from SCSI/VHDX/PXE (synthetic NIC); no IDE or legacy NIC; generation can\'t be changed later'],
+      ['Checkpoint types', '**Production** (default; VSS/file-system freeze in the guest, no memory state) vs **Standard** (saved state including memory)'],
+      ['Virtual disk limits', 'VHDX up to 64 TB; VHD up to 2040 GB'],
+      ['Virtual disk types', 'Fixed, dynamically expanding, differencing'],
+      ['Virtual switch types', 'External (physical NIC), internal (host + VMs), private (VMs only)'],
+      ['Nested virtualization', '`Set-VMProcessor -VMName VM1 -ExposeVirtualizationExtensions $true` with the VM off; MAC spoofing or NAT needed for nested guests\' networking'],
+      ['PowerShell Direct', '`Enter-PSSession -VMName VM1` from the host; needs guest credentials, no network or firewall rules; guest must run Windows 10 / Server 2016 or later'],
+      ['NIC teaming for Hyper-V', 'Switch Embedded Teaming (SET); LBFO teams are not supported under a Hyper-V virtual switch'],
+    ],
+  },
+  {
+    id: 'storage', title: 'Storage Spaces resiliency', topic: '5.3',
+    columns: ['Layout', 'Minimum disks (Storage Spaces)', 'Failures tolerated'],
+    rows: [
+      ['Simple', '1', '0'], ['Two-way mirror', '2', '1'], ['Three-way mirror', '5', '2'], ['Single parity', '3', '1'], ['Dual parity', '7', '2'],
+    ],
+    note: 'Storage Spaces Direct counts **servers**, not disks: two-way mirror needs 2 servers, three-way mirror 3 and dual parity 4. S2D supports 2–16 servers and needs Datacenter edition.',
+  },
+  {
+    id: 'fs', title: 'NTFS vs ReFS', topic: '5.3',
+    columns: ['Feature', 'NTFS', 'ReFS'],
+    rows: [
+      ['Bootable (OS volume)', 'Yes', 'No'], ['Disk quotas', 'Yes', 'No'], ['FSRM quotas, file screens, classification', 'Yes', 'No (FSRM is NTFS only)'],
+      ['Azure File Sync server endpoint', 'Yes', 'No'], ['Shrink a volume', 'Yes', 'No'],
+      ['Removable media', 'Yes', 'No'], ['File system encryption (EFS)', 'Yes', 'Windows Server 2025 only'],
+      ['Data Deduplication', 'Yes', 'Yes (2019 and later)'], ['BitLocker', 'Yes', 'Yes'],
+      ['Integrity streams / online repair with Storage Spaces mirrors', 'No', 'Yes'], ['Block cloning (fast VHDX merges, checkpoints)', 'No', 'Yes'],
+      ['Maximum file / volume size', '256 TB / 256 TB', '35 PB / 35 PB'],
+    ],
+    note: 'ReFS is recommended for Hyper-V VM storage and Storage Spaces Direct volumes; NTFS remains the choice for the OS volume, removable media, and volumes that need disk quotas, FSRM, Azure File Sync, shrinking or SAN features such as ODX and thin provisioning/TRIM.',
+  },
+  {
+    id: 'pwd', title: 'Default domain password policy', topic: '6.2',
+    columns: ['Setting', 'Default Domain Policy value'],
+    rows: [
+      ['Minimum password length', '7 characters'], ['Maximum password age', '42 days'], ['Minimum password age', '1 day'],
+      ['Enforce password history', '24 passwords'], ['Complexity requirements', 'Enabled'], ['Store with reversible encryption', 'Disabled'],
+    ],
+    note: 'Only one domain-wide password policy applies (from a GPO linked at the domain). Different policies for groups need **fine-grained password policies** (PSOs): `New-ADFineGrainedPasswordPolicy`, applied to users or global groups; the **lowest precedence number wins**.',
+  },
+  {
+    id: 'svc', title: 'Service account types', topic: '1.3',
+    columns: ['Type', 'Use'],
+    rows: [
+      ['Virtual account (`NT SERVICE\\<service>`)', 'One computer, no AD object; uses the computer account (`DOMAIN\\computer$`) on the network'],
+      ['Standalone MSA (sMSA)', 'One computer; automatic password management'],
+      ['Group MSA (gMSA)', 'Many computers (farms, clusters, scheduled tasks); needs a KDS root key (`Add-KdsRootKey`); hosts allowed via `-PrincipalsAllowedToRetrieveManagedPassword`'],
+      ['Delegated MSA (dMSA)', 'New in Windows Server 2025; needs at least one 2025 DC and a KDS root key (no functional level). Standalone, or supersedes a legacy user-based service account (`Start-`/`Complete-ADServiceAccountMigration`), which is then disabled; authentication is bound to authorised machines. Can\'t migrate a gMSA or sMSA'],
+      ['Regular user account', 'Legacy approach; manual password rotation; avoid for services'],
+    ],
+    note: 'Install a gMSA on a host with `Install-ADServiceAccount` and verify with `Test-ADServiceAccount`. In production, DCs wait up to 10 hours after a KDS root key is created before using it (to allow replication), even with `-EffectiveImmediately`; back-dating `-EffectiveTime` is for labs only.',
+  },
+];

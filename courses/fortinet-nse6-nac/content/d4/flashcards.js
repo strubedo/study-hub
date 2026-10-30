@@ -1,0 +1,48 @@
+// Domain 4 — Network visibility and monitoring flashcards (FortiNAC-F 7.6).
+export default [
+  // 4.1 Guests and contractors
+  { id: 'd4-f001', topic: '4.1', front: 'The four guest manager visitor types?', back: 'Guest, Contractor, Conference and Self-Registered Guest, set as the **Visitor Type** of a Guest/Contractor template.' },
+  { id: 'd4-f002', topic: '4.1', front: 'Account Duration vs Account End Date: which removes a guest account?', back: 'Whichever is **shorter**. Duration comes from the template, the end date from the account.' },
+  { id: 'd4-f003', topic: '4.1', front: 'Guest user expires vs guest host expires?', back: 'User expires: the user **and** the registered host are removed. Host expires first (global aging for registered hosts): only the host is removed.' },
+  { id: 'd4-f004', topic: '4.1', front: 'How is template Login Availability enforced?', back: 'Outside the window the host is marked **At Risk** for the **Guest No Access** admin scan. Needs a quarantine VLAN, the Forced Remediation group (wired) and model configuration entries.' },
+  { id: 'd4-f005', topic: '4.1', front: 'Manage Guests tab: Guest Account Access options?', back: '**No** (own accounts, no modify/delete), **Own Accounts** (modify/delete own), **All Accounts** (manage every guest account).' },
+  { id: 'd4-f006', topic: '4.1', front: 'What can a guest kiosk sponsor do?', back: 'Only log in to the kiosk PC and leave the guest self-service page running. No account creation, no other views. Needs a separate login for anything else.' },
+  { id: 'd4-f007', topic: '4.1', front: 'When do kiosk-created guest accounts expire?', back: 'At the template duration or at **11:59 PM** the same day, whichever comes first.' },
+  { id: 'd4-f008', topic: '4.1', front: 'Bulk guest import file rules?', back: '**No header row**, a comma for every field, line break after each record, email mandatory; with Import Passwords the password is the **last** field.' },
+  { id: 'd4-f009', topic: '4.1', front: 'Conference account restrictions?', back: 'Authentication **Local only**; the conference name is the user name; afterwards only passwords can be reset; no email/SMS until addresses or numbers are added.' },
+  { id: 'd4-f010', topic: '4.1', front: 'Default Guest Request Expiration for self-registration?', back: '**20 minutes** (portal Registration > Self Registration Login). Unanswered requests show State **Expired** in Users & Hosts > Registration Requests.' },
+  { id: 'd4-f011', topic: '4.1', front: 'Re-registration Period (F 7.6.7)?', back: 'Renamed from the template Reauth Period. At expiry (1 to 8760 h) the registered host is **deleted and becomes a rogue**, so the guest registers again.' },
+  { id: 'd4-f012', topic: '4.1', front: 'How do policies tell contractors from guests?', back: 'By the **role** (optionally a unique per-template role) and **Security & Access Value** set by the template, matched in user/host profiles ranked above broader ones.' },
+
+  // 4.2 Device profiling
+  { id: 'd4-f013', topic: '4.2', front: 'Which hosts does device profiler evaluate?', back: '**Rogues** with an IP address, against **enabled** rules in rank order. Registered hosts are never re-profiled.' },
+  { id: 'd4-f014', topic: '4.2', front: 'Rule methods: all or any?', back: '**All** selected methods must match. Inside a method, extra OUI entries or credentials are alternatives, but multiple TCP/UDP ports must **all** be open.' },
+  { id: 'd4-f015', topic: '4.2', front: 'What happens when a rule needs data FortiNAC-F lacks?', back: 'Evaluation of that device **stops** at that rule (no skipping) and *Device Profiling Rule Missing Data* is logged.' },
+  { id: 'd4-f016', topic: '4.2', front: 'Recommended rule rank order?', back: '**Vendor OUI** first, **DHCP** next, then Active, TCP/UDP, IP Range and Location. DHCP rules go low where static IPs exist.' },
+  { id: 'd4-f017', topic: '4.2', front: 'Register as options?', back: 'Device in Host View · Device in Topology (container) · Device in Host View and Topology · Host to User · Host to Logged In User (If Present).' },
+  { id: 'd4-f018', topic: '4.2', front: 'Which profiling methods need firewall session polling?', back: '**Active** and **FortiGate**; **Network Traffic** needs session polling and/or NetFlow.' },
+  { id: 'd4-f019', topic: '4.2', front: 'What does Run on Device Profiling Rules do?', back: 'Queues connected, not-yet-categorized rogues in the Rogue Evaluation Queue. Offline rogues and registered hosts are ignored; notify emails are resent.' },
+  { id: 'd4-f020', topic: '4.2', front: 'Rule confirmation options?', back: 'Confirm Device Rule **On Connect**, **On Interval**, and **Disable Device If Rule No Longer Matches Device**. Events: Device Rule Confirmation Success/Failure.' },
+  { id: 'd4-f021', topic: '4.2', front: 'CLI: profile one MAC now?', back: '`diagnose host device-profiling rules scan mac <mac>` (also `scan all`, `scan size`, `scan flush`).' },
+  { id: 'd4-f022', topic: '4.2', front: 'Device Fingerprint Changed event?', back: 'A MAC shows a different OS than it registered with, usually a dual-boot host. Each new fingerprint for a MAC adds an Endpoint Fingerprints record.' },
+  { id: 'd4-f023', topic: '4.2', front: 'Licence count exceeded during profiling?', back: 'Matching hosts are listed in Profiled Devices but **not registered**. Later: Register As Device, or delete them so the automatic rule re-profiles them.' },
+  { id: 'd4-f024', topic: '4.2', front: 'Host CSV import key rules?', back: 'Header row of field names required; `adap.mac` required (the key, existing records are **updated**); `user.uid` for users; `host.topo` also places the device in the Inventory.' },
+  { id: 'd4-f025', topic: '4.2', front: 'What is NOT in the database backup?', back: 'Alarms and events, connection logs and scan results. They are archived and purged (Event/Alarms Age Time default 7 days) and restored with Import.' },
+  { id: 'd4-f026', topic: '4.2', front: 'CLI restore of a local database backup?', back: '`execute restore database local <filename>` (or `execute restore database scp <host> <user> <password> <path>`). The GUI Restore Database restarts the server.' },
+
+  // 4.3 Troubleshoot network devices and device status
+  { id: 'd4-f027', topic: '4.3', front: 'Is a host in the database? (CLI)', back: '`diagnose host list mac=<mac>`; add `-adapters` for adapter details or `-format=json`.' },
+  { id: 'd4-f028', topic: '4.3', front: 'Three questions for a host ticket?', back: 'In the database? Rogue? Classified? Then check the infrastructure device (SNMP, traps, polling) and finally policy (Policy Details).' },
+  { id: 'd4-f029', topic: '4.3', front: 'Follow output.master live?', back: '`diagnose tail -F output.master`. -F follows through file replacement, -f does not, -k <numKB> shows the last N KB.' },
+  { id: 'd4-f030', topic: '4.3', front: 'Logger levels, most to least verbose?', back: 'TRACE, DEBUG, INFO, WARN, ERROR. `diagnose debug logger unset` returns to INHERIT.' },
+  { id: 'd4-f031', topic: '4.3', front: 'Test SNMP to a modeled switch?', back: '`diagnose network device test-snmp ip=<ip>`; `diagnose network device display ip=<ip>` shows the model.' },
+  { id: 'd4-f032', topic: '4.3', front: 'MAC notification trap statistics?', back: '`diagnose network mac-notification-stats all` (or `mac=`, `dbid=`, with `num-devs=` / `num-macs=` for the busiest).' },
+  { id: 'd4-f033', topic: '4.3', front: 'MAC notification and link up/down traps together?', back: 'Disable link up/down traps: they are redundant, add load and stop *MAC Learned* events from being generated.' },
+  { id: 'd4-f034', topic: '4.3', front: 'Event Log settings in Event Management?', back: 'Disabled, Internal, External, Internal & External; optionally limited to a group. Only External variants reach log receivers.' },
+  { id: 'd4-f035', topic: '4.3', front: 'Log receiver types and default ports?', back: 'Syslog CSV and Syslog CEF (514, facility 4), SNMP Trap (162, Security String), FortiAnalyzer (TCP 514).' },
+  { id: 'd4-f036', topic: '4.3', front: 'CSV syslog: log type and severity codes?', back: 'Log type 1 Event, 2 Alarm, 3 Security Alarm. Severity 0 Normal, 1 Minor, 2 Major, 3 Critical.' },
+  { id: 'd4-f037', topic: '4.3', front: 'Firewall session polling defaults and location?', back: 'Network > Inventory > right-click FortiGate > Set Firewall Session Polling; Frequency default **5 minutes**; optional Create Rogues from Session Data. View in Users & Hosts > Network Sessions.' },
+  { id: 'd4-f038', topic: '4.3', front: 'Global aging on existing hosts?', back: 'Applies only to records with no aging values, counting from creation, so old records can be deleted immediately. Group aging overrides; Never is untouched; checks run every 10 minutes.' },
+  { id: 'd4-f039', topic: '4.3', front: 'Audit log user ID "CLI Tool"?', back: 'The change was made through the FortiNAC-F CLI. Audit Logs record who added, modified or deleted an item.' },
+  { id: 'd4-f040', topic: '4.3', front: 'Where is the connection log?', back: '**Network > Network events**: Event Type, Registered/Rogue Type, Location, applied Logical Network, CLI Config Name, RADIUS flags.' },
+];

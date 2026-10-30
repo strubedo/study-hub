@@ -1,0 +1,98 @@
+// Domain 2 — Device manager (20–30%)
+// Lessons in recommended study order. Target: FortiManager 7.6.x managing FortiOS 7.6.
+export default [
+  {
+    id: '2.1-registration-methods',
+    topic: '2.1',
+    title: 'Registering Devices: Discover, FortiGate Requests, Model Devices and Blueprints',
+    minutes: 24,
+    file: '2.1-registration-methods.md',
+    objectives: [
+      'Compare the Add Device wizard (Discover Device) with a request sent from the FortiGate (unauthorized devices)',
+      'Add model devices by serial number or pre-shared key and explain auto-link for zero-touch and low-touch provisioning',
+      'Describe what a device blueprint and a CSV model-device import provide',
+      'Read the import report at the end of the Discover wizard and choose between Import Now and Import Later',
+      'Apply the FortiManager license count rules (VDOMs, HA secondaries, unregistered devices) and enable FortiGate-VM management',
+    ],
+  },
+  {
+    id: '2.1-fgfm-discovery-troubleshooting',
+    topic: '2.1',
+    title: 'FGFM, the Discovery Process and the Registration Failure Checklist',
+    minutes: 24,
+    file: '2.1-fgfm-discovery-troubleshooting.md',
+    objectives: [
+      'Explain FGFM: TCP 541, TLS with serial-number certificates, which side initiates, and the link-local tunnel',
+      'Configure config system central-management on the FortiGate, including fmg-source-ip and interface-select-method',
+      'Describe FGFM keepalives and the config system dm timers that control them',
+      'Work through a basic discovery failure checklist from routing to certificates',
+      'Use diagnose dvm device list, diagnose fgfm session-list and the fgfmd/fgfmsd debugs',
+    ],
+  },
+  {
+    id: '2.1-templates-ha-chassis-groups',
+    topic: '2.1',
+    title: 'Provisioning Templates, System Templates, HA Clusters, Chassis and Device Groups',
+    minutes: 20,
+    file: '2.1-templates-ha-chassis-groups.md',
+    objectives: [
+      'List the provisioning template types and the widgets in a system template',
+      'Copy system templates between ADOMs with the GUI export/import or execute fmprofile',
+      'Explain how FortiManager manages a FortiGate HA cluster as one device',
+      'Describe chassis management and the diagnose dvm chassis commands',
+      'Use device groups as targets for templates, scripts and installs',
+    ],
+  },
+  {
+    id: '2.2-cli-tcl-scripts',
+    topic: '2.2',
+    title: 'FortiManager Scripts: Types, Run Targets, Best Practices and Tcl',
+    minutes: 24,
+    file: '2.2-cli-tcl-scripts.md',
+    objectives: [
+      'Choose between CLI, Tcl and Jinja scripts and know which targets each supports',
+      'Predict the device and policy package status after running a script on the device database, the policy package or ADOM database, or the remote FortiGate',
+      'Apply best practices for CLI scripts (full keywords, short scripts, VDOM context, console output)',
+      'Enable and write a basic Tcl script with exec and explain why it needs SSH credentials',
+    ],
+  },
+  {
+    id: '2.2-script-scheduling-troubleshooting',
+    topic: '2.2',
+    title: 'Scheduling Scripts, Reading Script Logs and Fixing Script Errors',
+    minutes: 20,
+    file: '2.2-script-scheduling-troubleshooting.md',
+    objectives: [
+      'Enable script scheduling and know which targets can be scheduled',
+      'Read the script execution log for database and remote-device runs',
+      'Diagnose command parse error, unknown action, failed-1 and FortiOS return codes in script output',
+      'Use execute fmscript and related CLI commands to list, run and review scripts',
+    ],
+  },
+  {
+    id: '2.3-device-db-status-revisions',
+    topic: '2.3',
+    title: 'Device Database Status and the Configuration Revision History',
+    minutes: 22,
+    file: '2.3-device-db-status-revisions.md',
+    objectives: [
+      'Explain the device database and how it relates to the FortiGate running configuration',
+      'Interpret Synchronized, Modified, Auto-update, Out of Sync, Conflict and Unknown config status',
+      'Read the STATUS line of diagnose dvm device list (dev-db, conf, cond, dm, conn)',
+      'Use the revision history toolbar and Revision Diff (full file, diff only, capture to script)',
+    ],
+  },
+  {
+    id: '2.3-retrieve-autoupdate-revert',
+    topic: '2.3',
+    title: 'Retrieve, Auto-Update, Auto-Retrieve and Reverting a Revision',
+    minutes: 20,
+    file: '2.3-retrieve-autoupdate-revert.md',
+    objectives: [
+      'Distinguish retrieve, auto-update, auto-retrieve and import',
+      'Turn auto-update off and explain what changes for the administrator',
+      'Revert a device to an earlier revision and finish the job with install and import',
+      'Fix common configuration issues: out of sync, conflict and policy package unknown',
+    ],
+  },
+];

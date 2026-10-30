@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static file server for the study site, bound to localhost.
+"""Static file server for the Study Hub (hub + every course), bound to localhost.
 
 Same as `python3 -m http.server`, but sends `Cache-Control: no-cache` so the
 browser revalidates ES modules and lesson files on every load. Without it,
@@ -25,7 +25,7 @@ def main():
     root = Path(__file__).resolve().parent.parent
     handler = functools.partial(NoCacheHandler, directory=str(root))
     with http.server.ThreadingHTTPServer((args.bind, args.port), handler) as httpd:
-        print(f"CCNA Prep → http://{args.bind}:{args.port}/   (Ctrl+C to stop)", flush=True)
+        print(f"Study Hub → http://{args.bind}:{args.port}/   (Ctrl+C to stop)", flush=True)
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
