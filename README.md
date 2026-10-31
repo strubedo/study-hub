@@ -43,6 +43,11 @@ the Microsoft Store).
    | Linux | Run `./serve.sh` in a terminal |
    | Any | `python3 scripts/serve.py --open` |
 
+   **Windows Start Menu:** double-click `install-shortcut.bat` once to add a
+   "Study Hub" entry to the Start Menu (it also offers a desktop shortcut).
+   Run it again if you move the folder; `install-shortcut.bat /uninstall`
+   removes the shortcuts.
+
 4. The hub opens at <http://127.0.0.1:8231/>. Leave the window open while you
    study; close it (or press Ctrl+C) to stop. Another port: `./serve.sh 8232`
    or `python3 scripts/serve.py 8232 --open`.
