@@ -2,3 +2,6 @@ node_modules/
 .DS_Store
 *.swp
 *.log
+
+# Claude Code local settings (may contain personal overrides/tokens)
+.claude/settings.local.json
