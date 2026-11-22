@@ -18,7 +18,7 @@ export default [
   c('3.1', 'Does RAG retrain the model?', 'No. Retrieved text goes into the prompt at answer time; the weights are unchanged.'),
   c('3.1', 'Summarize-then-act?', 'Condense the input into a reviewable summary first, then act on it, with human approval before side effects.'),
   c('3.2', 'Custom assistant names by vendor?', 'Claude Projects, Gemini Gems, ChatGPT custom GPTs. Verify current features on the vendor page.'),
-  c('3.2', 'What happens to Gems on personal accounts?', 'Google says that starting in November 2026 they go away and transition automatically to skills (as of October 2026).'),
+  c('3.2', 'What happens to Gems on personal accounts?', 'They transition automatically to skills: read-only from November 17, 2026 and removed December 17, 2026 (as of November 2026).'),
   c('3.2', 'Instructions vs knowledge files in a custom assistant?', 'Instructions are standing rules like a system prompt; knowledge files are searchable reference material. Never put secrets in either.'),
   c('3.2', 'What is memory in an AI app?', 'Saved or retrieved text from past chats added to later prompts. It does not change model weights.'),
   c('3.2', 'Function calling in one sentence?', 'The model returns a structured tool call; your code runs it and returns a tool result; the model then answers.'),

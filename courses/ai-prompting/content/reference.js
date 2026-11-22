@@ -19,13 +19,13 @@ const d1Tables = [
     ],
   },
   {
-    id: 'chatgpt-gemini-claude', title: 'ChatGPT, Gemini and Claude at a glance (as of October 2026)', topic: '1.2',
+    id: 'chatgpt-gemini-claude', title: 'ChatGPT, Gemini and Claude at a glance (as of November 2026)', topic: '1.2',
     columns: ['Concept', 'ChatGPT (OpenAI)', 'Gemini (Google)', 'Claude (Anthropic)'],
     rows: [
       ['Vendor and family', 'OpenAI, GPT', 'Google, Gemini', 'Anthropic, Claude'],
-      ['API model lineup (vendor pages)', 'GPT-6 Astra (flagship), GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Luna (most efficient)', 'Gemini 4 Argon (flagship reasoning), Gemini 3.8 Flash, Flash-Lite models', 'Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 (fastest)'],
-      ['Tier pattern', 'Flagship / balanced / fast', 'Flagship / Flash / Flash-Lite', 'Fable and Opus / Sonnet / Haiku'],
-      ['Reasoning control (API)', 'reasoning effort (none to max, model dependent); standard or pro mode', 'thinking level; dynamic thinking by default on most models', 'Adaptive thinking guided by an effort setting; fixed budget_tokens is legacy'],
+      ['API model lineup (vendor pages)', 'GPT-6.2 Astra (flagship), GPT-6.2 Sol, GPT-6.1 Terra, GPT-6 Luna (most efficient)', 'Gemini 4 Carbon (strongest reasoning), Neon, Hydrogen, Argon (efficient); Flash and Flash-Lite models', 'Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 (fastest)'],
+      ['Tier pattern', 'Flagship / balanced / fast', 'Gemini 4 models / Flash / Flash-Lite', 'Fable and Opus / Sonnet / Haiku'],
+      ['Reasoning control (API)', 'reasoning effort (none to max, model dependent); standard or pro mode', 'thinking level (values vary by model); dynamic thinking by default', 'Adaptive thinking guided by an effort setting; fixed budget_tokens is legacy'],
       ['Reasoning tokens', 'Hidden; billed as output; count toward context', 'Billed as output; optional summaries returned', 'Billed as output; thinking blocks returned (summarized)'],
       ['Image input', 'Yes (all latest models per OpenAI)', 'Yes; docs also cover audio and video understanding', 'Yes (all current models per Anthropic)'],
       ['App vs API', 'ChatGPT app; Responses API', 'Gemini app; Gemini API', 'Claude app; Messages API'],
@@ -89,15 +89,15 @@ const d2Tables = [
 
 const d3Tables = [
   {
-    id: 'custom-assistants-compared', title: 'Custom assistants compared (as of October 2026)', topic: '3.2',
+    id: 'custom-assistants-compared', title: 'Custom assistants compared (as of November 2026)', topic: '3.2',
     columns: ['Feature', 'Claude Projects', 'Gemini Gems', 'ChatGPT custom GPTs'],
     rows: [
       ['What it is', 'Workspace with its own chats, knowledge and instructions', 'Saved custom Gemini with instructions', 'Saved custom ChatGPT with instructions (details unverified)'],
       ['Instructions', 'Project instructions apply to every chat in the project', 'Instructions you write; Gemini can help rewrite them', 'Instructions (unverified)'],
       ['What you can attach', 'Documents, text and code as project knowledge; paid plans use RAG when knowledge is large', 'Knowledge files uploaded from the device or added from Google Drive', 'Knowledge files (unverified)'],
       ['Sharing', 'Team and Enterprise plans share with people or the organization, view or edit', 'Gems can be shared; a shared Gem is not added to your manager automatically', 'Unverified'],
-      ['Status note', 'A new project version is in staged beta rollout, starting with Claude Code', 'Google says Gems go away on personal accounts and transition to skills starting November 2026', 'Check help.openai.com; the help center blocked automated fetching'],
-      ['Watch out', 'Free accounts are capped at five projects', 'Work or school accounts may differ', 'Do not put secrets in instructions or files in any of them'],
+      ['Status note', 'A new project version is in staged beta rollout, starting with Claude Code', 'Being replaced by skills: on personal accounts Gems became read-only on November 17, 2026 and are removed December 17, 2026; Workspace follows in March 2027 and education in June 2027', 'Check help.openai.com; the help center blocked automated fetching'],
+      ['Watch out', 'Free accounts are capped at five projects', 'Skills cap files at 100 MB in total and drop audio, video, GitHub, legacy Office and archive files; download Gem files before the removal date', 'Do not put secrets in instructions or files in any of them'],
     ],
   },
   {
