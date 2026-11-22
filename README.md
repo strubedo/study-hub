@@ -22,13 +22,19 @@ settings) plus any course-only plugins (CCNA: IOS CLI labs and a subnetting trai
 | Windows Server 2025 Essentials | `courses/winserver-essentials/` |
 | AI Prompt Engineering (ChatGPT, Gemini, Claude) | `courses/ai-prompting/` |
 | AZ-900 Azure Fundamentals (review) | `courses/az-900/` |
+| CompTIA Linux+ (XK0-006) | `courses/linux-plus/` |
 
 ## Download and run
 
 Everything runs on your own computer, offline. No account, no install step and
-no dependencies apart from **Python 3**, which macOS and Linux already have
-(Windows: install it from [python.org](https://www.python.org/downloads/) or
-the Microsoft Store).
+no dependencies apart from **Python 3** (3.7 or newer). It works the same on
+Windows, macOS (Intel and Apple silicon) and Linux:
+
+- **Linux:** Python 3 is already installed.
+- **macOS:** run `xcode-select --install` once (Apple's Command Line Tools
+  include Python 3), or install it from [python.org](https://www.python.org/downloads/).
+- **Windows:** install it from [python.org](https://www.python.org/downloads/)
+  or the Microsoft Store.
 
 1. **Download:** the latest zip from
    [Releases](https://github.com/strubedo/study-hub/releases/latest), or
@@ -39,7 +45,7 @@ the Microsoft Store).
    | System | How |
    |---|---|
    | Windows | Double-click `serve.bat` |
-   | macOS | Double-click `serve.command` (first time: right-click → Open, because it isn't signed) |
+   | macOS | Double-click `serve.command` (see the macOS note below if it is blocked) |
    | Linux | Run `./serve.sh` in a terminal |
    | Any | `python3 scripts/serve.py --open` |
 
@@ -47,6 +53,13 @@ the Microsoft Store).
    "Study Hub" entry to the Start Menu (it also offers a desktop shortcut).
    Run it again if you move the folder; `install-shortcut.bat /uninstall`
    removes the shortcuts.
+
+   **macOS note:** a copy downloaded as a zip is quarantined by macOS, so the
+   first double-click on `serve.command` may be blocked because the file isn't
+   signed. Either allow it (right-click → **Open**, or on newer macOS
+   **System Settings → Privacy & Security → Open Anyway**), or skip the
+   launcher: open Terminal, `cd` into the folder and run
+   `python3 scripts/serve.py --open`. A `git clone` is not quarantined.
 
 4. The hub opens at <http://127.0.0.1:8231/>. Leave the window open while you
    study; close it (or press Ctrl+C) to stop. Another port: `./serve.sh 8232`
@@ -189,6 +202,10 @@ a community estimate).
 Every course was fact-checked against vendor documentation and RFCs, but
 products change and mistakes slip through. Check anything important against
 the official docs, and open an issue if you find an error.
+
+The Linux+ course was checked against man pages and vendor documentation by
+an independent reviewer for every domain, but much of its sample command
+output is written from that documentation and has not yet been run in a lab.
 
 ## Linux app-menu launcher
 

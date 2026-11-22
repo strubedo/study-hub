@@ -1,0 +1,36 @@
+// Domain 4 — Automation, Orchestration, and Scripting. Original flashcards.
+let n = 0;
+const c = (topic, front, back) => ({ id: `d4-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('4.1', 'Declarative and idempotent?', 'Declarative: describe the end state, not the steps. Idempotent: rerunning changes nothing once the state matches (`changed=0`).'),
+  c('4.1', 'Ansible in one line?', 'Agentless push over SSH from a control node; YAML playbooks of tasks calling modules; inventory of hosts and groups; facts from `setup`; handlers run on change.'),
+  c('4.1', 'Ansible ad hoc command and collection install?', '`ansible web -i inventory.ini -m ansible.builtin.ping`; `ansible-galaxy collection install community.general`.'),
+  c('4.1', 'Puppet agent model?', 'Agent pulls a compiled catalog from the Puppet server (TCP 8140) every 30 min after the server CA signs its certificate (`puppetserver ca sign --certname host`).'),
+  c('4.1', 'OpenTofu terms and workflow?', 'Open-source Terraform fork (HCL). Provider = API plugin, resource = managed object, state = record of what exists. `tofu init`, `plan`, `apply`, `destroy`.'),
+  c('4.1', 'Kickstart essentials?', 'RHEL installer automation. Boot option `inst.ks=URL`; `%packages`/`%post` sections end with `%end`; template in `/root/anaconda-ks.cfg`; check with `ksvalidator`.'),
+  c('4.1', 'cloud-init essentials?', 'First-boot config of images. User data must start with `#cloud-config`. `cloud-init status --long`, `cloud-init schema -c file`, logs in `/var/log/cloud-init*.log`.'),
+  c('4.1', 'Shift-left testing?', 'Run checks as early as possible: linters, syntax checks, unit tests and security scans in the editor, pre-commit hooks and CI.'),
+  c('4.1', 'GitOps?', 'Git is the single source of truth for declarative desired state; changes by merge request; an agent (Argo CD, Flux) reconciles and reverts drift; rollback = `git revert`.'),
+  c('4.1', 'Kubernetes Secret protection?', 'Values are base64-encoded, not encrypted, and stored unencrypted in etcd by default. Use RBAC, encryption at rest and keep real values out of Git.'),
+  c('4.1', 'Docker Swarm terms?', 'Nodes: managers (Raft) and workers. Service = desired state; task = one container of it. Overlay networks, ingress routing mesh. `docker service scale web=5`.'),
+  c('4.1', '`docker compose down` vs `down -v`?', '`down` removes containers and the project network but keeps named volumes; `-v` also removes the named volumes.'),
+  c('4.1', '`docker compose`, `docker-compose`, `podman compose`?', 'Current Go plugin; legacy v1 Python tool (EOL); Podman wrapper that runs docker-compose or podman-compose against the Podman socket.'),
+  c('4.2', '`$(cmd)` vs backticks vs `( )`?', '`$(cmd)` and `` `cmd` `` both substitute output (prefer `$()`: nests cleanly). `(cmds)` runs a subshell; its variable changes are lost.'),
+  c('4.2', 'Special parameters?', '`$?` last exit status, `$#` argument count, `"$@"` arguments as separate words, `$0` script name, `$$` shell PID, `$!` last background PID.'),
+  c('4.2', 'IFS vs OFS?', 'IFS: bash field separators for word splitting and `read` (default space, tab, newline). OFS: awk output field separator (default space).'),
+  c('4.2', '`set -e` traps?', 'Not triggered in `if`/`&&`/`||` tests. `((i++))` with i=0 returns 1 and exits. `local x=$(cmd)` hides the failure of cmd.'),
+  c('4.2', '`[ ]` vs `[[ ]]`?', '`[ ]` is the test command: quote variables, escape `\\<` `\\>`, no `=~`. `[[ ]]` is a bash keyword: no word splitting, glob `==`, `=~` regex.'),
+  c('4.2', 'String `<=` / `>=` in bash?', 'Not valid in `[ ]` or `[[ ]]` (error). Use `(( a <= b ))` or `-le`/`-ge` for numbers, `[[ ! $a > $b ]]` for strings.'),
+  c('4.2', '`=~` rules?', 'ERE, right side unquoted (quoted parts match literally), anchor with `^`/`$`; groups in `BASH_REMATCH[1..]`; status 2 for a bad regex.'),
+  c('4.3', 'Create and use a venv?', '`python3 -m venv .venv`, `source .venv/bin/activate`, `pip install -r requirements.txt`, `pip freeze > requirements.txt`, `deactivate`.'),
+  c('4.3', 'PEP 668 "externally-managed-environment"?', 'Debian 12+/Ubuntu 23.04+ pip refuses system-wide and `--user` installs outside a venv. Use a venv, pipx or `python3-*` packages; Fedora/RHEL send `sudo pip` to /usr/local instead.'),
+  c('4.3', 'PEP 8 key rules?', '4-space indents, `snake_case` functions/variables, `CapWords` classes, `UPPER_CASE` constants, one import per line, `is None`, 79-char lines. Check with pycodestyle/flake8/ruff.'),
+  c('4.4', '`git reset` modes?', '`--soft`: changes stay staged. `--mixed` (default): changes unstaged in files. `--hard`: changes discarded. `git reflog` finds lost commits.'),
+  c('4.4', '`git merge --squash`?', 'Stages the branch\'s combined changes without committing or recording a merge; run `git commit` yourself. The branch then needs `git branch -D`.'),
+  c('4.4', 'When not to rebase?', 'Never rebase commits others have pulled; rebase rewrites hashes and needs a force push. Merge or `git revert` on shared branches.'),
+  c('4.4', 'fetch vs pull?', '`git fetch` updates `origin/*` only. `git pull` = fetch + merge (or rebase). A push is rejected when the remote has commits you lack.'),
+  c('4.4', '`checkout` vs `switch`/`restore`?', '`git switch [-c] branch` for branches, `git restore file` and `git restore --staged file` for files (Git 2.23+); `checkout` did both.'),
+  c('4.5', 'Safe use of AI-generated commands?', 'Read and understand every line, verify against man pages and docs, preview or dry-run in a test system, check packages exist, review like human code.'),
+  c('4.5', 'AI data governance?', 'No secrets or customer data in public models; sanitize; check retention and training terms; local or private models for sensitive data; human review; follow corporate AI policy.'),
+];

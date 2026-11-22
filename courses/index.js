@@ -24,4 +24,5 @@ export default [
   { id: 'winserver-essentials', status: 'ready', path: 'winserver-essentials/' },
   { id: 'ai-prompting', status: 'ready', path: 'ai-prompting/' },
   { id: 'az-900', status: 'ready', path: 'az-900/' },
+  { id: 'linux-plus', status: 'ready', path: 'linux-plus/' },
 ];
