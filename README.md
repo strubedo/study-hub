@@ -23,6 +23,7 @@ settings) plus any course-only plugins (CCNA: IOS CLI labs and a subnetting trai
 | AI Prompt Engineering (ChatGPT, Gemini, Claude) | `courses/ai-prompting/` |
 | AZ-900 Azure Fundamentals (review) | `courses/az-900/` |
 | CompTIA Linux+ (XK0-006) | `courses/linux-plus/` |
+| CompTIA Security+ (SY0-801) | `courses/security-plus/` |
 
 ## Download and run
 
@@ -203,9 +204,10 @@ Every course was fact-checked against vendor documentation and RFCs, but
 products change and mistakes slip through. Check anything important against
 the official docs, and open an issue if you find an error.
 
-The Linux+ course was checked against man pages and vendor documentation by
-an independent reviewer for every domain, but much of its sample command
-output is written from that documentation and has not yet been run in a lab.
+The Linux+ and Security+ courses were checked against man pages, standards
+and vendor documentation by an independent reviewer for every domain, but
+much of their sample output is written from that documentation and has not
+yet been run in a lab. Security+ targets the new SY0-801 exam, not SY0-701.
 
 ## Linux app-menu launcher
 

@@ -1,0 +1,37 @@
+// Domain 4 — Security Operations. Original content, checked (2026-11-22) against RFC 7208 (SPF), RFC 6376, 8301
+// and 8463 (DKIM), RFC 7489 and RFC 9989 (DMARC; 9989 obsoletes 7489, May 2026), the BIMI Group implementation
+// guide and FAQ, RFC 8601 (Authentication-Results), RFC 3748 (EAP), RFC 3580 (802.1X RADIUS usage), RFC 2865/2866
+// (RADIUS), RFC 5424, 5425, 5426, 6587 (syslog), RFC 3411, 3414, 3415, 3826, 7860, 6353 (SNMP), RFC 7011 (IPFIX)
+// and RFC 3954 (NetFlow v9), the IANA port registry, NIST SP 800-126 Rev. 3 (SCAP), SP 800-61 Rev. 3, SP 800-86,
+// RFC 3227, SP 800-40 Rev. 4, SP 800-88 Rev. 2, SP 800-63-4 (63A-4, 63B-4), the NIST CSRC glossary (MAC, DAC, RBAC,
+// ABAC, honeypot, chain of custody, identity proofing, federation, hardening, allowlist), the FIDO Alliance
+// passkeys page, OASIS SAML 2.0 technical overview, RFC 6749, RFC 9700, OpenID Connect Core 1.0, OWASP cheat
+// sheets (session management, input validation, secrets management) and SAST page, RFC 4226, 6238, 9116,
+// Microsoft Learn (Group Policy processing, App Control for Business, security event IDs, krbtgt reset) and
+// Red Hat's "Using SELinux" (RHEL 9).
+export default [
+  { id: '4.1-hardening-deception-appcontrol', topic: '4.1', title: 'Mitigation 1: Segmentation, Hardening, Sandboxing, Deception, MDM and Application Control', minutes: 12, file: '4.1-hardening-deception-appcontrol.md',
+    objectives: ['Apply segmentation and access controls, including as compensating controls', 'Harden systems to a secure baseline', 'Use sandboxing for detonation and confinement', 'Tell honeypot, honeynet, honeyfile, honeytoken and canary account apart', 'Use MDM and monitoring/alerting in scenarios', 'Choose between application allow lists and block lists'] },
+  { id: '4.1-network-endpoint-controls', topic: '4.1', title: 'Mitigation 2: IDS/IPS, Firewalls, Content Filtering, EDR/XDR and Network Access Control', minutes: 14, file: '4.1-network-endpoint-controls.md',
+    objectives: ['Distinguish IDS from IPS, NIDS/HIDS/WIPS, and fail-open from fail-closed', 'Compare signature and anomaly detection, false positives and false negatives', 'Choose between stateful, NGFW, WAF and UTM; Layer 4 vs Layer 7 rules; rate limiting', 'Apply content filtering by proxy or agent, and DLP', 'Compare antivirus, EDR and XDR', 'Explain 802.1X roles and flow, captive portals and posture checks'] },
+  { id: '4.1-app-email-os-security', topic: '4.1', title: 'Mitigation 3: Secrets Scanning, Application Security, SPF/DKIM/DMARC/BIMI, Group Policy and SELinux', minutes: 15, file: '4.1-app-email-os-security.md',
+    objectives: ['Respond correctly to secrets found in a repository', 'Apply input validation, secure cookie attributes, static analysis and code signing', 'Read SPF, DKIM, DMARC and BIMI records and Authentication-Results headers', 'Explain envelope vs header From and DMARC alignment', 'Apply Group Policy processing order, Enforced and Block Inheritance', 'Explain SELinux modes, labels and correct troubleshooting'] },
+  { id: '4.2-asset-management', topic: '4.2', title: 'Hardware, Software and Data Asset Management', minutes: 10, file: '4.2-asset-management.md',
+    objectives: ['Order the asset management life cycle stages', 'Put security requirements into planning and procurement', 'Assign owners and users and keep an accurate inventory', 'Use discovery and tracking to find unknown assets', 'Decommission and sanitize assets per NIST SP 800-88 Rev. 2'] },
+  { id: '4.3-vulnerability-management', topic: '4.3', title: 'Vulnerability Management: Identify, Prioritize, Remediate, Verify, Report', minutes: 11, file: '4.3-vulnerability-management.md',
+    objectives: ['Choose scan types: credentialed, agent-based, internal/external', 'Use IPAM, CSPM and source code review for identification', 'Prioritize with severity, context and penetration test reports', 'Apply SP 800-40 Rev. 4 risk responses and verify remediation', 'Explain bounty programs and responsible disclosure policies'] },
+  { id: '4.4-monitoring-activities-tools', topic: '4.4', title: 'Monitoring 1: Activities, Tools, Alert Tuning, Port Mirroring, Dashboards and NMS', minutes: 11, file: '4.4-monitoring-activities-tools.md',
+    objectives: ['Describe monitoring of systems, applications and infrastructure', 'Explain log aggregation, alerting, scanning, archiving, reporting and alert tuning', 'Choose the right tool: benchmarks, agents/agentless, SIEM, AV, DLP, scanners, orchestration, packet analyzer', 'Explain port mirroring and TAPs, dashboards and network management systems'] },
+  { id: '4.4-monitoring-protocols', topic: '4.4', title: 'Monitoring 2: NetFlow/IPFIX, SNMP, syslog and SCAP', minutes: 11, file: '4.4-monitoring-protocols.md',
+    objectives: ['Compare flow data with packet capture', 'Secure SNMP with v3 authPriv and know ports 161/162', 'Decode syslog PRI values and severities 0-7; choose syslog transports', 'Name the SCAP component specifications and their roles'] },
+  { id: '4.5-identity-federation-mfa', topic: '4.5', title: 'IAM 1: Provisioning, Identity Proofing, Federation and SSO, Account Types and MFA', minutes: 13, file: '4.5-identity-federation-mfa.md',
+    objectives: ['Provision and deprovision accounts and assign permissions safely', 'Describe identity proofing outcomes (SP 800-63A-4)', 'Explain SAML, OAuth 2.0, OpenID Connect and LDAP roles in SSO', 'Match account types to their controls', 'Classify MFA methods and identify phishing-resistant ones'] },
+  { id: '4.5-access-models-passwords', topic: '4.5', title: 'IAM 2: Access Control Models, Access Management and Password Concepts', minutes: 13, file: '4.5-access-models-passwords.md',
+    objectives: ['Choose among rule-based, role-based, time-based, mandatory, discretionary and just-in-time models', 'Separate logical/technical from administrative/business policies', 'Run an access review', 'Explain passkeys, passwordless and password managers', 'Teach password settings alongside SP 800-63B-4 guidance'] },
+  { id: '4.6-automation-orchestration', topic: '4.6', title: 'Automation, Orchestration and AI in Security Operations', minutes: 11, file: '4.6-automation-orchestration.md',
+    objectives: ['Match automation use cases to scenarios', 'Weigh guardrails, logic, complexity, cost and other considerations', 'Describe agentic, chatbot, predictive and AI-augmented baseline capabilities', 'Place security gates in a CI/CD pipeline', 'Design an automated workflow with integrations'] },
+  { id: '4.7-incident-response', topic: '4.7', title: 'Incident Response Activities', minutes: 12, file: '4.7-incident-response.md',
+    objectives: ['Order the incident response activities as the objectives list them', 'Map them to SP 800-61 Rev. 3 and CSF 2.0', 'Prepare with roles, playbooks, training, tabletop exercises and simulations', 'Handle identification, investigation and containment while preserving evidence', 'Explain negotiation, notification duties and post-incident reporting'] },
+  { id: '4.8-investigation-data', topic: '4.8', title: 'Data, Artifacts and Sources for Investigations', minutes: 13, file: '4.8-investigation-data.md',
+    objectives: ['Choose the log or trace type that answers an investigation question', 'Use scans, reports, flows, footage, security tools, dashboards and packet captures', 'Protect file and log integrity', 'Choose between memory dump, bit-level copy and snapshot; follow the order of volatility', 'Involve HR, accounts and legal', 'Parse logs to extract and count fields'] },
+];

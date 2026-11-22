@@ -25,4 +25,5 @@ export default [
   { id: 'ai-prompting', status: 'ready', path: 'ai-prompting/' },
   { id: 'az-900', status: 'ready', path: 'az-900/' },
   { id: 'linux-plus', status: 'ready', path: 'linux-plus/' },
+  { id: 'security-plus', status: 'ready', path: 'security-plus/' },
 ];
