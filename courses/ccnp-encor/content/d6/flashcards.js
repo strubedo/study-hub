@@ -1,0 +1,35 @@
+// Domain 6 — Automation and Artificial Intelligence. Original flashcards (Python behaviour run with Python 3; JSON rules from RFC 8259; YANG from RFC 7950 / 8340; RESTCONF from RFC 8040; Catalyst Center and SD-WAN Manager from developer.cisco.com; EEM keywords from Cisco-IOS-XE-eem.yang; Cisco-specific details not confirmed from a primary source are listed in REVIEW-TODO.md).
+let n = 0;
+const c = (topic, front, back) => ({ id: `d6-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('6.1', 'list vs tuple vs set vs dict?', 'list `[ ]` ordered, mutable; tuple `( )` ordered, immutable; set `{1, 2}` unordered, no duplicates, no indexing; dict `{"k": v}` key to value. `{}` alone is an empty dict.'),
+  c('6.1', 'What do `x[0]`, `x[-1]` and `x[1:3]` return?', 'First item, last item, and items at index 1 and 2: the stop index of a slice is excluded.'),
+  c('6.1', '`break` vs `continue` vs `finally`?', '`break` leaves the loop; `continue` skips to the next pass; a `finally` block runs every time, even after `break` or `return`.'),
+  c('6.1', '`json.loads` vs `json.load` vs `json.dumps`?', '`loads`: JSON string to Python; `load`: JSON file object to Python; `dumps`: Python to JSON string (`dump` writes to a file). `response.json()` in requests parses an HTTP body.'),
+  c('6.1', 'Clues that identify requests, ncclient and Netmiko in a script?', 'requests: URLs, `headers=`, `.status_code`, `.json()`. ncclient: `manager.connect(port=830)`, XML filters, `get_config`, `edit_config`. Netmiko: `ConnectHandler`, `device_type`, `send_command`, `send_config_set`.'),
+  c('6.1', 'Netmiko `send_config_set` and `send_command` return what?', '`send_config_set(list)` enters and leaves config mode itself and returns the session text; `send_command("show ...")` returns the output as one string.'),
+  c('6.2', 'The six JSON value types?', 'Object `{}`, array `[]`, string (double quotes), number, `true` / `false`, `null`.'),
+  c('6.2', 'JSON vs Python literals?', 'JSON `true`, `false`, `null`, double quotes only, no trailing commas, no comments. Python `True`, `False`, `None`, single or double quotes, trailing commas allowed.'),
+  c('6.2', 'How to write a quote and a backslash inside a JSON string?', '`\\"` and `\\\\`. A lone backslash may be rejected (`\\l`) or silently become an escape (`\\b`, `\\r`).'),
+  c('6.2', 'Where does a parser report a missing comma?', 'At the start of the next member, one line after the real fault. Python: `Expecting \',\' delimiter`.'),
+  c('6.3', 'What is YANG?', 'A data modeling language (RFC 7950) that defines structure, types, keys and config vs state. Not a protocol or encoding: NETCONF, RESTCONF and gNMI carry YANG data as XML or JSON.'),
+  c('6.3', 'Tree diagram symbols?', '`rw` config, `ro` state, `*` list or leaf-list, `[key]` list keys, `?` optional, `!` presence container, `prefix:node` augmented from another module, `-x` RPC, `-n` notification.'),
+  c('6.3', 'augment vs deviation?', '`augment` adds nodes from one module into another\'s tree (ietf-ip adds ipv4 to interfaces). `deviation` declares where a vendor implementation differs from a model.'),
+  c('6.3', 'Native vs IETF vs OpenConfig models?', 'Native (Cisco-IOS-XE-native): full feature coverage, one platform. IETF (ietf-interfaces): standard, common features. OpenConfig: operator-driven, vendor-neutral, telemetry-oriented; vendors publish deviations.'),
+  c('6.4', 'Catalyst Center authentication?', '`POST /dna/system/api/v1/auth/token` with HTTP Basic; body `{"Token": "..."}`; send it as `X-Auth-Token`. Lifetime 60 minutes, then 401.'),
+  c('6.4', 'Catalyst Center north / south / east / west?', 'North: Intent API (REST). South: device protocols (SSH, SNMP, NETCONF). East: events and webhooks. West: ITSM and IPAM integration.'),
+  c('6.4', 'SD-WAN Manager session authentication?', '`POST /j_security_check` with form fields `j_username` / `j_password` gives the `JSESSIONID` cookie; `GET /dataservice/client/token` gives the token sent as `X-XSRF-TOKEN` on POST/PUT/DELETE; `POST /logout` at the end.'),
+  c('6.4', 'SD-WAN Manager base path and an example resource?', '`/dataservice/`, for example `GET /dataservice/device` (inventory with `host-name`, `system-ip`, `site-id`, `personality`). Release 20.18.1 adds JWT via `/jwt/login`.'),
+  c('6.5', '202 from Catalyst Center means?', 'Accepted for asynchronous processing, not success. Read `response.taskId`, poll `GET /dna/intent/api/v1/task/{taskId}` until `endTime` appears, then check `isError` and `failureReason`.'),
+  c('6.5', '401 vs 403?', '401: not authenticated (no, wrong or expired token or password). 403: authenticated but not allowed (role, privilege level). A new token fixes 401, not 403.'),
+  c('6.5', 'RESTCONF success codes by method?', 'GET 200; POST create 201 (409 if it exists); PUT 201 created or 204 replaced; PATCH 204 (never creates); DELETE 204.'),
+  c('6.5', 'RESTCONF error body structure?', '`{"ietf-restconf:errors": {"error": [{"error-type": ..., "error-tag": ..., "error-path": ..., "error-message": ...}]}}`; types transport, rpc, protocol, application.'),
+  c('6.6', 'Minimum applet that changes configuration?', '`event manager applet NAME`, one `event ...`, then `action 1.0 cli command "enable"`, `action 2.0 cli command "configure terminal"`, the commands, `cli command "end"`.'),
+  c('6.6', 'In what order do EEM actions run?', 'By label sorted as strings: `1.0`, `10.0`, `2.0`. Use `1.0, 1.1 ...` or zero-padded labels.'),
+  c('6.6', 'EEM timers?', '`watchdog time N` repeats every N s; `countdown time N` once after N s; `cron cron-entry "m h dom mon dow"` calendar; `absolute time` once at a set time.'),
+  c('6.6', 'EEM with AAA command authorization?', '`event manager session cli username USER` (global) or `event manager applet NAME authorization bypass` (per applet).'),
+  c('6.6', 'Verify and debug EEM?', '`show event manager policy registered`, `show event manager history events`, `event manager run NAME` (for `event none`), `debug event manager action cli`.'),
+  c('6.7', 'Agent-based tools and their ports?', 'Puppet: agent pulls from Puppet Server, HTTPS TCP 8140, manifests. Chef: Infra Client pulls from Chef Infra Server over HTTPS (TCP 443), Ruby recipes/cookbooks. Salt: minion and master, ZeroMQ TCP 4505/4506, YAML states.'),
+  c('6.7', 'Ansible in one line?', 'Agentless, push from a control node over SSH / NETCONF / HTTPS, YAML playbooks calling modules, inventory of hosts, idempotent (`changed` vs `ok`).'),
+];

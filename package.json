@@ -2,7 +2,7 @@
   "name": "study-hub",
   "version": "1.0.0",
   "private": true,
-  "description": "Offline study hub: certification and skills courses (CCNA, Azure, Windows Server, Linux+, Security+, CCNA Automation, Fortinet, Palo Alto, LPI DevOps, TCP/IP, AI prompting) on one shared engine with lessons, question banks, exam simulators and flashcards.",
+  "description": "Offline study hub: certification and skills courses (CCNA, Azure, Windows Server, Linux+, Security+, CCNA Automation, CCNP ENCOR, Fortinet, Palo Alto, LPI DevOps, TCP/IP, AI prompting) on one shared engine with lessons, question banks, exam simulators and flashcards.",
   "license": "MIT",
   "type": "module",
   "scripts": {

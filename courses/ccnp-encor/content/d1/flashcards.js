@@ -1,0 +1,35 @@
+// Domain 1 — Architecture. Original flashcards (facts checked against the RFCs and Cisco DevNet sources listed in lessons.js; Cisco-only defaults are listed in REVIEW-TODO.md).
+let n = 0;
+const c = (topic, front, back) => ({ id: `d1-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('1.1', 'Access, distribution and core: one job each?', 'Access: connect and secure endpoints (PoE, 802.1X, marking). Distribution: aggregate, FHRP gateways, summarization and policy. Core: fast transport between blocks, minimal policy.'),
+  c('1.1', 'Two-tier vs three-tier?', 'Two-tier (collapsed core): core and distribution on one pair, for one building or a small campus. Three-tier adds a core when many distribution blocks would otherwise need a full mesh.'),
+  c('1.1', 'Routed access in one line?', 'Access switch is the default gateway and uplinks are routed: ECMP through the IGP, no STP blocking on uplinks, VLANs stay on one switch.'),
+  c('1.1', 'Spine-leaf rules?', 'Every leaf connects to every spine; no leaf-leaf or spine-spine links. Any leaf is two hops from any other leaf. Add spines for bandwidth, leaves for ports.'),
+  c('1.1', 'IaaS vs PaaS vs SaaS?', 'IaaS: you run OS, apps and virtual routers on provider infrastructure. PaaS: provider also runs OS and runtime. SaaS: provider runs the whole application.'),
+  c('1.1', 'HSRP vs VRRPv3 key facts?', 'HSRP: Cisco, UDP 1985, 224.0.0.2 (v1), 3 s/10 s, MAC `0000.0c07.acXX` (v1), no preempt by default. VRRPv3: RFC 9568, protocol 112, 224.0.0.18, 1 s, MAC `0000.5e00.01XX`, preempts by default.'),
+  c('1.1', 'FHRP election and tracking?', 'Highest priority wins (default 100); tie goes to highest IP. Tracking lowers priority when an uplink fails, but the peer takes over only if it can preempt.'),
+  c('1.1', 'SSO vs RPR?', 'SSO: standby fully booted with configuration and feature state synchronized; takes over without reloading line cards. RPR: standby must finish initializing; line cards reload.'),
+  c('1.1', 'NSF vs NSR?', 'NSF: forwarding continues on the old FIB; graceful restart needs NSF-aware neighbors to keep routes. NSR: the standby keeps routing sessions itself; neighbors need nothing.'),
+  c('1.1', 'StackWise Virtual essentials?', 'Two chassis, one control plane with SSO, joined by the StackWise Virtual link (SVL). Downstream uses multichassis EtherChannel. Dual-active detection handles an SVL failure.'),
+  c('1.2', 'SD-WAN new and old names?', 'SD-WAN Manager = vManage (management), SD-WAN Validator = vBond (orchestration), SD-WAN Controller = vSmart (control), WAN Edge = vEdge/cEdge (data).'),
+  c('1.2', 'SD-WAN control connection ports?', 'DTLS (default): UDP 12346 base, more ports per controller core in steps of 100. TLS: TCP 23456 base. Port offset and port hopping can change the edge port.'),
+  c('1.2', 'What does OMP carry?', 'OMP routes (service-side prefixes), TLOC routes, service routes, plus data-plane IPsec keys. Runs only between WAN Edges and Controllers, inside DTLS/TLS.'),
+  c('1.2', 'What is a TLOC?', 'Transport locator: system IP + color + encapsulation (IPsec or GRE). Identifies one transport attachment of one WAN Edge.'),
+  c('1.2', 'SD-WAN BFD defaults?', 'Hello 1,000 ms, multiplier 7 (tunnel down after about 7 s). App-route poll interval 600,000 ms with multiplier 6 for loss, latency and jitter.'),
+  c('1.2', 'OMP timer defaults?', 'Hold time 60 s; graceful restart on with a 43,200 s (12 h) timer; send-path-limit and ECMP limit 4.'),
+  c('1.2', 'Top SD-WAN limitations?', 'Dependency on controllers for joins and changes, Validator needs a public address, NAT traversal limits, IPsec and BFD overhead in a full mesh, licensing, vendor lock-in.'),
+  c('1.3', 'SD-Access planes?', 'Control: LISP. Data: VXLAN with Group Policy ID. Policy: TrustSec SGTs and SGACLs. Management: Catalyst Center with ISE.'),
+  c('1.3', 'SD-Access fabric roles?', 'Control plane node (LISP MS/MR), border node (internal, external, Layer 2), edge node (anycast gateway, VTEP), intermediate node (underlay only), extended node.'),
+  c('1.3', 'VXLAN-GPO fields used by SD-Access?', 'VNI (24 bits) = VN or Layer 2 segment; Group Policy ID (16 bits) = source SGT. VXLAN uses UDP 4789; IPv4 overhead 50 bytes.'),
+  c('1.3', 'LISP messages in the fabric?', 'Edge sends Map-Register for its endpoints to the control plane node; remote edges send Map-Request and get a Map-Reply with the RLOC. LISP control uses UDP 4342.'),
+  c('1.3', 'Layer 3 handoff to a fusion device?', 'IP transit: one VRF-lite sub-interface or SVI plus one eBGP session per VN. The fusion device leaks routes to shared services or hands inter-VN traffic to a firewall.'),
+  c('1.3', 'Layer 2 handoff rules?', 'Bridges a fabric subnet to a traditional VLAN (IDs may differ). Remove the old SVI/FHRP gateway; only one Layer 2 handoff per VLAN to avoid loops.'),
+  c('1.4', 'Key DSCP values?', 'EF 46, AFxy = 8x + 2y (AF41 34, AF31 26, AF21 18, AF11 10), CSx = 8x (CS6 48, CS5 40), default 0. ToS byte = DSCP x 4.'),
+  c('1.4', 'RFC 4594 markings to know?', 'Voice EF, signaling CS5, interactive video AF4x, streaming AF3x, transactional AF2x, bulk AF1x, network control CS6, OAM CS2, scavenger CS1.'),
+  c('1.4', '`match-any` vs `match-all`?', '`match-any`: any line matches (OR). `match-all` (default): every line must match (AND). Classes are checked top down; first match wins; the rest go to class-default.'),
+  c('1.4', 'LLQ `priority` behavior?', 'Strict priority queue. With a rate (`priority percent 10`) it has a conditional policer during congestion: excess counted as `b/w exceed drops`. `priority level 1|2` without a rate needs `police`.'),
+  c('1.4', 'Policing vs shaping?', 'Policing: drop or re-mark now, input or output, Bc in bytes. Shaping: buffer and delay, output only, Bc in bits. Tc = Bc / CIR.'),
+  c('1.4', 'WRED in three lines?', 'Below min threshold: no drops. Between min and max: random drops rising to 1/mark-probability-denominator. Above max: tail drop. DSCP-based thresholds drop AFx3 first.'),
+];

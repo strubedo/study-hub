@@ -25,6 +25,7 @@ settings) plus any course-only plugins (CCNA: IOS CLI labs and a subnetting trai
 | CompTIA Linux+ (XK0-006) | `courses/linux-plus/` |
 | CompTIA Security+ (SY0-801) | `courses/security-plus/` |
 | Cisco CCNA Automation (200-901 CCNAAUTO, formerly DevNet Associate) | `courses/ccna-automation/` |
+| Cisco CCNP ENCOR (350-401 v1.2) | `courses/ccnp-encor/` |
 
 ## Download and run
 
@@ -205,7 +206,7 @@ Every course was fact-checked against vendor documentation and RFCs, but
 products change and mistakes slip through. Check anything important against
 the official docs, and open an issue if you find an error.
 
-The Linux+, Security+ and CCNA Automation courses were checked against man pages, standards
+The Linux+, Security+, CCNA Automation and CCNP ENCOR courses were checked against man pages, standards
 and vendor documentation by an independent reviewer for every domain, but
 much of their sample output is written from that documentation and has not
 yet been run in a lab. Security+ targets the new SY0-801 exam, not SY0-701.
