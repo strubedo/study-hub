@@ -1,0 +1,57 @@
+// Domain 3 — Deploy and manage Azure compute resources (20–25%). Original content. Facts, limits, defaults and
+// command syntax checked against Microsoft Learn on 2026-11-23 (ARM/Bicep docs, template reference, Virtual
+// Machines and scale set docs, Azure CLI and Az PowerShell references). Nothing was run against Azure: command
+// output, portal labels and error behaviour are documentation-based and listed in REVIEW-TODO.md.
+// 3.1 and 3.2 written first; topics 3.3 (containers) and 3.4 (App Service) are appended after them.
+export default [
+  // 3.1 ARM templates and Bicep
+  { id: '3.1-arm-templates', topic: '3.1', title: 'Interpret ARM Templates', minutes: 13, file: '3.1-arm-templates.md',
+    objectives: ['Identify the $schema, contentVersion, parameters, variables, functions, resources and outputs sections', 'Read parameter types and constraints: allowedValues, defaultValue, min/max, secureString', 'Evaluate expressions with resourceGroup(), concat(), format(), uniqueString(), resourceId() and reference()', 'Predict what copy loops, copyIndex(), dependsOn and conditions deploy'] },
+  { id: '3.1-bicep-files', topic: '3.1', title: 'Interpret Bicep Files', minutes: 12, file: '3.1-bicep-files.md',
+    objectives: ['Read param, var, resource (symbolic name and type@apiVersion), output, module and existing declarations', 'Apply decorators such as @allowed, @secure, @minLength and @description', 'Trace implicit dependencies through symbolic references and string interpolation', 'Count the resources produced by for loops, range() and if conditions, and set targetScope'] },
+  { id: '3.1-modify-templates', topic: '3.1', title: 'Modify ARM Templates and Bicep Files', minutes: 12, file: '3.1-modify-templates.md',
+    objectives: ['Add a parameter with allowed values in ARM JSON and Bicep', 'Add a child resource with dependsOn or parent, and an output', 'Convert a single resource into a copy loop or a for loop', 'Write JSON parameter files and .bicepparam files and pass them correctly'] },
+  { id: '3.1-deploy-templates', topic: '3.1', title: 'Deploy Templates: Scopes, Modes, What-If and History', minutes: 13, file: '3.1-deploy-templates.md',
+    objectives: ['Deploy at resource group, subscription, management group and tenant scope with the CLI and PowerShell', 'Predict what incremental and complete mode do to existing resources', 'Preview changes with what-if and read deployment history', 'Describe template specs and deployment stacks at a high level'] },
+  { id: '3.1-export-convert', topic: '3.1', title: 'Export Templates and Convert ARM JSON to Bicep', minutes: 11, file: '3.1-export-convert.md',
+    objectives: ['Choose between exporting from a resource group and saving from deployment history', 'Use az group export, Export-AzResourceGroup, az deployment group export and Save-AzResourceGroupDeploymentTemplate', 'State the export limits: 200 resources, missing secrets, unsupported types', 'Convert with az bicep decompile and az bicep build and clean up the result'] },
+  // 3.2 Virtual machines
+  { id: '3.2-create-vm', topic: '3.2', title: 'Create Virtual Machines', minutes: 14, file: '3.2-create-vm.md',
+    objectives: ['Choose image, size, security type, authentication and networking when creating a VM', 'Know the resources az vm create and New-AzVM create alongside the VM', 'Explain Trusted launch as the default security type and the Basic public IP retirement', 'Customize VMs with cloud-init, extensions, Run Command and managed identities'] },
+  { id: '3.2-disk-encryption', topic: '3.2', title: 'Azure Disk Encryption and Encryption at Host', minutes: 13, file: '3.2-disk-encryption.md',
+    objectives: ['State the Azure Disk Encryption retirement date and the recommended replacement', 'Compare SSE with platform or customer-managed keys, encryption at host and ADE', 'List the ADE requirements for Key Vault, VM size and memory', 'Enable ADE with az vm encryption enable and Set-AzVMDiskEncryptionExtension, and encryption at host'] },
+  { id: '3.2-move-vms', topic: '3.2', title: 'Move VMs Across Resource Groups, Subscriptions and Regions', minutes: 12, file: '3.2-move-vms.md',
+    objectives: ['Move VMs with az resource move and Move-AzResource and predict the effects', 'Identify what must move together and what blocks a move', 'Apply the special cases: availability sets, ADE, Marketplace plans, Azure Backup', 'Move a VM to another region with Azure Resource Mover'] },
+  { id: '3.2-vm-sizes', topic: '3.2', title: 'Manage VM Sizes', minutes: 11, file: '3.2-vm-sizes.md',
+    objectives: ['Match size families to workloads and decode size names', 'Resize with az vm resize and Update-AzVM and know when deallocation is needed', 'Use az vm list-vm-resize-options and Get-AzVMSize', 'Distinguish Stopped from Stopped (deallocated) and what each is billed for'] },
+  { id: '3.2-vm-disks', topic: '3.2', title: 'Manage VM Disks', minutes: 14, file: '3.2-vm-disks.md',
+    objectives: ['Compare OS, temporary and data disks', 'Choose between Ultra Disk, Premium SSD v2, Premium SSD, Standard SSD and Standard HDD', 'Attach, detach and expand disks, set host caching and know the online expansion rules', 'Use snapshots, images, shared disks and ephemeral OS disks appropriately'] },
+  { id: '3.2-availability', topic: '3.2', title: 'Availability Sets and Availability Zones', minutes: 12, file: '3.2-availability.md',
+    objectives: ['Explain fault domains and update domains and calculate worst-case impact', 'Deploy VMs to availability sets and availability zones', 'Quote the 99.9%, 99.95% and 99.99% VM SLA configurations', 'Explain why a VM joins an availability set only at creation, and what proximity placement groups do'] },
+  { id: '3.2-scale-sets', topic: '3.2', title: 'Deploy and Configure Virtual Machine Scale Sets', minutes: 14, file: '3.2-scale-sets.md',
+    objectives: ['Compare Flexible and Uniform orchestration and know the default', 'Create zone-spanning scale sets with az vmss create and New-AzVmss', 'Configure autoscale profiles, instance limits and rules and predict their result', 'Set scale-in policies, instance protection and upgrade policies'] },
+  // 3.3 Containers
+  { id: '3.3-container-registry', topic: '3.3', title: 'Create and Manage an Azure Container Registry', minutes: 14, file: '3.3-container-registry.md',
+    objectives: ['Choose between the Basic, Standard and Premium SKUs and name what Premium adds', 'Create a registry and identify its login server, repositories and tags', 'Get images in with az acr build (ACR Tasks) and az acr import', 'Choose an authentication method: Entra identities with AcrPull/AcrPush, managed identity, admin user, tokens and scope maps', 'Clean up with retention policies and acr purge'] },
+  { id: '3.3-container-instances', topic: '3.3', title: 'Provision Containers with Azure Container Instances', minutes: 14, file: '3.3-container-instances.md',
+    objectives: ['Explain the container group as the unit of deployment and what its containers share', 'Size a group with CPU and memory requests and limits and choose a restart policy', 'Expose a group with a public IP and DNS name label or deploy it into a virtual network', 'Use secure environment variables, Azure Files volumes and a user-assigned identity to pull from ACR', 'Deploy with az container create, YAML and New-AzContainerGroup; use logs and exec'] },
+  { id: '3.3-container-apps', topic: '3.3', title: 'Provision Containers with Azure Container Apps', minutes: 15, file: '3.3-container-apps.md',
+    objectives: ['Describe environments, workload profiles environments and the Consumption and Dedicated plans', 'Predict which changes create revisions and use single and multiple revision modes', 'Configure external or internal ingress and split traffic between revisions', 'Configure scale rules, secrets and managed identities', 'Deploy with az containerapp create, up and update'] },
+  { id: '3.3-container-scaling', topic: '3.3', title: 'Size and Scale Containers and Choose a Container Platform', minutes: 13, file: '3.3-container-scaling.md',
+    objectives: ['Size ACI container groups and change their size by recreating them', 'Scale ACI out by deploying more container groups', 'Set Container Apps replica limits and HTTP, TCP and event-driven scale rules and predict replica counts', 'Choose between ACI, Container Apps, AKS and App Service for a scenario'] },
+  // 3.4 App Service
+  { id: '3.4-app-service-plans', topic: '3.4', title: 'Provision and Scale App Service Plans', minutes: 13, file: '3.4-app-service-plans.md',
+    objectives: ['Explain what a plan fixes (OS, region, tier, size, instances) and how apps share it', 'Map features to tiers: Free, Shared, Basic, Standard, Premium v3/v4, Isolated v2', 'Scale up and scale out with the portal, CLI and PowerShell', 'Choose between manual scale-out, rule-based autoscale and automatic scaling, and describe per-app scaling'] },
+  { id: '3.4-create-web-app', topic: '3.4', title: 'Create an App Service Web App', minutes: 11, file: '3.4-create-web-app.md',
+    objectives: ['Create a web app for code or a container with az webapp create and New-AzWebApp', 'Know that az webapp up is deprecated and what replaces it', 'Configure app settings, connection strings and general settings', 'Describe deployment methods: ZIP deploy, run from package, Deployment Center, containers, slots'] },
+  { id: '3.4-certificates-tls', topic: '3.4', title: 'Configure Certificates and TLS for App Service', minutes: 12, file: '3.4-certificates-tls.md',
+    objectives: ['Compare the free managed certificate, App Service certificates, Key Vault import and PFX upload', 'Create SNI and IP-based TLS bindings and know their tiers', 'Enforce HTTPS Only and a minimum TLS version', 'Describe client certificate modes'] },
+  { id: '3.4-custom-domains', topic: '3.4', title: 'Map a Custom DNS Name to App Service', minutes: 11, file: '3.4-custom-domains.md',
+    objectives: ['Choose A or CNAME records for apex, subdomain and wildcard names', 'Create the asuid TXT verification record with the custom domain verification ID', 'Add the host name with the portal, az webapp config hostname add and PowerShell', 'Troubleshoot validation and certificate issuance failures'] },
+  { id: '3.4-backup', topic: '3.4', title: 'Configure Backup and Restore for App Service', minutes: 12, file: '3.4-backup.md',
+    objectives: ['Compare automatic and custom backups: tiers, frequency, retention and size limits', 'Configure custom backups to a storage account container on demand and on a schedule', 'Explain linked database backups and their deprecation, and use _backup.filter', 'Restore to the same app, another app or a slot'] },
+  { id: '3.4-networking', topic: '3.4', title: 'Configure App Service Networking', minutes: 14, file: '3.4-networking.md',
+    objectives: ['Separate inbound features from outbound features', 'Configure access restrictions with priorities, service tags, subnets and the unmatched rule', 'Use private endpoints for private inbound access', 'Configure regional VNet integration, route all, NAT gateway and Hybrid Connections'] },
+  { id: '3.4-deployment-slots', topic: '3.4', title: 'Configure Deployment Slots', minutes: 12, file: '3.4-deployment-slots.md',
+    objectives: ['State which tiers support slots and how many', 'Predict which settings swap and which stick, and use slot settings', 'Swap, swap with preview, auto swap and custom warm-up', 'Route a percentage of production traffic to a slot'] },
+];

@@ -28,4 +28,5 @@ export default [
   { id: 'security-plus', status: 'ready', path: 'security-plus/' },
   { id: 'ccna-automation', status: 'ready', path: 'ccna-automation/' },
   { id: 'ccnp-encor', status: 'ready', path: 'ccnp-encor/' },
+  { id: 'az-104', status: 'ready', path: 'az-104/' },
 ];
