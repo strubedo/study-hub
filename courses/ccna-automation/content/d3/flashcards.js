@@ -1,0 +1,35 @@
+// Domain 3 — Cisco Platforms and Development. Original flashcards; facts checked 2026-11-22 against the sources listed in lessons.js (developer.cisco.com, cisco.com guides, nso-docs.cisco.com, developer.webex.com, PyPI and SDK READMEs, RFC 6241, 6242, 8040, 8340 and the gNMI specification).
+let n = 0;
+const c = (topic, front, back) => ({ id: `d3-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('3.1', 'What does a Cisco SDK add over raw `requests`?', 'Methods named after API operations, built-in auth and token handling, pagination, rate-limit retries and parsed results. The API docs stay the reference for what each call does.'),
+  c('3.1', 'Meraki SDK: connection object, key variable, pagination?', '`meraki.DashboardAPI()` reads `MERAKI_DASHBOARD_API_KEY`; methods are `dashboard.<scope>.<operationId>()`; `total_pages="all"` follows every page; errors raise `meraki.APIError`.'),
+  c('3.1', 'Current names of the Webex and Catalyst Center Python SDKs?', 'Webex: `webexpythonsdk` (`WebexAPI`, token from `WEBEX_ACCESS_TOKEN`) replaced `webexteamssdk`. Catalyst Center: `catalystcentersdk` (`api.CatalystCenterAPI`); `dnacentersdk` (`DNACenterAPI`) covers older API versions.'),
+  c('3.1', 'ACI Python SDKs: which is current?', 'Cobra (`acicobra` + `acimodel` wheels from `https://<apic>/cobra/_downloads/`) is officially supported. `acitoolkit` is deprecated.'),
+  c('3.2', 'Meraki Dashboard API v1: base URL and auth header?', '`https://api.meraki.com/api/v1`; `Authorization: Bearer <API key>`. v0 used `X-Cisco-Meraki-API-Key`.'),
+  c('3.2', 'Meraki rate limits and what happens when exceeded?', '10 requests/s per organization (shared, small burst) and 100/s per source IP. Excess gets `429` with `Retry-After`.'),
+  c('3.2', 'Meraki pagination?', 'Query parameters `perPage`, `startingAfter`, `endingBefore`; the `Link` header carries `first`, `prev`, `next`, `last`. Follow `rel=next`.'),
+  c('3.2', 'Catalyst Center authentication flow?', '`POST /dna/system/api/v1/auth/token` with Basic auth → `{"Token": ...}` → send `X-Auth-Token` on Intent API calls. Valid one hour.'),
+  c('3.2', 'Catalyst Center device list and paging?', '`GET /dna/intent/api/v1/network-device`; `offset` is 1-based, `limit` up to 500; data under `response`.'),
+  c('3.2', 'APIC login and session token?', '`POST /api/aaaLogin.json` with `{"aaaUser":{"attributes":{"name","pwd"}}}`; token returned as an attribute and `Set-Cookie`; send it as cookie `APIC-cookie`. Default timeout 600 s; `aaaRefresh`.'),
+  c('3.2', 'APIC class query vs MO query?', 'Class: `/api/class/fvTenant.json` returns every object of the class. MO: `/api/mo/uni/tn-ExampleCorp.json` returns one object by DN. Replies: `totalCount` + `imdata`.'),
+  c('3.2', 'SD-WAN Manager session authentication?', 'Form POST to `/j_security_check` → `JSESSIONID` cookie; `GET /dataservice/client/token` → send in `X-XSRF-TOKEN` for writes; `POST /logout`. JWT (`/jwt/login`) from 20.18.1.'),
+  c('3.2', 'NSO in one line, plus its key parts?', 'Multivendor service orchestration: YANG service models, NEDs (NETCONF, CLI, generic, SNMP), CDB, network-wide transactions; RESTCONF, NETCONF, JSON-RPC, CLI and Web UI northbound.'),
+  c('3.3', 'UCS Manager API style and login?', 'XML API: XML methods POSTed to `/nuova`. `aaaLogin inName/inPassword` → `outCookie`, sent as `cookie` on later calls. Objects by class and DN in the management information tree.'),
+  c('3.3', 'Intersight API style and authentication?', 'SaaS REST/JSON at `https://intersight.com/api/v1`, OpenAPI 3 spec, OData `$filter`/`$select`. API key = key ID + private key; every request is HTTP-signed, no login call.'),
+  c('3.4', 'Webex bot vs integration vs guest access?', 'Bot: own identity and token; in group spaces sees only messages that @mention it. Integration: OAuth 2.0 on behalf of a user, with scopes. Guest Issuer (deprecated) → Service App guest management.'),
+  c('3.4', 'Webex calls to create a space, add a person, post a message?', '`POST /v1/rooms` (`title`), `POST /v1/memberships` (`roomId` + `personEmail`), `POST /v1/messages` (`roomId` + `text`/`markdown`). Bearer token; lists in `items`.'),
+  c('3.4', 'Webex devices: what is the xAPI?', 'RoomOS commands, statuses and configurations. Cloud: `GET /v1/xapi/status?deviceId=&name=`, `POST /v1/xapi/command/{commandName}`. On device: local access and macros.'),
+  c('3.4', 'CUCM AXL vs UDS?', 'AXL: SOAP/XML provisioning at `https://<cucm>:8443/axl/`, Basic auth with an AXL role, `SOAPAction` header. UDS: REST/XML end-user data at `/cucm-uds/...` (directory, devices, call forward).'),
+  c('3.5', 'Secure Firewall Management Center token flow?', '`POST /api/fmc_platform/v1/auth/generatetoken` (Basic) → `X-auth-access-token`, `X-auth-refresh-token`, `DOMAIN_UUID` in headers. 30 minutes, three refreshes via `refreshtoken`.'),
+  c('3.5', 'Cisco XDR and Secure Endpoint authentication?', 'API client credentials → `POST https://visibility.amp.cisco.com/iroh/oauth2/token` (`grant_type=client_credentials`) → `Authorization: Bearer`. Secure Endpoint v3 exchanges that token at `/v3/access_tokens`.'),
+  c('3.5', 'ISE ERS vs OpenAPI vs pxGrid?', 'ERS: config REST at `/ers/config/<resource>`, port 443 or 9060, ERS Admin/Operator. OpenAPI: `/api/v1/...`, Swagger UI. pxGrid: context sharing via HTTP APIs and WebSocket pub/sub.'),
+  c('3.6', 'IOS XE commands for NETCONF, RESTCONF and gNMI?', 'NETCONF: `netconf-yang` (SSH 830). RESTCONF: `restconf` + `ip http secure-server` (HTTPS 443). gNMI: `gnxi`, `gnxi secure-trustpoint <tp>`, `gnxi secure-server` (secure port 9339). Needs a privilege 15 user.'),
+  c('3.6', 'NX-API CLI vs NX-API REST?', 'Both need `feature nxapi`. CLI: commands in a POST to `/ins` (JSON, XML or JSON-RPC). REST: the DME object model at `/api/mo/sys/...`.'),
+  c('3.7', 'Always-on vs on-demand sandbox?', 'Always on: shared, restricted, ready in minutes. On demand: private, full admin, longer to build. Session length is set per sandbox. Both need a reservation; one active at a time; nothing persists.'),
+  c('3.8', 'NETCONF `get` vs `get-config`?', '`get-config`: configuration only, from a named `<source>` (running, candidate, startup). `get`: running configuration plus state data; no source.'),
+  c('3.8', 'RESTCONF method to NETCONF mapping?', 'GET → get/get-config; POST → create (`201`, `409` if it exists); PUT → create or replace; PATCH → merge; DELETE → delete (`204`).'),
+  c('3.8', 'RESTCONF URL for interface Gi1/0/1 in ietf-interfaces?', '`/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1%2F0%2F1` with `Accept: application/yang-data+json`. Root found via `/.well-known/host-meta`.'),
+  c('3.9', 'Where the data sits in each platform\'s reply?', 'Meraki: bare list. Catalyst Center: `response`. APIC: `imdata`. SD-WAN Manager: `data`. Webex: `items`. NSO RESTCONF: `tailf-ncs:device`.'),
+];

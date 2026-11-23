@@ -1,0 +1,37 @@
+// Domain 6 — Network Fundamentals. Original flashcards (facts checked against the IANA port registry, RFC 9542, the IEEE EtherType registry, RFC 1918, 3021, 4291, 5737, 1812, 2131, 1035, 7766, 3022, 3417, 5905, 9293, 1191, 8201 and 9110, and the requests and curl documentation).
+let n = 0;
+const c = (topic, front, back) => ({ id: `d6-f${String(++n).padStart(3, '0')}`, topic, front, back });
+
+export default [
+  c('6.1', 'Structure of a MAC address?', '48 bits: a 24-bit OUI assigned by the IEEE plus 24 bits assigned by the holder. Written `00:00:5e:00:53:1a`, `00-00-5E-00-53-1A` or `0000.5e00.531a`.'),
+  c('6.1', 'The two special bits of a MAC address?', 'In the first octet: group bit `0x01` (1 = multicast) and local bit `0x02` (1 = locally administered). Broadcast is `ff:ff:ff:ff:ff:ff`.'),
+  c('6.1', 'How does a switch learn and forward?', 'Learns the source MAC per port and VLAN; forwards on the destination MAC; floods unknown unicast, broadcast and multicast (unless IGMP snooping constrains it) within the VLAN, except out the ingress port.'),
+  c('6.1', '802.1Q tag fields?', '4 bytes after the source MAC: TPID `0x8100`, PCP (3 bits), DEI (1 bit), VID (12 bits). VIDs 0 and 4095 reserved: usable VLANs 1 to 4094.'),
+  c('6.1', 'Native VLAN?', 'The VLAN whose frames cross an 802.1Q trunk untagged (Cisco default VLAN 1). Must match on both ends. In the Meraki API, `vlan` on a trunk port is the native VLAN.'),
+  c('6.1', 'Access vs trunk port?', 'Access: one untagged VLAN (plus optional voice VLAN), to end hosts. Trunk: many VLANs tagged with 802.1Q, to switches, routers, hypervisors, APs.'),
+  c('6.2', 'Usable hosts in a /26? Network and broadcast of 192.168.10.77/26?', '62. Network 192.168.10.64, broadcast 192.168.10.127, hosts .65 to .126.'),
+  c('6.2', 'The /31 exception?', 'RFC 3021: on point-to-point links both addresses of a /31 are usable; there is no network or broadcast address.'),
+  c('6.2', 'Route selection order?', '1. Longest prefix match. 2. Administrative distance, only between routes to the same prefix. 3. Metric within the same protocol.'),
+  c('6.2', 'What changes when a router forwards a packet?', 'New source and destination MAC for the next link and TTL decremented. IP addresses stay the same unless NAT translates them.'),
+  c('6.2', 'Gateway rule for a host?', 'Destination in my subnet: ARP for it directly. Otherwise send to the default gateway, which must be in the host\'s own subnet.'),
+  c('6.2', 'IPv6 address basics?', '128 bits in hex; drop leading zeros, one `::` per address; LANs are /64; link-local `fe80::/10`; no broadcast; documentation prefix `2001:db8::/32`.'),
+  c('6.3', 'Stateless filter vs stateful firewall?', 'Stateless (router ACL) checks each packet alone and needs return rules. Stateful keeps a session table and allows return traffic for known connections.'),
+  c('6.3', 'What does a next-generation firewall add?', 'Application identification, user identity, IPS, URL filtering and TLS decryption, on top of stateful inspection.'),
+  c('6.4', 'Five-step diagram reading method?', 'Roles, subnets, trace the path, read port and VLAN labels, find where NAT and filtering happen.'),
+  c('6.5', 'Management, control, data plane?', 'Management: configure and monitor (SSH, NETCONF, RESTCONF, SNMP, syslog). Control: build paths (OSPF, BGP, STP, ARP). Data: forward packets, apply ACL, NAT, QoS.'),
+  c('6.5', 'Catalyst SD-WAN planes?', 'SD-WAN Manager (ex-vManage) = management; SD-WAN Controller (ex-vSmart) = control (OMP); WAN Edge = data; SD-WAN Validator (ex-vBond) = orchestration.'),
+  c('6.6', 'DHCP DORA and ports?', 'Discover, Offer, Request, Acknowledge. UDP 67 server, UDP 68 client. Renew at T1 = 50%, rebind at T2 = 87.5% of the lease.'),
+  c('6.6', 'DHCP relay?', '`ip helper-address <server>` on the client subnet\'s gateway forwards broadcasts as unicast and sets `giaddr`, which the server uses to choose the scope.'),
+  c('6.6', 'DNS record types?', 'A IPv4, AAAA IPv6, CNAME alias, MX mail (lower preference wins), PTR reverse, TXT text/verification, SRV service with port. TTL = cache lifetime in seconds.'),
+  c('6.6', 'Cisco NAT terms?', 'Inside local: inside host\'s real address. Inside global: how it appears outside. Outside local/global: the outside host as seen inside / its real address.'),
+  c('6.6', 'Static NAT vs PAT?', 'Static: fixed one-to-one, inbound connections work. PAT (overload, NAPT): many inside hosts share one address, told apart by source port; outbound-initiated only.'),
+  c('6.6', 'SNMP ports and versions?', 'Manager polls agent on UDP 161; traps/informs to manager on UDP 162. v1/v2c community in clear text; v3 adds authentication and encryption (authPriv).'),
+  c('6.6', 'Why NTP matters to automation?', 'UDP 123. Wrong clocks break log correlation, certificate validity checks ("not yet valid") and token expiry (`exp`, `nbf`). Stratum 16 = unsynchronised.'),
+  c('6.7', 'Exam topic ports?', 'SSH TCP 22, Telnet TCP 23, HTTP TCP 80, HTTPS TCP 443, NETCONF over SSH TCP 830. RESTCONF uses HTTPS (443), no port of its own.'),
+  c('6.7', 'Other ports a developer meets?', 'DNS 53 UDP/TCP, DHCP 67/68 UDP, NTP 123 UDP, SNMP 161/162 UDP, SMTP 25 TCP, syslog 514 UDP, NETCONF over TLS 6513 TCP.'),
+  c('6.8', 'Timeout vs refused?', 'Timeout: no reply, usually a firewall drop or routing. Refused: TCP RST from a closed port (RFC 9293) or a firewall reject.'),
+  c('6.8', 'requests exceptions and causes?', '`ConnectTimeout` drop/route; `ConnectionError` refused or `NameResolutionError` DNS; `SSLError` certificate or TLS inspection; `ProxyError` 407 or proxy failure.'),
+  c('6.8', 'Proxy environment variables?', '`HTTPS_PROXY`/`HTTP_PROXY` set the proxy; `NO_PROXY` lists hosts that bypass it. curl accepts the HTTP one only as lowercase `http_proxy`.'),
+  c('6.8', 'Four VPN faults?', 'Prefix missing from a split tunnel, overlapping subnets, MTU black hole (small works, large hangs), DNS not following the tunnel.'),
+  c('6.9', 'Constraint to API design fix?', 'Latency: bulk calls, keep-alive, concurrency. Bandwidth: pagination, filtering, compression. Loss: timeouts plus retries with backoff and jitter. MTU: fix in the network.'),
+];

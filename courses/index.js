@@ -26,4 +26,5 @@ export default [
   { id: 'az-900', status: 'ready', path: 'az-900/' },
   { id: 'linux-plus', status: 'ready', path: 'linux-plus/' },
   { id: 'security-plus', status: 'ready', path: 'security-plus/' },
+  { id: 'ccna-automation', status: 'ready', path: 'ccna-automation/' },
 ];
