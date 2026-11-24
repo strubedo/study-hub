@@ -27,6 +27,7 @@ settings) plus any course-only plugins (CCNA: IOS CLI labs and a subnetting trai
 | Cisco CCNA Automation (200-901 CCNAAUTO, formerly DevNet Associate) | `courses/ccna-automation/` |
 | Cisco CCNP ENCOR (350-401 v1.2) | `courses/ccnp-encor/` |
 | AZ-104 Azure Administrator | `courses/az-104/` |
+| Building AI Agents (tool use, MCP, agent SDKs) | `courses/ai-agents/` |
 
 ## Download and run
 
@@ -212,7 +213,10 @@ and vendor documentation by an independent reviewer for every domain, but
 much of their sample output is written from that documentation and has not
 yet been run in a lab. Security+ targets the new SY0-801 exam, not SY0-701.
 The AZ-104 commands, templates and Bicep files were checked against Microsoft
-Learn but have not been deployed to a subscription or compiled.
+Learn but have not been deployed to a subscription or compiled. The Building
+AI Agents code samples were checked against the vendors' documentation as it
+read on November 23, 2026 and compiled, but were not run against a model API;
+that field changes monthly, so check the current docs.
 
 ## Linux app-menu launcher
 

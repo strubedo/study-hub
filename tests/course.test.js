@@ -142,7 +142,7 @@ test('normalizeCourse never modifies the raw config', () => {
 });
 
 test('registry: every listed course is ready, none coming soon', () => {
-  assert.deepEqual(registry.filter((c) => c.status === 'ready').map((c) => c.id), ['ccna', 'winserver', 'fortinet-nse4', 'fortinet-nse6-fmg', 'fortinet-nse5-sdwan', 'fortinet-nse7', 'fortinet-nse5-fsw', 'fortinet-nse5-wlan', 'fortinet-nse6-nac', 'paloalto-ngfw', 'lpi-devops', 'tcpip-ipv4', 'winserver-essentials', 'ai-prompting', 'az-900', 'linux-plus', 'security-plus', 'ccna-automation', 'ccnp-encor', 'az-104']);
+  assert.deepEqual(registry.filter((c) => c.status === 'ready').map((c) => c.id), ['ccna', 'winserver', 'fortinet-nse4', 'fortinet-nse6-fmg', 'fortinet-nse5-sdwan', 'fortinet-nse7', 'fortinet-nse5-fsw', 'fortinet-nse5-wlan', 'fortinet-nse6-nac', 'paloalto-ngfw', 'lpi-devops', 'tcpip-ipv4', 'winserver-essentials', 'ai-prompting', 'az-900', 'linux-plus', 'security-plus', 'ccna-automation', 'ccnp-encor', 'az-104', 'ai-agents']);
   assert.deepEqual(registry.filter((c) => c.status === 'coming-soon').map((c) => c.name), []);
   const ids = registry.map((c) => c.id);
   assert.equal(new Set(ids).size, ids.length);

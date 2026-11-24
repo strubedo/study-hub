@@ -1,0 +1,21 @@
+// Domain 1 — Agent Foundations (15%). Original content.
+// Facts checked on 2026-11-23 against the vendors' documentation: Claude developer docs (platform.claude.com/docs: tool use,
+// stop reasons, context windows, Messages API reference, tool runner, Managed Agents), the Claude Agent SDK docs
+// (code.claude.com/docs/en/agent-sdk), Anthropic's engineering article "Building effective agents", OpenAI's API docs
+// (developers.openai.com: function calling, Responses API reference, Agents, Agents SDK, Agents API), Google's Gemini API docs
+// (function calling, Interactions API reference, managed agents) and the Agent Development Kit docs (adk.dev).
+// Every URL is listed in REVIEW-TODO.md. API requests, responses and transcripts are written from documented shapes, not captured.
+export default [
+  { id: '1.1-agent-loop', topic: '1.1', title: 'What an Agent Is: the Loop, Workflows and Agents', minutes: 12, file: '1.1-agent-loop.md',
+    objectives: ['Trace the agent loop: goal and tool definitions in, tool call out, result back, repeat until an answer or a limit', 'Say who does what in the loop: the model asks, your code or the provider runs the tool', 'Distinguish workflows (code decides the steps) from agents (the model decides the steps) using the vendors\' published definitions', 'Design one IT operations task three ways: a single call, a fixed workflow and an agent'] },
+  { id: '1.1-when-not-to-build', topic: '1.1', title: 'When Not to Build an Agent: Cost, Latency and Compounding Errors', minutes: 12, file: '1.1-when-not-to-build.md',
+    objectives: ['Apply a decision checklist that picks a single call, a workflow or an agent', 'Explain why each loop iteration costs more input tokens than the last', 'Estimate the latency of a sequential loop', 'Compute end-to-end success from per-step success rates and explain the limits of that model', 'Name the controls that make autonomy affordable: limits, read-only tools, approval gates and verification'] },
+  { id: '1.2-request-anatomy', topic: '1.2', title: 'Anatomy of an Agent Request: System Prompt, Messages, Tools and Content Blocks', minutes: 13, file: '1.2-request-anatomy.md',
+    objectives: ['Identify the parts of a Messages API request: model, max_tokens, system, tools and messages', 'Explain the user and assistant roles and where tool calls and tool results live', 'Read a tool definition at overview level: name, description and input_schema', 'Read a response: content blocks, stop_reason and usage', 'Build the follow-up request that returns a tool result, and name the OpenAI and Gemini equivalents'] },
+  { id: '1.2-stop-reasons-context', topic: '1.2', title: 'Stop Reasons, a Minimal Loop and the Context Window', minutes: 14, file: '1.2-stop-reasons-context.md',
+    objectives: ['State what each Claude stop reason means and what the loop does next', 'Separate stop reasons (successful responses) from HTTP errors', 'Map the stop signals to OpenAI Responses and Gemini Interactions equivalents', 'Read and run a minimal Python tool loop with an iteration limit', 'Explain the context window as working memory: what accumulates, and why long runs degrade or stop'] },
+  { id: '1.3-build-options', topic: '1.3', title: 'Four Ways to Build an Agent', minutes: 13, file: '1.3-build-options.md',
+    objectives: ['Describe a model API with your own tool loop (Claude Messages API, OpenAI Responses API, Gemini Interactions API)', 'Describe the Claude SDK tool runner and when the docs say to use a manual loop instead', 'Describe agent SDKs and frameworks: Claude Agent SDK, OpenAI Agents SDK and Google ADK', 'Describe hosted agents: Claude Managed Agents, OpenAI Agents API and Gemini managed agents', 'Use product names as the vendors\' documentation gives them'] },
+  { id: '1.3-what-you-own', topic: '1.3', title: 'What You Own in Each Option, and Where to Start', minutes: 11, file: '1.3-what-you-own.md',
+    objectives: ['Say who owns the loop, tools, state, sandbox and permissions in each way to build', 'List what you give up as the provider takes on more', 'Choose a way to build for an IT operations scenario with a constraint', 'Pick a sensible starting point and know when to move up a level'] },
+];

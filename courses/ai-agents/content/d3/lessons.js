@@ -1,0 +1,38 @@
+// Domain 3 — Context, Memory and Orchestration (20%). Original content.
+// Written 2026-11-23. Facts checked that day against the Claude developer docs (platform.claude.com/docs: context windows,
+// prompt caching, cache diagnostics, tool use with prompt caching, manage tool context, compaction overview, compaction on
+// demand, compaction at a token threshold, context editing, token counting, memory tool, embeddings, citations, search
+// results, prompting best practices, Messages API reference, Managed Agents memory stores, sessions and multiagent
+// orchestration), the Claude Agent SDK docs (code.claude.com/docs/en/agent-sdk: subagents, sessions, agent loop, Python
+// reference), Anthropic's engineering articles ("Building effective agents", "Effective context engineering for AI agents",
+// "Effective harnesses for long-running agents", "How we built our multi-agent research system", "Contextual Retrieval")
+// and the Claude blog post "Building multi-agent systems: when and how to use them", OpenAI's API docs (prompt caching,
+// conversation state, compaction, file search, Agents SDK orchestration and running agents), the Gemini API docs (context
+// caching, file search) and the ADK docs (sessions, memory, workflows).
+// Every URL is listed in REVIEW-TODO.md. API requests, responses and transcripts are written from documented shapes, not captured.
+export default [
+  // 3.1 Managing context
+  { id: '3.1-agent-system-prompts', topic: '3.1', title: 'System Prompts Written for Agents', minutes: 13, file: '3.1-agent-system-prompts.md',
+    objectives: ['Explain why an agent\'s system prompt differs from a chat prompt: resent every turn, cached, and durable across compaction', 'Apply the vendors\' published prompting guidance for agents and long-running work', 'Write the five parts of an agent system prompt: role and goal, operating rules, tool-use guidance, stopping criteria and output format', 'Decide what belongs in the system prompt, in tool descriptions and in the first user message', 'Improve a weak system prompt for a read-only network diagnostics agent'] },
+  { id: '3.1-context-budgets', topic: '3.1', title: 'Context Budgets: What Fills the Window and How to Measure It', minutes: 13, file: '3.1-context-budgets.md',
+    objectives: ['List everything that counts toward the context window on each request, including thinking and cached tokens', 'Read the usage fields of a Messages API response and compute total input', 'Estimate the next request\'s size and measure with token counting', 'Explain why large tool results dominate budgets and shape them with filtering, pagination, summaries and references', 'State what happens at the context limit'] },
+  { id: '3.1-compaction-context-editing', topic: '3.1', title: 'Compaction, Context Editing and Summarizing History Yourself', minutes: 14, file: '3.1-compaction-context-editing.md',
+    objectives: ['Distinguish compaction (summarize) from context editing (remove by rule)', 'Describe on-demand and threshold compaction as documented: parameters, beta headers, what is kept and dropped', 'Configure tool result clearing and thinking block clearing and explain their effect on caching', 'Describe automatic compaction in the Claude Agent SDK and name the OpenAI equivalent', 'Summarize history yourself without separating tool calls from their results'] },
+  { id: '3.1-prompt-caching', topic: '3.1', title: 'Prompt Caching and What Breaks a Cache', minutes: 15, file: '3.1-prompt-caching.md',
+    objectives: ['State the cached prefix order: tools, then system, then messages', 'Enable caching with a top-level cache_control or explicit breakpoints, and place breakpoints on the last stable block', 'Describe cache lifetimes, the per-model minimum length, and the usage fields for reads and writes', 'Compute the cost of an agent run with and without caching using the documented multipliers', 'Recognize changes that silently invalidate a cache and use cache diagnostics to find them'] },
+  // 3.2 Memory and state
+  { id: '3.2-state-and-memory', topic: '3.2', title: 'Conversation State, Durable Memory and the Memory Tool', minutes: 13, file: '3.2-state-and-memory.md',
+    objectives: ['Distinguish conversation state from durable memory', 'Use files as memory: a progress file read at the start and updated at the end', 'Describe the memory tool as documented: client-side execution, the /memories prefix and its six commands', 'Write a path check that stops traversal outside the memory directory', 'Combine memory with context editing and compaction for long runs'] },
+  { id: '3.2-sessions-what-not-to-store', topic: '3.2', title: 'Sessions, Resuming Work and What Not to Store', minutes: 12, file: '3.2-sessions-what-not-to-store.md',
+    objectives: ['Continue, resume and fork Claude Agent SDK sessions and know what a session does not restore', 'Describe Managed Agents sessions and memory stores, including read_write and read_only access', 'Name the OpenAI and Google equivalents for sessions and memory', 'Keep secrets, unneeded personal data, unverified claims and untrusted instructions out of memory', 'Explain why writable memory is a persistent injection path and list controls'] },
+  // 3.3 Retrieval
+  { id: '3.3-rag-embeddings', topic: '3.3', title: 'Retrieval-Augmented Generation: Embeddings, Chunking, Ranking and Citations', minutes: 13, file: '3.3-rag-embeddings.md',
+    objectives: ['Trace the RAG pipeline from chunking to citations', 'State what Anthropic\'s embeddings page recommends and name hosted retrieval tools at OpenAI and Google', 'Avoid chunking pitfalls: lost context, split structure, missing metadata, stale duplicates, secrets', 'Combine semantic and keyword search and add reranking', 'Use Claude citations and search_result blocks, and explain what a citation does not prove'] },
+  { id: '3.3-agentic-search-choosing', topic: '3.3', title: 'Agentic Search and Choosing a Retrieval Approach', minutes: 12, file: '3.3-agentic-search-choosing.md',
+    objectives: ['Describe agentic search as just-in-time retrieval with tools', 'Compare RAG and agentic search on freshness, recall, latency, cost, operational burden and access control', 'Choose a retrieval approach for runbooks, device configurations and tickets', 'Apply a five-question decision guide to a new source', 'Cite sources and treat retrieved content as untrusted with either approach'] },
+  // 3.4 Orchestration
+  { id: '3.4-orchestration-patterns', topic: '3.4', title: 'Orchestration Patterns: Chaining, Routing, Parallelization, Orchestrator-Workers, Evaluator-Optimizer', minutes: 14, file: '3.4-orchestration-patterns.md',
+    objectives: ['Describe the five workflow patterns named in "Building effective agents"', 'Say when each pattern fits, using the article\'s criteria', 'Match network operations tasks to patterns and recognize each from a diagram', 'Run independent checks in parallel and combine them in code', 'Map the patterns to OpenAI Agents SDK and Google ADK constructs'] },
+  { id: '3.4-subagents-in-practice', topic: '3.4', title: 'Subagents in Practice and When More Agents Make Things Worse', minutes: 13, file: '3.4-subagents-in-practice.md',
+    objectives: ['Define a subagent with AgentDefinition and invoke it through the Agent tool', 'Explain what a subagent receives and returns, and why the hand-off prompt must be complete', 'Scope a subagent\'s tools and permissions and cap depth, concurrency and spend', 'Describe Managed Agents subagents, session threads and shared credentials', 'Use Anthropic\'s published guidance to decide when a single agent is better'] },
+];

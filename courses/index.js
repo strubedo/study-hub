@@ -29,4 +29,5 @@ export default [
   { id: 'ccna-automation', status: 'ready', path: 'ccna-automation/' },
   { id: 'ccnp-encor', status: 'ready', path: 'ccnp-encor/' },
   { id: 'az-104', status: 'ready', path: 'az-104/' },
+  { id: 'ai-agents', status: 'ready', path: 'ai-agents/' },
 ];
